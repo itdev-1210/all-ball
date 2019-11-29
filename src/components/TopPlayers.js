@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import PlayerCard from './PlayerCard';
+
 class TopPlayers extends Component {
     constructor() {
         super()
@@ -31,8 +33,17 @@ class TopPlayers extends Component {
     }
 
     render() {
+        const highestPoints = [].concat(this.state.players)
+            .sort((a, b) => b.pts - a.pts).splice(0, 5)
+            .map((playerData, i) =>
+                 <PlayerCard 
+                 key={i} 
+                 playerData={playerData}
+                 /> );
+
         return (
             <div>
+                {highestPoints}
             </div>
         );
     }
