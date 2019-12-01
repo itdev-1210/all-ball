@@ -31,8 +31,17 @@ class GameContainer extends Component {
     }
 
     render() {
+        const gameInformation = this.state.games.map((team, id) =>
+            <div key={id}>
+                <div>{team.visitor_team.full_name} {team.visitor_team_score}</div>
+                <span> @ </span>
+                <div>{team.home_team.full_name} {team.home_team_score}</div>
+                <br />
+            </div>
+        );
         return (
             <div>
+                {gameInformation}
             </div>
         );
     }
