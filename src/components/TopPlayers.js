@@ -6,8 +6,10 @@ class TopPlayers extends Component {
     constructor() {
         super()
         this.state = {
-            players: []
+            players: [],
+            statistic: 'points'
         }
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -32,19 +34,69 @@ class TopPlayers extends Component {
             })
     }
 
-    render() {
-        const highestPoints = [].concat(this.state.players)
-            .sort((a, b) => b.pts - a.pts).splice(0, 5)
-            .map((playerData, i) =>
-                 <PlayerCard 
-                 key={i} 
-                 playerData={playerData}
-                 /> );
+    handleChange(event) {
+        this.setState({ statistic: event.target.value });
+    }
 
+    render() {
+        let highestPoints;
+        if (this.state.statistic === 'assists') {
+            highestPoints = [].concat(this.state.players)
+                .sort((a, b) => b.ast - a.ast).splice(0, 5)
+                .map((playerData, i) =>
+                    <PlayerCard
+                        key={i}
+                        playerData={playerData}
+                    />);
+        } else if (this.state.statistic === 'points') {
+            highestPoints = [].concat(this.state.players)
+                .sort((a, b) => b.pts - a.pts).splice(0, 5)
+                .map((playerData, i) =>
+                    <PlayerCard
+                        key={i}
+                        playerData={playerData}
+                    />);
+        } else if (this.state.statistic === 'rebounds') {
+            highestPoints = [].concat(this.state.players)
+                .sort((a, b) => b.reb - a.reb).splice(0, 5)
+                .map((playerData, i) =>
+                    <PlayerCard
+                        key={i}
+                        playerData={playerData}
+                    />);
+        } else if (this.state.statistic === 'steals') {
+            highestPoints = [].concat(this.state.players)
+                .sort((a, b) => b.stl - a.stl).splice(0, 5)
+                .map((playerData, i) =>
+                    <PlayerCard
+                        key={i}
+                        playerData={playerData}
+                    />);
+        } else if (this.state.statistic === 'blocks') {
+            highestPoints = [].concat(this.state.players)
+                .sort((a, b) => b.blk - a.blk).splice(0, 5)
+                .map((playerData, i) =>
+                    <PlayerCard
+                        key={i}
+                        playerData={playerData}
+                    />);
+        }
         return (
             <div>
+                <form>
+                    <label>
+                        Sort players by:
+                        <select value={this.state.statistic} onChange={this.handleChange}>
+                            <option value='points'>Points</option>
+                            <option value='assists'>Assists</option>
+                            <option value='rebounds'>Rebounds</option>
+                            <option value='steals'>Steals</option>
+                            <option value='blocks'>Blocks</option>
+                        </select>
+                    </label>
+                </form>
                 {highestPoints}
-            </div>
+            </div >
         );
     }
 }
