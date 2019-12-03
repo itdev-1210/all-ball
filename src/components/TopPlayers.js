@@ -7,7 +7,10 @@ class TopPlayers extends Component {
         super()
         this.state = {
             players: [],
-            statistic: 'points'
+            statistic: 'points',
+            yearList: [2019],
+            monthList: [1],
+            dayList: [1]
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -35,7 +38,25 @@ class TopPlayers extends Component {
     }
 
     handleChange(event) {
-        this.setState({ statistic: event.target.value });
+        const { name, value } = event.target
+        this.setState({ [name]: value },
+            () => { console.log(this.state.yearList, this.state.monthList, this.state.dayList) }
+        );
+        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${this.state.yearList}&dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
+            .then(response => response.json())
+            .then(data => {
+                let currentPage = data.meta.current_page
+                let totalPages = data.meta.total_pages
+                for (let i = currentPage; i <= totalPages; i++) {
+                    fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${this.state.yearList}&dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setState({
+                                players: data.data
+                            })
+                        })
+                }
+            })
     }
 
     render() {
@@ -81,22 +102,65 @@ class TopPlayers extends Component {
                         playerData={playerData}
                     />);
         }
+
+        const years = []
+        for (let i = 2020; i > 1984; i--) {
+            years.push({ year: i })
+        };
+
+        const months = []
+        for (let x = 12; x > 0; x--) {
+            months.push({ month: x })
+        };
+
+        const days = []
+        for (let y = 31; y > 0; y--) {
+            days.push({ day: y })
+        };
+
         return (
             <div>
-                <form>
-                    <label>
-                        Sort players by:
-                        <select value={this.state.statistic} onChange={this.handleChange}>
-                            <option value='points'>Points</option>
-                            <option value='assists'>Assists</option>
-                            <option value='rebounds'>Rebounds</option>
-                            <option value='steals'>Steals</option>
-                            <option value='blocks'>Blocks</option>
-                        </select>
-                    </label>
-                </form>
-                {highestPoints}
-            </div >
+                <div>
+                    <form>
+
+                        <label>
+                            Sort players by:
+                        <select name='statistic' value={this.state.statistic} onChange={this.handleChange}>
+                                <option value='points'>Points</option>
+                                <option value='assists'>Assists</option>
+                                <option value='rebounds'>Rebounds</option>
+                                <option value='steals'>Steals</option>
+                                <option value='blocks'>Blocks</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Year:
+                        <select name='yearList' value={this.state.yearList} onChange={this.handleChange}>
+                                {years.map(({ value, year }) => <option value={value} >{year}</option>)}
+                            </select>
+                        </label>
+
+                        <label>
+                            Month:
+                        <select name='monthList' value={this.state.monthList} onChange={this.handleChange}>
+                                {months.map(({ value, month }) => <option value={value} >{month}</option>)}
+                            </select>
+                        </label>
+
+                        <label>
+                            Day:
+                        <select name='dayList' value={this.state.dayList} onChange={this.handleChange}>
+                                {days.map(({ value, day }) => <option value={value} >{day}</option>)}
+                            </select>
+                        </label>
+
+                    </form>
+                </div>
+                <div>
+                    {highestPoints}
+                </div>
+            </div>
         );
     }
 }
