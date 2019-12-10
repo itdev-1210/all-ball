@@ -46,11 +46,32 @@ class PlayerSearch extends Component {
                 })
         }
     }
-
     render() {
+        let searchedPlayers = this.state.loading ?
+            <p> LOADING </p>
+            : this.state.allPlayers.map(d =>
+                <li key={d.id}>
+                    {d.first_name} {d.last_name} {d.id}
+                </li>)
+
         return (
             <div>
-
+                <div>
+                    <form>
+                        <input type='text'
+                            name='input'
+                            value={this.state.input}
+                            onChange={this.handleChange}
+                        >
+                        </input>
+                    </form>
+                </div>
+                <button onClick={this.handleClick} >
+                    Search players
+                </button>
+                <div>
+                    {searchedPlayers}
+                </div>
             </div >
         );
     }
