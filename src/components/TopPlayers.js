@@ -13,6 +13,7 @@ class TopPlayers extends Component {
             dayList: [1]
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -42,6 +43,11 @@ class TopPlayers extends Component {
         this.setState({ [name]: value },
             () => { console.log(this.state.yearList, this.state.monthList, this.state.dayList) }
         );
+    }
+
+
+    handleClick(event) {
+        event.preventDefault();
         fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${this.state.yearList}&dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
             .then(response => response.json())
             .then(data => {
@@ -122,7 +128,6 @@ class TopPlayers extends Component {
             <div>
                 <div>
                     <form>
-
                         <label>
                             Sort players by:
                         <select name='statistic' value={this.state.statistic} onChange={this.handleChange}>
@@ -154,10 +159,12 @@ class TopPlayers extends Component {
                                 {days.map(({ value, day }) => <option value={value} >{day}</option>)}
                             </select>
                         </label>
-
+                        <button onClick={this.handleClick}>
+                            Search
+                        </button>
                     </form>
                 </div>
-                <div>
+                <div style={{ display: 'flex', margin: '20px' }}>
                     {highestPoints}
                 </div>
             </div>
