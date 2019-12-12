@@ -6,10 +6,19 @@ class PlayerSearch extends Component {
         this.state = {
             allPlayers: [],
             input: '',
-            loading: false
+            loading: false,
+            playerDetails: []
         }
-        this.handleClick = this.handleClick.bind(this)
+        this.handleSearchClick = this.handleSearchClick.bind(this)
+        this.handlePlayerClick = this.handlePlayerClick.bind(this)
         this.handleChange = this.handleChange.bind(this)
+    }
+
+    handlePlayerClick(value) {
+        this.setState({
+            allPlayers: [],
+            playerDetails: [value]
+        })
     }
 
     handleChange(event) {
@@ -18,9 +27,10 @@ class PlayerSearch extends Component {
         })
     }
 
-    handleClick() {
+    handleSearchClick() {
         this.setState({
-            allPlayers: []
+            allPlayers: [],
+            playerDetails: []
         })
         if (this.state.input.length > 2) {
             fetch(`https://www.balldontlie.io/api/v1/players?search=${this.state.input}&per_page=100`)
@@ -50,15 +60,20 @@ class PlayerSearch extends Component {
         let searchedPlayers = this.state.loading ?
             <p> LOADING </p>
             : this.state.allPlayers.map(d =>
-                <li key={d.id}>
-                    {d.first_name} {d.last_name} {d.id}
+                <li key={d.id} onClick={() => { this.handlePlayerClick(d) }}>
+                    {d.first_name} {d.last_name}
                 </li>)
+        let chosenPlayer = this.state.playerDetails.map(d =>
+            <li key={d.id}>
+                {d.first_name} {d.last_name} {d.team.city}
+            </li>)
 
         return (
             <div>
                 <div>
                     <form>
-                        <input type='text'
+                        <input
+                            type='text'
                             name='input'
                             value={this.state.input}
                             onChange={this.handleChange}
@@ -66,13 +81,16 @@ class PlayerSearch extends Component {
                         </input>
                     </form>
                 </div>
-                <button onClick={this.handleClick} >
-                    Search players
+                <button onClick={this.handleSearchClick}>
+                    Search
                 </button>
                 <div>
                     {searchedPlayers}
                 </div>
-            </div >
+                <div>
+                    {chosenPlayer}
+                </div>
+            </div>
         );
     }
 }
