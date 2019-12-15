@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import PlayerSearchResults from './PlayerSearchResults';
+import PlayerStats from './PlayerStats';
+import PlayerGameLogs from './PlayerGameLogs';
+
 class PlayerSearch extends Component {
     constructor() {
         super()
@@ -7,7 +11,9 @@ class PlayerSearch extends Component {
             allPlayers: [],
             input: '',
             loading: false,
-            playerDetails: []
+            playerDetails: [],
+            playerStats: [],
+            playerGameLogs: []
         }
         this.handleSearchClick = this.handleSearchClick.bind(this)
         this.handlePlayerClick = this.handlePlayerClick.bind(this)
@@ -19,6 +25,20 @@ class PlayerSearch extends Component {
             allPlayers: [],
             playerDetails: [value]
         })
+        fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2019&player_ids[]=${value.id}`)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    playerStats: data.data
+                })
+            })
+        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=2019&player_ids[]=${value.id}&per_page=100`)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    playerGameLogs: data.data
+                })
+            })
     }
 
     handleChange(event) {
@@ -30,7 +50,9 @@ class PlayerSearch extends Component {
     handleSearchClick() {
         this.setState({
             allPlayers: [],
-            playerDetails: []
+            playerDetails: [],
+            playerStats: [],
+            playerGameLogs: []
         })
         if (this.state.input.length > 2) {
             fetch(`https://www.balldontlie.io/api/v1/players?search=${this.state.input}&per_page=100`)
@@ -45,28 +67,42 @@ class PlayerSearch extends Component {
                         fetch(`https://www.balldontlie.io/api/v1/players?search=${this.state.input}&per_page=100&page=` + i)
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data)
                                 this.setState({
                                     allPlayers: this.state.allPlayers.concat(data.data),
                                     loading: false
                                 })
-
                             })
                     }
                 })
         }
     }
+
     render() {
         let searchedPlayers = this.state.loading ?
             <p> LOADING </p>
-            : this.state.allPlayers.map(d =>
-                <li key={d.id} onClick={() => { this.handlePlayerClick(d) }}>
-                    {d.first_name} {d.last_name}
-                </li>)
+            : this.state.allPlayers.map((players, id) =>
+                <PlayerSearchResults
+                    key={id}
+                    onClick={() => { this.handlePlayerClick(players) }}
+                    players={players}
+                />);
+
         let chosenPlayer = this.state.playerDetails.map(d =>
             <li key={d.id}>
                 {d.first_name} {d.last_name} {d.team.city}
-            </li>)
+            </li>);
+
+        let seasonAverages = this.state.playerStats.map((seasonStats, id) =>
+            <PlayerStats
+                key={id}
+                seasonStats={seasonStats}
+            />);
+
+        let gameLogs = this.state.playerGameLogs.map((logs, id) =>
+            <PlayerGameLogs
+                key={id}
+                logs={logs}
+            />);
 
         return (
             <div>
@@ -89,6 +125,12 @@ class PlayerSearch extends Component {
                 </div>
                 <div>
                     {chosenPlayer}
+                </div>
+                <div>
+                    {seasonAverages}
+                </div>
+                <div>
+                    {gameLogs}
                 </div>
             </div>
         );
