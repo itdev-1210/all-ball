@@ -13,11 +13,13 @@ class PlayerSearch extends Component {
             loading: false,
             playerDetails: [],
             playerStats: [],
-            playerGameLogs: []
+            playerGameLogs: [],
+            statSwitch: false
         }
         this.handleSearchClick = this.handleSearchClick.bind(this)
         this.handlePlayerClick = this.handlePlayerClick.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.toggleClick = this.toggleClick.bind(this)
     }
 
     handlePlayerClick(value) {
@@ -77,6 +79,12 @@ class PlayerSearch extends Component {
         }
     }
 
+    toggleClick() {
+        this.setState(prevState => ({
+            statSwitch: !prevState.statSwitch
+        }))
+    }
+
     render() {
         let searchedPlayers = this.state.loading ?
             <p> LOADING </p>
@@ -98,14 +106,23 @@ class PlayerSearch extends Component {
                 seasonStats={seasonStats}
             />);
 
-        let gameLogs = this.state.playerGameLogs.map((logs, id) =>
+        let gameLogs = this.state.playerDetails.length !== 0 ?
             <PlayerGameLogs
-                key={id}
-                logs={logs}
-            />);
+                logs={this.state.playerGameLogs}
+            />
+            : null
+
+        let statSwitch = this.state.statSwitch ? seasonAverages : gameLogs
+
+        let toggleStatsButton = this.state.playerDetails.length !== 0 ?
+            <button onClick={this.toggleClick}>
+                Switch stats
+            </button>
+            : null
 
         return (
             <div>
+                {console.log(this.state.playerDetails)}
                 <div>
                     <form>
                         <input
@@ -121,16 +138,14 @@ class PlayerSearch extends Component {
                     Search
                 </button>
                 <div>
+                    {toggleStatsButton}
                     {searchedPlayers}
                 </div>
                 <div>
                     {chosenPlayer}
                 </div>
                 <div>
-                    {seasonAverages}
-                </div>
-                <div>
-                    {gameLogs}
+                    {statSwitch}
                 </div>
             </div>
         );
