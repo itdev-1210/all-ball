@@ -21,19 +21,34 @@ class TopPlayers extends Component {
         let currentYear = date.getFullYear();
         let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
         let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
+        let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
         fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${yesterday}&per_page=100`)
             .then(response => response.json())
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
-                for (let i = currentPage; i <= totalPages; i++) {
-                    fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${yesterday}&per_page=100&page=` + i)
-                        .then(response => response.json())
-                        .then(data => {
-                            this.setState({
-                                players: this.state.players.concat(data.data)
+                if (totalPages === 0) {
+                    console.log('YAO')
+                    console.log(twoDaysAgo)
+                    for (let i = currentPage; i <= 4; i++) {
+                        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${twoDaysAgo}&per_page=100&page=` + i)
+                            .then(response => response.json())
+                            .then(data => {
+                                this.setState({
+                                    players: this.state.players.concat(data.data)
+                                })
                             })
-                        })
+                    }
+                } else {
+                    for (let i = currentPage; i <= totalPages; i++) {
+                        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${yesterday}&per_page=100&page=` + i)
+                            .then(response => response.json())
+                            .then(data => {
+                                this.setState({
+                                    players: this.state.players.concat(data.data)
+                                })
+                            })
+                    }
                 }
             })
     }
@@ -44,7 +59,6 @@ class TopPlayers extends Component {
             () => { console.log(this.state.yearList, this.state.monthList, this.state.dayList) }
         );
     }
-
 
     handleClick(event) {
         event.preventDefault();
@@ -67,6 +81,7 @@ class TopPlayers extends Component {
 
     render() {
         let highestPoints;
+
         if (this.state.statistic === 'assists') {
             highestPoints = [].concat(this.state.players)
                 .sort((a, b) => b.ast - a.ast).splice(0, 5)
@@ -75,6 +90,7 @@ class TopPlayers extends Component {
                         key={i}
                         playerData={playerData}
                     />);
+
         } else if (this.state.statistic === 'points') {
             highestPoints = [].concat(this.state.players)
                 .sort((a, b) => b.pts - a.pts).splice(0, 5)
@@ -83,6 +99,7 @@ class TopPlayers extends Component {
                         key={i}
                         playerData={playerData}
                     />);
+
         } else if (this.state.statistic === 'rebounds') {
             highestPoints = [].concat(this.state.players)
                 .sort((a, b) => b.reb - a.reb).splice(0, 5)
@@ -91,6 +108,7 @@ class TopPlayers extends Component {
                         key={i}
                         playerData={playerData}
                     />);
+
         } else if (this.state.statistic === 'steals') {
             highestPoints = [].concat(this.state.players)
                 .sort((a, b) => b.stl - a.stl).splice(0, 5)
@@ -99,6 +117,7 @@ class TopPlayers extends Component {
                         key={i}
                         playerData={playerData}
                     />);
+
         } else if (this.state.statistic === 'blocks') {
             highestPoints = [].concat(this.state.players)
                 .sort((a, b) => b.blk - a.blk).splice(0, 5)
@@ -112,21 +131,23 @@ class TopPlayers extends Component {
         const years = []
         for (let i = 2020; i > 1984; i--) {
             years.push({ year: i })
-        };
+        }
 
         const months = []
         for (let x = 12; x > 0; x--) {
             months.push({ month: x })
-        };
+        }
 
         const days = []
         for (let y = 31; y > 0; y--) {
             days.push({ day: y })
-        };
+        }
 
         return (
             <div>
                 <div>
+                    <h1>Top players from {`${this.state.yearList}-${this.state.monthList}-${this.state.dayList}`}</h1>
+
                     <form>
                         <label>
                             Sort players by:
@@ -159,11 +180,13 @@ class TopPlayers extends Component {
                                 {days.map(({ value, day }) => <option value={value} >{day}</option>)}
                             </select>
                         </label>
+
                         <button onClick={this.handleClick}>
                             Search
                         </button>
                     </form>
                 </div>
+
                 <div style={{ display: 'flex', margin: '20px' }}>
                     {highestPoints}
                 </div>

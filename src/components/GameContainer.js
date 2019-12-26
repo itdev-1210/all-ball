@@ -22,13 +22,21 @@ class GameContainer extends Component {
         let currentYear = date.getFullYear();
         let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
         let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
+        let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
         fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${currentYear}&start_date=[]${yesterday}&end_date=[]${yesterday}`)
             .then(response => response.json())
             .then(data => {
-                let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
-                for (let i = currentPage; i <= totalPages; i++) {
-                    fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${currentYear}&start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100&page=` + i)
+                if (totalPages === 0) {
+                    fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${currentYear}&start_date=[]${twoDaysAgo}&end_date=[]${twoDaysAgo}&per_page=100`)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setState({
+                                games: data.data
+                            })
+                        })
+                } else {
+                    fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${currentYear}&start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100`)
                         .then(response => response.json())
                         .then(data => {
                             this.setState({
@@ -54,7 +62,7 @@ class GameContainer extends Component {
             state: {
                 game: `${value.id}`
             }
-        })
+        });
     }
 
     handleSearchClick(event) {
@@ -87,17 +95,17 @@ class GameContainer extends Component {
         const years = []
         for (let i = 2020; i > 1984; i--) {
             years.push({ year: i })
-        };
+        }
 
         const months = []
         for (let x = 12; x > 0; x--) {
             months.push({ month: x })
-        };
+        }
 
         const days = []
         for (let y = 31; y > 0; y--) {
             days.push({ day: y })
-        };
+        }
 
         return (
             <div>
@@ -128,6 +136,7 @@ class GameContainer extends Component {
                         </button>
                     </form>
                 </div>
+
                 <div style={{ display: 'flex', margin: '20px' }}>
                     {gameResults}
                 </div>
