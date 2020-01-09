@@ -22,16 +22,14 @@ class TopPlayers extends Component {
         let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
         let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
         let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
-        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${yesterday}&per_page=100`)
+        fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100`)
             .then(response => response.json())
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
                 if (totalPages === 0) {
-                    console.log('YAO')
-                    console.log(twoDaysAgo)
                     for (let i = currentPage; i <= 4; i++) {
-                        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${twoDaysAgo}&per_page=100&page=` + i)
+                        fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${twoDaysAgo}&per_page=100&page=` + i)
                             .then(response => response.json())
                             .then(data => {
                                 this.setState({
@@ -41,7 +39,7 @@ class TopPlayers extends Component {
                     }
                 } else {
                     for (let i = currentPage; i <= totalPages; i++) {
-                        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${currentYear}&dates[]=${yesterday}&per_page=100&page=` + i)
+                        fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100&page=` + i)
                             .then(response => response.json())
                             .then(data => {
                                 this.setState({
