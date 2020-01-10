@@ -1,5 +1,15 @@
 import React from 'react';
 
+import {
+    ResponsiveContainer, 
+    BarChart, 
+    XAxis, 
+    YAxis, 
+    Tooltip, 
+    Legend, 
+    Bar
+} from "recharts";
+
 class GameInfoContainer extends React.Component {
     constructor() {
         super()
@@ -20,7 +30,7 @@ class GameInfoContainer extends React.Component {
 
     render() {
         let teamAbbreviations = this.state.selectedGame.map(x => x.team.abbreviation)
-
+        
         let homeTeam = [...new Set(teamAbbreviations)]
         let awayTeam = homeTeam.pop()
 
@@ -56,7 +66,7 @@ class GameInfoContainer extends React.Component {
 
         let awayFTPercent = (awayFTMade / awayFTAttempts).toFixed(2)
         let homeFTPercent = (homeFTMade / homeFTAttempts).toFixed(2)
-
+        
         let awayTeamAssists = awayTeamRoster.reduce((a, b) => a + b.ast, 0)
         let homeTeamAssists = homeTeamRoster.reduce((a, b) => a + b.ast, 0)
 
@@ -78,63 +88,112 @@ class GameInfoContainer extends React.Component {
         let awayTeamTurnovers = awayTeamRoster.reduce((a, b) => a + b.turnover, 0)
         let homeTeamTurnovers = homeTeamRoster.reduce((a, b) => a + b.turnover, 0)
 
+        const data = [
+            {
+              "name": 'FG Attempts',
+              [awayTeam]: awayFGAttempts,
+              [homeTeam]: homeFGAttempts
+            },
+            {
+              "name": 'FG Made',
+              [awayTeam]: awayFGMade,
+              [homeTeam]: homeFGMade
+            },
+            {
+              "name": 'FG %',
+              [awayTeam]: awayFGPercent,
+              [homeTeam]: homeFGPercent
+            },
+            {
+              "name": 'FG3 Attempts',
+              [awayTeam]: awayFG3Attempts,
+              [homeTeam]: homeFG3Attempts
+            },
+            {
+              "name": 'FG3 Made',
+              [awayTeam]: awayFG3Made,
+              [homeTeam]: homeFG3Made
+            },
+            {
+              "name": 'FG3 %',
+              [awayTeam]: awayFG3Percent,
+              [homeTeam]: homeFG3Percent
+            },
+            {
+              "name": 'FT Attempts',
+              [awayTeam]: awayFTAttempts,
+              [homeTeam]: homeFTAttempts
+            },
+            {
+              "name": 'FT Made',
+              [awayTeam]: awayFGMade,
+              [homeTeam]: homeFGMade
+            },
+            {
+              "name": 'FT %',
+              [awayTeam]: awayFTPercent,
+              [homeTeam]: homeFTPercent
+            },
+            {
+              "name": 'Assists',
+              [awayTeam]: awayTeamAssists,
+              [homeTeam]: homeTeamAssists
+            },
+            {
+              "name": "Steals",
+              [awayTeam]: awayTeamSteals,
+              [homeTeam]: homeTeamSteals
+            },
+            {
+              "name": "Rebounds",
+              [awayTeam]: awayTeamRebounds,
+              [homeTeam]: homeTeamRebounds
+            },
+             {
+              "name": "OFF Rebounds",
+              [awayTeam]: awayTeamOffRebounds,
+              [homeTeam]: homeTeamOffRebounds
+            },
+            {
+              "name": "DEF Rebounds",
+              [awayTeam]: awayTeamDefRebounds,
+              [homeTeam]: homeTeamDefRebounds
+            },
+           {
+              "name": "Blocks",
+              [awayTeam]: awayTeamBlocks,
+              [homeTeam]: homeTeamBlocks
+            },
+            {
+              "name": "Turnovers",
+              [awayTeam]: awayTeamTurnovers,
+              [homeTeam]: homeTeamTurnovers
+            },
+          ]
 
         return (
+          <div>
             <div>
-
-                <p>Points: {awayTeamPoints}</p>
-                <p>Points: {homeTeamPoints}</p>
-
-                <p>FGA: {awayFGAttempts}</p>
-                <p>FGA: {homeFGAttempts}</p>
-
-                <p>FGM: {awayFGMade}</p>
-                <p>FGM: {homeFGMade}</p>
-
-                <p>FG %: {awayFGPercent}</p>
-                <p>FG %: {homeFGPercent}</p>
-
-                <p>FG3A: {awayFG3Attempts}</p>
-                <p>FG3A: {homeFG3Attempts}</p>
-
-                <p>FG3M: {awayFG3Made}</p>
-                <p>FG3M: {homeFG3Made}</p>
-
-                <p>FG3 %: {awayFG3Percent}</p>
-                <p>FG3 %: {homeFG3Percent}</p>
-
-                <p>FTA: {awayFTAttempts}</p>
-                <p>FTA: {homeFTAttempts}</p>
-
-                <p>FTM: {awayFTMade}</p>
-                <p>FTM: {homeFTMade}</p>
-
-                <p>FT%: {awayFTPercent}</p>
-                <p>FT%: {homeFTPercent}</p>
-
-                <p>Assists: {awayTeamAssists}</p>
-                <p>Assists: {homeTeamAssists}</p>
-
-                <p>Steals: {awayTeamSteals}</p>
-                <p>Steals: {homeTeamSteals}</p>
-
-                <p>Rebounds: {awayTeamRebounds}</p>
-                <p>Rebounds:{homeTeamRebounds}</p>
-
-                <p>O. Rebounds: {awayTeamOffRebounds}</p>
-                <p>O. Rebounds: {homeTeamOffRebounds}</p>
-
-                <p>D. Rebounds: {awayTeamDefRebounds}</p>
-                <p>D. Rebounds: {homeTeamDefRebounds}</p>
-
-                <p>Blocks: {awayTeamBlocks}</p>
-                <p>Blocks: {homeTeamBlocks}</p>
-
-                <p>Turnovers: {awayTeamTurnovers}</p>
-                <p>Turnovers: {homeTeamTurnovers}</p>
+              <h1>{awayTeam}: {awayTeamPoints}</h1>
+              <h1>{homeTeam}: {homeTeamPoints}</h1>
+            </div>
+            <BarChart 
+              width={600} 
+              height={800} 
+              data={data} 
+              layout="vertical"
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <XAxis type="number" />
+              <YAxis type="category" dataKey="name" />
+              <Tooltip/>
+              <Legend />
+              <Bar dataKey={`${awayTeam}`} fill="#8884d8" />
+              <Bar dataKey={`${homeTeam}`} fill="#82ca9d" />
+            </BarChart>
             </div>
         )
-    }
+    } 
 }
 
 export default GameInfoContainer;
