@@ -46,8 +46,8 @@ class GameInfoContainer extends React.Component {
         let awayFGMade = awayTeamRoster.reduce((a, b) => a + b.fgm, 0)
         let homeFGMade = homeTeamRoster.reduce((a, b) => a + b.fgm, 0)
 
-        let awayFGPercent = (awayFGMade / awayFGAttempts).toFixed(2)
-        let homeFGPercent = (homeFGMade / homeFGAttempts).toFixed(2)
+        let awayFGPercent = ((awayFGMade / awayFGAttempts).toFixed(2) * 100)
+        let homeFGPercent = ((homeFGMade / homeFGAttempts).toFixed(2) * 100)
 
         let awayFG3Attempts = awayTeamRoster.reduce((a, b) => a + b.fg3a, 0)
         let homeFG3Attempts = homeTeamRoster.reduce((a, b) => a + b.fg3a, 0)
@@ -55,8 +55,8 @@ class GameInfoContainer extends React.Component {
         let awayFG3Made = awayTeamRoster.reduce((a, b) => a + b.fg3m, 0)
         let homeFG3Made = homeTeamRoster.reduce((a, b) => a + b.fg3m, 0)
 
-        let awayFG3Percent = (awayFG3Made / awayFG3Attempts).toFixed(2)
-        let homeFG3Percent = (homeFG3Made / homeFG3Attempts).toFixed(2)
+        let awayFG3Percent = ((awayFG3Made / awayFG3Attempts).toFixed(2) * 100)
+        let homeFG3Percent = ((homeFG3Made / homeFG3Attempts).toFixed(2) * 100)
 
         let awayFTAttempts = awayTeamRoster.reduce((a, b) => a + b.fta, 0)
         let homeFTAttempts = homeTeamRoster.reduce((a, b) => a + b.fta, 0)
@@ -64,8 +64,8 @@ class GameInfoContainer extends React.Component {
         let awayFTMade = awayTeamRoster.reduce((a, b) => a + b.ftm, 0)
         let homeFTMade = homeTeamRoster.reduce((a, b) => a + b.ftm, 0)
 
-        let awayFTPercent = (awayFTMade / awayFTAttempts).toFixed(2)
-        let homeFTPercent = (homeFTMade / homeFTAttempts).toFixed(2)
+        let awayFTPercent = ((awayFTMade / awayFTAttempts).toFixed(2) * 100)
+        let homeFTPercent = ((homeFTMade / homeFTAttempts).toFixed(2) * 100)
         
         let awayTeamAssists = awayTeamRoster.reduce((a, b) => a + b.ast, 0)
         let homeTeamAssists = homeTeamRoster.reduce((a, b) => a + b.ast, 0)
