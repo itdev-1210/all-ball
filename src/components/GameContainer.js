@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 
 import GameCard from './GameCard';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components'
+
+const Container = styled.div`
+    display: flex;
+    margin: auto;
+    overflow: auto;
+    width: 94%;
+`
+
+const FlexScroll = styled.div`
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 30px 20px;
+`
 
 class GameContainer extends Component {
     constructor() {
@@ -136,10 +152,12 @@ class GameContainer extends Component {
                         </button>
                     </form>
                 </div>
-
-                <div style={{ display: 'flex', margin: '20px' }}>
-                    {gameResults}
-                </div>
+           
+                <Container>
+                    <FlexScroll>
+                        {gameResults}
+                    </FlexScroll>
+                </Container>
             </div>
         );
     }
