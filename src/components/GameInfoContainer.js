@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
     ResponsiveContainer, 
@@ -10,13 +10,13 @@ import {
     Bar
 } from "recharts";
 
-class GameInfoContainer extends React.Component {
+class GameInfoContainer extends Component {
     constructor() {
         super()
         this.state = {
             selectedGame: []
         }
-    }
+      }
 
     componentDidMount() {
         fetch(`https://www.balldontlie.io/api/v1/stats?game_ids[]=${this.props.location && this.props.location.state.game}&per_page=100`)
@@ -31,8 +31,8 @@ class GameInfoContainer extends React.Component {
     render() {
         let teamAbbreviations = this.state.selectedGame.map(x => x.team.abbreviation)
         
-        let homeTeam = [...new Set(teamAbbreviations)]
-        let awayTeam = homeTeam.pop()
+        let awayTeam = [...new Set(teamAbbreviations)]
+        let homeTeam = awayTeam.pop()
 
         let homeTeamRoster = this.state.selectedGame.filter(x => x.team.abbreviation == homeTeam)
         let awayTeamRoster = this.state.selectedGame.filter(x => x.team.abbreviation == awayTeam)
@@ -87,6 +87,16 @@ class GameInfoContainer extends React.Component {
 
         let awayTeamTurnovers = awayTeamRoster.reduce((a, b) => a + b.turnover, 0)
         let homeTeamTurnovers = homeTeamRoster.reduce((a, b) => a + b.turnover, 0)
+
+        let teamHexColors = {
+          ATL: '#E03A3E', BKN: '#000000', BOS: '#007A33', CHA: '#1D1160', CHI: '#CE1141', CLE: '#860038', DAL: '#00538C', DEN: '#0E2240', 
+          DET: '#C8102E', GSW: '#1D428A', HOU: '#CE1141', IND: '#002D62', LAC: '#1D1160', LAL: '#552583', MEM: '#5D76A9', MIA: '#98002E', 
+          MIL: '#00471B', MIN: '#0C2340', NOP: '#85714D', NYK: '#F58426', OKC: '#007AC1', ORL: '#0077C0', PHI: '#006BB6', PHX: '#1D1160', 
+          POR: '#E03A3E', SAC: '#5A2D81', SAS: '#C4CED4', TOR: '#CE1141', UTA: '#002B5C', WAS: '#002B5C'
+        }
+
+        let homeTeamColor = teamHexColors[homeTeam]
+        let awayTeamColor = teamHexColors[awayTeam]
 
         const data = [
             {
@@ -179,7 +189,7 @@ class GameInfoContainer extends React.Component {
             </div>
             <BarChart 
               width={600} 
-              height={800} 
+              height={1300} 
               data={data} 
               layout="vertical"
               margin={{top: 5, right: 30, left: 20, bottom: 5}}
@@ -188,10 +198,10 @@ class GameInfoContainer extends React.Component {
               <YAxis type="category" dataKey="name" />
               <Tooltip/>
               <Legend />
-              <Bar dataKey={`${awayTeam}`} fill="#8884d8" />
-              <Bar dataKey={`${homeTeam}`} fill="#82ca9d" />
+              <Bar dataKey={`${awayTeam}`} fill={`${awayTeamColor}`} />
+              <Bar dataKey={`${homeTeam}`} fill={`${homeTeamColor}`} />
             </BarChart>
-            </div>
+          </div>
         )
     } 
 }
