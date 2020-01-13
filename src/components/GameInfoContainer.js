@@ -16,7 +16,7 @@ class GameInfoContainer extends Component {
         this.state = {
             selectedGame: []
         }
-      }
+    }
 
     componentDidMount() {
         fetch(`https://www.balldontlie.io/api/v1/stats?game_ids[]=${this.props.location && this.props.location.state.game}&per_page=100`)
@@ -187,22 +187,24 @@ class GameInfoContainer extends Component {
               <h1>{awayTeam}: {awayTeamPoints}</h1>
               <h1>{homeTeam}: {homeTeamPoints}</h1>
             </div>
-            <BarChart 
-              width={600} 
-              height={1300} 
-              data={data} 
-              layout="vertical"
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            >
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="name" />
-              <Tooltip/>
-              <Legend />
-              <Bar dataKey={`${awayTeam}`} fill={`${awayTeamColor}`} />
-              <Bar dataKey={`${homeTeam}`} fill={`${homeTeamColor}`} />
-            </BarChart>
+            <div style={{marginLeft: '18%'}}>
+              <ResponsiveContainer width={'80%'} height={750}>
+                <BarChart 
+                  data={data} 
+                  layout="vertical"
+                  margin={{top: 5, right: 30, left: 20, bottom: 5}}
+                >
+                  <XAxis type="number" />
+                  <YAxis type="category" dataKey="name" />
+                  <Tooltip/>
+                  <Legend />
+                  <Bar dataKey={`${awayTeam}`} fill={`${awayTeamColor}`} />
+                  <Bar dataKey={`${homeTeam}`} fill={`${homeTeamColor}`} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-        )
+        );
     } 
 }
 
