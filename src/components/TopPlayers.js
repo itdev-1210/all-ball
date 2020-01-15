@@ -56,17 +56,17 @@ class TopPlayers extends Component {
         this.setState({ [name]: value },
             () => { console.log(this.state.yearList, this.state.monthList, this.state.dayList) }
         );
-    }
+    }   
 
     handleClick(event) {
         event.preventDefault();
-        fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${this.state.yearList}&dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
+        fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
             .then(response => response.json())
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
                 for (let i = currentPage; i <= totalPages; i++) {
-                    fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=${this.state.yearList}&dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
+                    fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
                         .then(response => response.json())
                         .then(data => {
                             this.setState({
