@@ -65,12 +65,15 @@ class TopPlayers extends Component {
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
+                this.setState({
+                    players: []
+                })
                 for (let i = currentPage; i <= totalPages; i++) {
                     fetch(`https://www.balldontlie.io/api/v1/stats?dates[]=${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
                         .then(response => response.json())
                         .then(data => {
                             this.setState({
-                                players: data.data
+                                players: this.state.players.concat(data.data)
                             })
                         })
                 }
