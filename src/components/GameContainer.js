@@ -35,14 +35,18 @@ const FlexScroll = styled.div`
     padding: 30px 20px;
 `
 
+let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
+let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
+let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
+
 class GameContainer extends Component {
     constructor() {
         super()
         this.state = {
             games: [],
-            yearList: [2019],
-            monthList: [1],
-            dayList: [1]
+            yearList: [],
+            monthList: [],
+            dayList: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -50,11 +54,6 @@ class GameContainer extends Component {
     }
 
     componentDidMount() {
-        let date = new Date();
-        let currentYear = date.getFullYear();
-        let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
-        let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
-        let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
         fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}`)
             .then(response => response.json())
             .then(data => {
@@ -99,7 +98,8 @@ class GameContainer extends Component {
 
     handleSearchClick(event) {
         event.preventDefault();
-        fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}`)
+         if (`${this.state.yearList}` && `${this.state.monthList}` && `${this.state.dayList}`) {
+        fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
             .then(response => response.json())
             .then(data => {
                 let currentPage = data.meta.current_page
@@ -114,6 +114,7 @@ class GameContainer extends Component {
                         })
                 }
             })
+        } 
     }
 
     render() {
@@ -146,22 +147,25 @@ class GameContainer extends Component {
                         <label>
                             Year:
                         <select name='yearList' value={this.state.yearList} onChange={this.handleChange}>
-                                {years.map(({ value, year }) => <option value={value}>{year}</option>)}
+                            <option value="" disabled select hidden>-</option>
+                            {years.map(({ value, year }) => <option value={value}>{year}</option>)}
                             </select>
                         </label>
 
                         <label>
                             Month:
                         <select name='monthList' value={this.state.monthList} onChange={this.handleChange}>
-                                {months.map(({ value, month }) => <option value={value} >{month}</option>)}
+                            <option value="" disabled select hidden>-</option>
+                            {months.map(({ value, month }) => <option value={value} >{month}</option>)}
                             </select>
                         </label>
 
                         <label>
                             Day:
                         <select name='dayList' value={this.state.dayList} onChange={this.handleChange}>
-                                {days.map(({ value, day }) => <option value={value} >{day}</option>)}
-                            </select>
+                            <option value="" disabled select hidden>-</option>
+                            {days.map(({ value, day }) => <option value={value} >{day}</option> )}
+                        </select>
                         </label>
                         <button onClick={this.handleSearchClick}>
                             Search
