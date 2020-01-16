@@ -8,7 +8,7 @@ const Container = styled.div`
     display: flex;
     margin: auto;
     overflow: auto;
-    width: 94%;
+    justify-content: center;
 
     &::-webkit-scrollbar-track {
 	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -30,9 +30,8 @@ const Container = styled.div`
 
 const FlexScroll = styled.div`
     align-items: center;
-    display: flex;
+     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
     padding: 30px 20px;
 `
 
@@ -100,13 +99,13 @@ class GameContainer extends Component {
 
     handleSearchClick(event) {
         event.preventDefault();
-        fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${this.state.yearList}&start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}`)
+        fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}`)
             .then(response => response.json())
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
                 for (let i = currentPage; i <= totalPages; i++) {
-                    fetch(`https://www.balldontlie.io/api/v1/games/?seasons[]=${this.state.yearList}&start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
+                    fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
                         .then(response => response.json())
                         .then(data => {
                             this.setState({
