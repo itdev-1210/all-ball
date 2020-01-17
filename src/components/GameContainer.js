@@ -26,6 +26,10 @@ const Container = styled.div`
 	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	    background-color: #555;
 }
+
+    @media screen and (max-width: 1440px) {
+        justify-content: normal;
+}
 `
 
 const FlexScroll = styled.div`
@@ -37,7 +41,6 @@ const FlexScroll = styled.div`
 
 let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
 let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
-let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
 
 class GameContainer extends Component {
     constructor() {
@@ -54,6 +57,7 @@ class GameContainer extends Component {
     }
 
     componentDidMount() {
+        let twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2)).toISOString().split('T')[0];
         fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}`)
             .then(response => response.json())
             .then(data => {

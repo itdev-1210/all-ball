@@ -8,7 +8,11 @@ const CardContainer = styled.div`
     flex-wrap: nowrap;
     justify-content: center;
     margin: 1px;
-    padding: 50px 20px;
+    padding: 50px 10px;
+
+    @media screen and (max-width:1440px) {
+        padding: 50px 5px;
+   }
 `
 
 const BoxScore = styled.div`
