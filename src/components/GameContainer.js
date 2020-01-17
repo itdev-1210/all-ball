@@ -34,13 +34,14 @@ const Container = styled.div`
 
 const FlexScroll = styled.div`
     align-items: center;
-     display: flex;
+    display: flex;
     flex-wrap: nowrap;
     padding: 30px 20px;
 `
 
-let tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
-let yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
+const tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
+const yesterday = (new Date(Date.now() - 1 - tzOffset)).toISOString().split('T')[0];
+const date = new Date();
 
 class GameContainer extends Component {
     constructor() {
@@ -144,8 +145,25 @@ class GameContainer extends Component {
             days.push({ day: y })
         }
 
-        return (
-            <div>
+        const today = date.toISOString().split('T')[0];
+        const addZeroToMonth = this.state.monthList < 10 ? `${'0' + this.state.monthList}` : `${this.state.monthList}`
+        const selectedDate = `${this.state.yearList}-${addZeroToMonth}-${this.state.dayList}`;
+        let gameDayMessage;
+        
+        if (!`${this.state.yearList}` || !`${this.state.monthList}` || !`${this.state.dayList}`) {
+            gameDayMessage = ''
+        } else if (selectedDate > today){
+            gameDayMessage = `Games scheduled on ${selectedDate}`;
+        } else if (selectedDate == yesterday) {
+            gameDayMessage = 'Game results from yesterday';
+        } else if (selectedDate == today) {
+            gameDayMessage = `Games scheduled for today`;
+        } else if (selectedDate < today) {
+            gameDayMessage = `Game results from ${selectedDate}`;
+        } 
+  
+          return (
+              <div>
                 <div>
                     <form>
                         <label>
@@ -174,6 +192,7 @@ class GameContainer extends Component {
                         <button onClick={this.handleSearchClick}>
                             Search
                         </button>
+                        <h1> {gameDayMessage} </h1>
                     </form>
                 </div>
            
