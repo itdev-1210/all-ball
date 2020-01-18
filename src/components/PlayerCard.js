@@ -3,12 +3,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TopFiveContainer = styled.div`
-    border-radius 15px;
-    flex: 0 1 20%;
-    flex-wrap: wrap;
+    border-radius 20px;
     text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    flex: 1;
     color: #FEFEFE;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -17,6 +16,10 @@ const TopFiveContainer = styled.div`
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         cursor: pointer;
       }
+
+    @media screen and (max-width:1000px) {
+        margin-top: 10px;
+    }
 `
 
 function PlayerCard(props) {
@@ -42,7 +45,7 @@ function PlayerCard(props) {
     return (
         <TopFiveContainer style={{background: `${playerCardColor}`, border: `6px solid ${playerCardSecondColor}`}}>
             <div>
-                <h2>{props.playerData.player.first_name} {props.playerData.player.last_name} </h2>
+                <h2>{props.playerData.player.first_name} {props.playerData.player.last_name}</h2>
             </div>
             <h3>Points: {props.playerData.pts}</h3>
             

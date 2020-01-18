@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 
 import PlayerCard from './PlayerCard';
+import styled from 'styled-components';
+
+const OuterContainer = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    padding: 25px
+
+    @media screen and (min-width: 768px) and (max-width:1000px) {
+        flex-direction: column;
+        margin-left:180px;
+        margin-right: 180px;
+    }
+
+    @media screen and (max-width:767px) {
+        flex-direction: column;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+`
 
 class TopPlayers extends Component {
     constructor() {
@@ -188,9 +207,9 @@ class TopPlayers extends Component {
                     </form>
                 </div>
 
-                <div style={{ display: 'flex', margin: '20px' }}>
+                <OuterContainer>
                     {highestPoints}
-                </div>
+                </OuterContainer>
             </div>
         );
     }
