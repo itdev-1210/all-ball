@@ -6,25 +6,25 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
+    justify-content: center;
     margin: auto;
     overflow: auto;
-    justify-content: center;
 
     &::-webkit-scrollbar-track {
 	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	    border-radius: 10px;
-	    background-color: #F5F5F5;
+        background-color: #F5F5F5;
+        margin: 0 50px;
 }
 
     &::-webkit-scrollbar {
-	    width: 12px;
-	    background-color: #F5F5F5;
+        background-color: white
 }
 
     &::-webkit-scrollbar-thumb {
 	    border-radius: 10px;
 	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	    background-color: #555;
+        background-color: #555;
 }
 
     @media screen and (max-width: 1440px) {
@@ -36,7 +36,7 @@ const FlexScroll = styled.div`
     align-items: center;
     display: flex;
     flex-wrap: nowrap;
-    padding: 30px 20px;
+    padding: 17px 20px;
 `
 
 const tzOffset = (new Date()).getTimezoneOffset() * 350111; //offset in milliseconds
@@ -50,7 +50,8 @@ class GameContainer extends Component {
             games: [],
             yearList: [],
             monthList: [],
-            dayList: []
+            dayList: [],
+            gameCardHeader: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -83,6 +84,30 @@ class GameContainer extends Component {
             })
     }
 
+    getGameMessage() {
+        const today = date.toISOString().split('T')[0];
+        const addZeroToMonth = this.state.monthList < 10 ? `${'0' + this.state.monthList}` : `${this.state.monthList}`
+        const selectedDate = `${this.state.yearList}-${addZeroToMonth}-${this.state.dayList}`;
+        let gameDayMessage;
+
+        if (!`${this.state.yearList}` || !`${this.state.monthList}` || !`${this.state.dayList}`) {
+            gameDayMessage = ''
+        } else if (selectedDate > today){
+            gameDayMessage = `Games scheduled on ${selectedDate}`;
+        } else if (selectedDate == yesterday) {
+            gameDayMessage = 'Game results from yesterday';
+        } else if (selectedDate == today) {
+            gameDayMessage = `Games scheduled for today`;
+        } else if (selectedDate < today) {
+            gameDayMessage = `Game results from ${selectedDate}`;
+        } 
+        this.setState({
+            gameCardHeader: gameDayMessage
+        },
+            () => { console.log(this.state.gameCardHeader) }
+        )
+    }
+
     handleChange(event) {
         const { name, value } = event.target
         this.setState({
@@ -102,6 +127,7 @@ class GameContainer extends Component {
     }
 
     handleSearchClick(event) {
+        this.getGameMessage();
         event.preventDefault();
          if (`${this.state.yearList}` && `${this.state.monthList}` && `${this.state.dayList}`) {
         fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100`)
@@ -144,24 +170,7 @@ class GameContainer extends Component {
         for (let y = 31; y > 0; y--) {
             days.push({ day: y })
         }
-
-        const today = date.toISOString().split('T')[0];
-        const addZeroToMonth = this.state.monthList < 10 ? `${'0' + this.state.monthList}` : `${this.state.monthList}`
-        const selectedDate = `${this.state.yearList}-${addZeroToMonth}-${this.state.dayList}`;
-        let gameDayMessage;
         
-        if (!`${this.state.yearList}` || !`${this.state.monthList}` || !`${this.state.dayList}`) {
-            gameDayMessage = ''
-        } else if (selectedDate > today){
-            gameDayMessage = `Games scheduled on ${selectedDate}`;
-        } else if (selectedDate == yesterday) {
-            gameDayMessage = 'Game results from yesterday';
-        } else if (selectedDate == today) {
-            gameDayMessage = `Games scheduled for today`;
-        } else if (selectedDate < today) {
-            gameDayMessage = `Game results from ${selectedDate}`;
-        } 
-  
           return (
               <div>
                 <div>
@@ -192,7 +201,7 @@ class GameContainer extends Component {
                         <button onClick={this.handleSearchClick}>
                             Search
                         </button>
-                        <h1> {gameDayMessage} </h1>
+                        <h1> {this.state.gameCardHeader} </h1>
                     </form>
                 </div>
            
