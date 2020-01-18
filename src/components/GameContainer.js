@@ -51,7 +51,8 @@ class GameContainer extends Component {
             yearList: [],
             monthList: [],
             dayList: [],
-            gameCardHeader: ''
+            gameCardHeader: '',
+            noGameMessage: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -127,6 +128,9 @@ class GameContainer extends Component {
     }
 
     handleSearchClick(event) {
+        this.setState({
+            noGameMessage: ''
+        })
         this.getGameMessage();
         event.preventDefault();
          if (`${this.state.yearList}` && `${this.state.monthList}` && `${this.state.dayList}`) {
@@ -135,6 +139,7 @@ class GameContainer extends Component {
             .then(data => {
                 let currentPage = data.meta.current_page
                 let totalPages = data.meta.total_pages
+                if (totalPages > 0) {
                 for (let i = currentPage; i <= totalPages; i++) {
                     fetch(`https://www.balldontlie.io/api/v1/games/?start_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&end_date=[]${this.state.yearList}-${this.state.monthList}-${this.state.dayList}&per_page=100&page=` + i)
                         .then(response => response.json())
@@ -144,17 +149,28 @@ class GameContainer extends Component {
                             })
                         })
                 }
+            } else {
+                this.setState({
+                    noGameMessage: 'No games scheduled. Try a different date!'
+                })
+            }
             })
         } 
     }
 
     render() {
-        const gameResults = this.state.games.map((gameData, id) =>
+        let gameResults;
+
+        if (!this.state.noGameMessage) {
+            gameResults = this.state.games.map((gameData, id) =>
             <GameCard
                 key={id}
                 onClick={() => { this.handleGameClick(gameData) }}
                 gameData={gameData}
             />);
+        } else {
+            gameResults = null
+        }
 
         const years = []
         for (let i = 2020; i > 1984; i--) {
@@ -201,7 +217,7 @@ class GameContainer extends Component {
                         <button onClick={this.handleSearchClick}>
                             Search
                         </button>
-                        <h1> {this.state.gameCardHeader} </h1>
+                        <h1> {!this.state.noGameMessage ? this.state.gameCardHeader : this.state.noGameMessage} </h1>
                     </form>
                 </div>
            
