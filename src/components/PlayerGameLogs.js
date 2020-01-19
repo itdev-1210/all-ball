@@ -31,10 +31,12 @@ function PlayerGameLogs(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.logs.map((stats, index) => {
+                    {props.logs.sort((firstGame, secondGame) => new Date(secondGame.game.date) - new Date(firstGame.game.date))
+                        .map((stats, id) => {
+                        const gameDate = stats.game.date.split('T')[0]
                         return (
-                            <tr key={index}>
-                                <td>{stats.game.date.split('T')[0]}</td>
+                            <tr key={id}>
+                                <td>{gameDate}</td>
                                 <td>{stats.team.abbreviation}</td>
                                 <td>{stats.game.home_team_id}</td>
                                 <td>{stats.min}</td>
