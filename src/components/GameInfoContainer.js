@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import styled from 'styled-components';
+
 import {
     ResponsiveContainer, 
     BarChart, 
@@ -9,6 +11,11 @@ import {
     Legend, 
     Bar
 } from "recharts";
+
+const TeamContainer = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+`
 
 class GameInfoContainer extends Component {
     constructor() {
@@ -95,8 +102,18 @@ class GameInfoContainer extends Component {
           POR: '#E03A3E', SAC: '#5A2D81', SAS: '#C4CED4', TOR: '#CE1141', UTA: '#002B5C', WAS: '#002B5C'
         }
 
+        const teamHexSecondColors = {
+          ATL: '#C1D32F', BKN: '#FFFFFF', BOS: '#BA9653', CHA: '#00788C', CHI: '#000000', CLE: '#FDBB30', DAL: '#002B5E', DEN: '#FEC524', 
+          DET: '#1D42BA', GSW: '#FFC72C', HOU: '#000000', IND: '#FDBB30', LAC: '#C8102E', LAL: '#FDB927', MEM: '#12173F', MIA: '#F9A01B', 
+          MIL: '#EEE1C6', MIN: '#236192', NOP: '#0C2340', NYK: '#0072CE', OKC: '#EF3B24', ORL: '#C4CED4', PHI: '#ED174C', PHX: '#E56020', 
+          POR: '#000000', SAC: '#63727A', SAS: '#000000', TOR: '#000000', UTA: '#00471B', WAS: '#E31837'
+        }
+
         let homeTeamColor = teamHexColors[homeTeam]
         let awayTeamColor = teamHexColors[awayTeam]
+
+        let homeTeamSecondColor = teamHexSecondColors[homeTeam]
+        let awayTeamSecondColor = teamHexSecondColors[awayTeam]
 
         const data = [
             {
@@ -183,10 +200,16 @@ class GameInfoContainer extends Component {
 
         return (
           <div>
-            <div>
-              <h1>{awayTeam}: {awayTeamPoints}</h1>
-              <h1>{homeTeam}: {homeTeamPoints}</h1>
-            </div>
+            <TeamContainer>
+              <div style={{display: 'flex'}}>
+              <h1 style={{color: `${awayTeamColor}`, webkitTextStrokeWidth: '1px', WebkitTextStrokeColor: `${awayTeamSecondColor}`}}>{awayTeam}</h1> 
+              <h1 style={{marginLeft: '15px'}}>{awayTeamPoints}</h1>
+              </div>
+              <div style={{display: 'flex'}}>
+              <h1 style={{color: `${homeTeamColor}`, webkitTextStrokeWidth: '1px', WebkitTextStrokeColor: `${homeTeamSecondColor}`}}>{homeTeam}</h1> 
+              <h1 style={{marginLeft: '15px'}}>{homeTeamPoints}</h1>
+              </div>
+            </TeamContainer>
             <div style={{marginLeft: '18%'}}>
               <ResponsiveContainer width={'80%'} height={750}>
                 <BarChart 
@@ -198,8 +221,8 @@ class GameInfoContainer extends Component {
                   <YAxis type="category" dataKey="name" />
                   <Tooltip/>
                   <Legend />
-                  <Bar dataKey={`${awayTeam}`} fill={`${awayTeamColor}`} />
-                  <Bar dataKey={`${homeTeam}`} fill={`${homeTeamColor}`} />
+                  <Bar dataKey={`${awayTeam}`} fill={`${awayTeamColor}`} stroke={`${awayTeamSecondColor}`} strokeWidth={3} />
+                  <Bar dataKey={`${homeTeam}`} fill={`${homeTeamColor}`} stroke={`${homeTeamSecondColor}`} strokeWidth={3} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
