@@ -3,6 +3,13 @@ import React, { Component } from 'react';
 import PlayerSearchResults from './PlayerSearchResults';
 import PlayerStats from './PlayerStats';
 import PlayerGameLogs from './PlayerGameLogs';
+import styled from 'styled-components';
+
+const PlayerOuterContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`
 
 class PlayerSearch extends Component {
     constructor() {
@@ -100,11 +107,11 @@ class PlayerSearch extends Component {
                 {d.first_name} {d.last_name} {d.team.city}
             </li>);
 
-        let seasonAverages = this.state.playerStats.map((seasonStats, id) =>
+        let seasonAverages = this.state.playerDetails. length !==0 ?
             <PlayerStats
-                key={id}
-                seasonStats={seasonStats}
-            />);
+                seasonStats={this.state.playerStats}
+            />
+            : null
 
         let gameLogs = this.state.playerDetails.length !== 0 ?
             <PlayerGameLogs
@@ -122,7 +129,6 @@ class PlayerSearch extends Component {
 
         return (
             <div>
-                {console.log(this.state.playerDetails)}
                 <div>
                     <form>
                         <input
@@ -137,9 +143,11 @@ class PlayerSearch extends Component {
                 <button onClick={this.handleSearchClick}>
                     Search
                 </button>
+                <PlayerOuterContainer>
+                    {searchedPlayers}
+                </PlayerOuterContainer>
                 <div>
                     {toggleStatsButton}
-                    {searchedPlayers}
                 </div>
                 <div>
                     {chosenPlayer}
