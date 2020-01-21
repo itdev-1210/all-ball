@@ -10,6 +10,13 @@ const PlayerInnerContainer = styled.div`
     list-style: none;
     margin: 3px;
     padding: 20px 10px;
+
+    @media screen and (max-width:414px) {
+        font-size: 12px;
+        display: inline;
+        text-align: center;
+        padding: 7px;
+    }
 `
 
 const PlayerFirstName = styled.div`
@@ -17,6 +24,10 @@ const PlayerFirstName = styled.div`
 
 const PlayerLastName = styled.div`
     margin-left: 5px;
+
+    @media screen and (max-width:414px) {
+        margin-left: 0px;
+    }
 `
 
 function PlayerSearchResults(props) {
