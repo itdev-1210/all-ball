@@ -23,7 +23,7 @@ class PlayerSearch extends Component {
             playerGameLogs: [],
             statSwitch: false
         }
-        this.handleSearchClick = this.handleSearchClick.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
         this.handlePlayerClick = this.handlePlayerClick.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.toggleClick = this.toggleClick.bind(this)
@@ -56,7 +56,8 @@ class PlayerSearch extends Component {
         })
     }
 
-    handleSearchClick() {
+    handleSearch(event) {
+        event.preventDefault();
         this.setState({
             allPlayers: [],
             playerDetails: [],
@@ -126,11 +127,11 @@ class PlayerSearch extends Component {
                 Switch stats
             </button>
             : null
-
         return (
+
             <div>
                 <div>
-                    <form>
+                    <form onSubmit={this.handleSearch}>
                         <input
                             type='text'
                             name='input'
@@ -138,11 +139,12 @@ class PlayerSearch extends Component {
                             onChange={this.handleChange}
                         >
                         </input>
+                        <button>
+                            Search
+                        </button>
                     </form>
                 </div>
-                <button onClick={this.handleSearchClick}>
-                    Search
-                </button>
+                
                 <PlayerOuterContainer>
                     {searchedPlayers}
                 </PlayerOuterContainer>
