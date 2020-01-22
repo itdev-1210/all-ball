@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PlayerSearchResults from './PlayerSearchResults';
 import PlayerStats from './PlayerStats';
 import PlayerGameLogs from './PlayerGameLogs';
+import SelectedPlayer from './SelectedPlayer';
 import styled from 'styled-components';
 
 const PlayerOuterContainer = styled.div`
@@ -94,7 +95,7 @@ class PlayerSearch extends Component {
     }
 
     render() {
-        let searchedPlayers = this.state.loading ?
+        const searchedPlayers = this.state.loading ?
             <p> LOADING </p>
             : this.state.allPlayers.map((players, id) =>
                 <PlayerSearchResults
@@ -103,26 +104,27 @@ class PlayerSearch extends Component {
                     players={players}
                 />);
 
-        let chosenPlayer = this.state.playerDetails.map(d =>
-            <li key={d.id}>
-                {d.first_name} {d.last_name} {d.team.city}
-            </li>);
+        const chosenPlayer = this.state.playerDetails.map((player, id) =>
+            <SelectedPlayer
+                key={id}
+                player={player}
+            />);
 
-        let seasonAverages = this.state.playerDetails. length !==0 ?
+        const seasonAverages = this.state.playerDetails.length !==0 ?
             <PlayerStats
                 seasonStats={this.state.playerStats}
             />
             : null
 
-        let gameLogs = this.state.playerDetails.length !== 0 ?
+        const gameLogs = this.state.playerDetails.length !== 0 ?
             <PlayerGameLogs
                 logs={this.state.playerGameLogs}
             />
             : null
 
-        let statSwitch = this.state.statSwitch ? seasonAverages : gameLogs
+        const statSwitch = this.state.statSwitch ? seasonAverages : gameLogs
 
-        let toggleStatsButton = this.state.playerDetails.length !== 0 ?
+        const toggleStatsButton = this.state.playerDetails.length !== 0 ?
             <button onClick={this.toggleClick}>
                 Switch stats
             </button>
