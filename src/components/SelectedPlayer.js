@@ -32,6 +32,14 @@ const ProportionContainer = styled.div`
     justify-content: center;
 `
 
+const VerticalLine = styled.div`
+    border-right: 2px solid black;
+    height: 30px;
+    margin-left: 20px;
+    margin-right: 19px;
+    margin-top: 15px;
+`
+
 function SelectedPlayer(props) {
     return (
         <div>
@@ -43,8 +51,9 @@ function SelectedPlayer(props) {
                 <h2>{props.player.team.full_name}</h2>
             </TeamNameContainer>
             <ProportionContainer>
-            <h3>Height: {props.player.height_feet}'{props.player.height_inches}</h3>
-            <h3>Weight: {props.player.weight_pounds}</h3>
+                <h3>{props.player.height_feet}'{props.player.height_inches}</h3>
+                <VerticalLine/>
+                <h3>{props.player.weight_pounds}</h3>
             </ProportionContainer>
         </div>
     );
