@@ -41,6 +41,14 @@ const VerticalLine = styled.div`
 `
 
 function SelectedPlayer(props) {
+    const heightAndWeight = props.player.height_feet ? 
+    <ProportionContainer>
+        <h3>{props.player.height_feet}'{props.player.height_inches}</h3>
+        <VerticalLine/>
+        <h3>{props.player.weight_pounds}</h3>
+    </ProportionContainer>
+    : null
+    
     return (
         <div>
             <NameContainer>
@@ -50,11 +58,7 @@ function SelectedPlayer(props) {
             <TeamNameContainer>
                 <h2>{props.player.team.full_name}</h2>
             </TeamNameContainer>
-            <ProportionContainer>
-                <h3>{props.player.height_feet}'{props.player.height_inches}</h3>
-                <VerticalLine/>
-                <h3>{props.player.weight_pounds}</h3>
-            </ProportionContainer>
+            {heightAndWeight}
         </div>
     );
 }
