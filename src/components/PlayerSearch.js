@@ -28,6 +28,40 @@ const Input = styled.input`
 	width: 50%;
 `;
 
+const GameLog = styled.h3`
+	color: ${props => (!props.log ? `red` : `gray`)};
+	margin: 10px;
+	border-bottom: ${props => (!props.log ? `2px solid red` : "none")};
+	padding: 10px;
+
+	:hover {
+		cursor: pointer;
+	}
+`;
+
+const SeasonAverage = styled.h3`
+	color: ${props => (!props.average ? `red` : `gray`)};
+	margin: 10px;
+	border-bottom: ${props => (!props.average ? `2px solid red` : "none")};
+	padding: 10px;
+
+	:hover {
+		cursor: pointer;
+	}
+`;
+
+const StatSwitchContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	margin-bottom: 20px;
+	width: 50%;
+
+	@media screen and (max-width: 500px) {
+		width: 90%;
+	}
+`;
+
 class PlayerSearch extends Component {
 	constructor() {
 		super();
@@ -164,17 +198,17 @@ class PlayerSearch extends Component {
 
 		const statSwitch =
 			this.state.playerDetails.length !== 0 ? (
-				<div>
-					<h3 log={this.state.isGameLog} onClick={this.toggleGameLog}>
+				<StatSwitchContainer>
+					<GameLog log={this.state.isGameLog} onClick={this.toggleGameLog}>
 						Game Logs
-					</h3>
-					<h3
+					</GameLog>
+					<SeasonAverage
 						average={this.state.isSeasonAverage}
 						onClick={this.toggleSeasonAverage}
 					>
 						Season Averages
-					</h3>
-				</div>
+					</SeasonAverage>
+				</StatSwitchContainer>
 			) : null;
 
 		return (
