@@ -1,71 +1,112 @@
-import React from 'react';
+import React from "react";
+
+import styled from "styled-components";
+
+const Table = styled.table`
+  border: 1px solid #ddd;
+  padding; 8px;
+  text-align: left;
+  margin: auto;
+  width: 75%;
+`;
+
+const TableRow = styled.tr`
+	:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	:hover {
+		background-color: #ddd;
+	}
+`;
+
+const TableHeader = styled.th`
+	text-align: left;
+	color: black;
+	padding: 8px;
+`;
+
+const TableContainer = styled.div`
+	overflow-y: auto;
+
+	@media screen and (max-width: 1024px) {
+		margin-left: 17px;
+		margin-right: 17px;
+	}
+`;
+
+const TableData = styled.td``;
 
 function PlayerGameLogs(props) {
-    return (
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Team</th>
-                        <th>Opp</th>
-                        <th>MP</th>
-                        <th>PTS</th>
-                        <th>FGA</th>
-                        <th>FGM</th>
-                        <th>FG%</th>
-                        <th>FG3A</th>
-                        <th>FG3M</th>
-                        <th>FG3%</th>
-                        <th>FTA</th>
-                        <th>FTM</th>
-                        <th>FT%</th>
-                        <th>REB</th>
-                        <th>OREB</th>
-                        <th>DREB</th>
-                        <th>AST</th>
-                        <th>STL</th>
-                        <th>BLK</th>
-                        <th>TOV</th>
-                        <th>PF</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.logs.sort((firstGame, secondGame) => new Date(secondGame.game.date) - new Date(firstGame.game.date))
-                        .map((stats, id) => {
-                        const gameDate = stats.game.date.split('T')[0]
-                        return (
-                            <tr key={id}>
-                                <td>{gameDate}</td>
-                                <td>{stats.team.abbreviation}</td>
-                                <td>{stats.game.home_team_id}</td>
-                                <td>{stats.min}</td>
-                                <td>{stats.pts}</td>
-                                <td>{stats.fga}</td>
-                                <td>{stats.fgm}</td>
-                                <td>{stats.fg_pct}</td>
-                                <td>{stats.fg3a}</td>
-                                <td>{stats.fg3m}</td>
-                                <td>{stats.fg3_pct}</td>
-                                <td>{stats.fta}</td>
-                                <td>{stats.ftm}</td>
-                                <td>{stats.ft_pct}</td>
-                                <td>{stats.reb}</td>
-                                <td>{stats.oreb}</td>
-                                <td>{stats.dreb}</td>
-                                <td>{stats.ast}</td>
-                                <td>{stats.stl}</td>
-                                <td>{stats.blk}</td>
-                                <td>{stats.turnover}</td>
-                                <td>{stats.pf}</td>
-                            </tr>
-                        )
-                    })
-                    }
-                </tbody>
-            </table>
-        </div>
-    );
+	return (
+		<TableContainer>
+			<Table>
+				<thead>
+					<TableRow>
+						<TableHeader>Date</TableHeader>
+						<TableHeader>Team</TableHeader>
+						<TableHeader>Opp</TableHeader>
+						<TableHeader>MP</TableHeader>
+						<TableHeader>PTS</TableHeader>
+						<TableHeader>FGA</TableHeader>
+						<TableHeader>FGM</TableHeader>
+						<TableHeader>FG%</TableHeader>
+						<TableHeader>FG3A</TableHeader>
+						<TableHeader>FG3M</TableHeader>
+						<TableHeader>FG3%</TableHeader>
+						<TableHeader>FTA</TableHeader>
+						<TableHeader>FTM</TableHeader>
+						<TableHeader>FT%</TableHeader>
+						<TableHeader>REB</TableHeader>
+						<TableHeader>OREB</TableHeader>
+						<TableHeader>DREB</TableHeader>
+						<TableHeader>AST</TableHeader>
+						<TableHeader>STL</TableHeader>
+						<TableHeader>BLK</TableHeader>
+						<TableHeader>TOV</TableHeader>
+						<TableHeader>PF</TableHeader>
+					</TableRow>
+				</thead>
+				<tbody>
+					{props.logs
+						.sort(
+							(firstGame, secondGame) =>
+								new Date(secondGame.game.date) - new Date(firstGame.game.date)
+						)
+						.splice(0, 10)
+						.map((stats, id) => {
+							const gameDate = stats.game.date.split("T")[0];
+							return (
+								<TableRow key={id}>
+									<TableData>{gameDate}</TableData>
+									<TableData>{stats.team.abbreviation}</TableData>
+									<TableData>{stats.game.home_team_id}</TableData>
+									<TableData>{stats.min}</TableData>
+									<TableData>{stats.pts}</TableData>
+									<TableData>{stats.fga}</TableData>
+									<TableData>{stats.fgm}</TableData>
+									<TableData>{stats.fg_pct}</TableData>
+									<TableData>{stats.fg3a}</TableData>
+									<TableData>{stats.fg3m}</TableData>
+									<TableData>{stats.fg3_pct}</TableData>
+									<TableData>{stats.fta}</TableData>
+									<TableData>{stats.ftm}</TableData>
+									<TableData>{stats.ft_pct}</TableData>
+									<TableData>{stats.reb}</TableData>
+									<TableData>{stats.oreb}</TableData>
+									<TableData>{stats.dreb}</TableData>
+									<TableData>{stats.ast}</TableData>
+									<TableData>{stats.stl}</TableData>
+									<TableData>{stats.blk}</TableData>
+									<TableData>{stats.turnover}</TableData>
+									<TableData>{stats.pf}</TableData>
+								</TableRow>
+							);
+						})}
+				</tbody>
+			</Table>
+		</TableContainer>
+	);
 }
 
 export default PlayerGameLogs;
