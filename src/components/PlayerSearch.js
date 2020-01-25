@@ -12,6 +12,22 @@ const PlayerOuterContainer = styled.div`
 	justify-content: center;
 `;
 
+const FormContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	margin-top: 100px;
+`;
+
+const Form = styled.form`
+	display: flex;
+	justify-content: center;
+	width: 75%;
+`;
+
+const Input = styled.input`
+	width: 50%;
+`;
+
 class PlayerSearch extends Component {
 	constructor() {
 		super();
@@ -144,15 +160,23 @@ class PlayerSearch extends Component {
 				<PlayerGameLogs logs={this.state.playerGameLogs} />
 			) : null;
 
-		const statSwitch = this.state.isGameLog ? seasonAverages : gameLogs;
+		const logsOrAverages = this.state.isGameLog ? seasonAverages : gameLogs;
 
-		const toggleStatsButton =
+		const statSwitch =
 			this.state.playerDetails.length !== 0 ? (
 				<div>
-					<h3 onClick={this.toggleGameLog}>Game Logs</h3>
-					<h3 onClick={this.toggleSeasonAverage}>Seaon Average</h3>
+					<h3 log={this.state.isGameLog} onClick={this.toggleGameLog}>
+						Game Logs
+					</h3>
+					<h3
+						average={this.state.isSeasonAverage}
+						onClick={this.toggleSeasonAverage}
+					>
+						Season Averages
+					</h3>
 				</div>
 			) : null;
+
 		return (
 			<div>
 				<FormContainer>
@@ -168,9 +192,9 @@ class PlayerSearch extends Component {
 				</FormContainer>
 
 				<PlayerOuterContainer>{searchedPlayers}</PlayerOuterContainer>
-				<div>{toggleStatsButton}</div>
 				{chosenPlayer}
-				<div>{statSwitch}</div>
+				{statSwitch}
+				<div>{logsOrAverages}</div>
 			</div>
 		);
 	}
