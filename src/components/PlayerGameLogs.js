@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 const Table = styled.table`
   border: 1px solid #ddd;
+  margin: auto;
   padding; 8px;
   text-align: left;
-  margin: auto;
   width: 75%;
 `;
 
@@ -21,13 +21,16 @@ const TableRow = styled.tr`
 `;
 
 const TableHeader = styled.th`
-	text-align: left;
+	background-color: lightgray;
 	color: black;
 	padding: 8px;
+	position: sticky;
+	top: 0;
 `;
 
 const TableContainer = styled.div`
-	overflow-y: auto;
+	height: 350px;
+	overflow: auto;
 
 	@media screen and (max-width: 1024px) {
 		margin-left: 17px;
@@ -73,7 +76,7 @@ function PlayerGameLogs(props) {
 							(firstGame, secondGame) =>
 								new Date(secondGame.game.date) - new Date(firstGame.game.date)
 						)
-						.splice(0, 10)
+						// .splice(0, 10)
 						.map((stats, id) => {
 							const gameDate = stats.game.date.split("T")[0];
 							return (
