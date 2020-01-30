@@ -43,7 +43,28 @@ const TableData = styled.td``;
 class TeamGameLog extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			isHomeTeam: false,
+			isAwayteam: true
+		};
+		this.toggleHomeTeamGameLog = this.toggleHomeTeamGameLog.bind(this);
+		this.toggleAwayTeamGameLog = this.toggleAwayTeamGameLog.bind(this);
+	}
+
+	toggleAwayTeamGameLog() {
+		if (!this.state.isHomeTeam)
+			this.setState(prevState => ({
+				isHomeTeam: !prevState.isHomeTeam,
+				isAwayTeam: !prevState.isAwayTeam
+			}));
+	}
+
+	toggleHomeTeamGameLog() {
+		if (this.state.isAwayTeam)
+			this.setState(prevState => ({
+				isHomeTeam: !prevState.isHomeTeam,
+				isAwayTeam: !prevState.isAwayTeam
+			}));
 	}
 
 	render() {
@@ -163,10 +184,19 @@ class TeamGameLog extends Component {
 			</TableContainer>
 		);
 
+		const logSwitch = (
+			<div>
+				<h3 onClick={this.toggleHomeTeamGameLog}>{this.props.homeTeam}</h3>
+				<h3 onClick={this.toggleAwayTeamGameLog}>{this.props.awayTeam}</h3>
+			</div>
+		);
+
+		const homeOrAwayTeamLog = this.state.isHomeTeam ? awayTeamLog : homeTeamLog;
+
 		return (
 			<div>
-				{homeTeamLog}
-				{awayTeamLog}
+				{logSwitch}
+				{homeOrAwayTeamLog}
 			</div>
 		);
 	}
