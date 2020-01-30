@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 
 import TeamGameChart from "./TeamGameChart";
+import TeamGameLog from "./TeamGameLog";
 
 class GameInfoContainer extends Component {
 	constructor() {
 		super();
 		this.state = {
-			selectedGame: []
+			selectedGame: [],
+			isTeamLog: false,
+			isTeamChart: true
 		};
+		this.toggleTeamChart = this.toggleTeamChart.bind(this);
+		this.toggleTeamGameLog = this.toggleTeamGameLog.bind(this);
 	}
 
 	componentDidMount() {
@@ -20,6 +25,22 @@ class GameInfoContainer extends Component {
 					selectedGame: data.data
 				});
 			});
+	}
+
+	toggleTeamChart() {
+		if (!this.state.isTeamLog)
+			this.setState(prevState => ({
+				isTeamLog: !prevState.isTeamLog,
+				isTeamChart: !prevState.isTeamChart
+			}));
+	}
+
+	toggleTeamGameLog() {
+		if (!this.state.isTeamChart)
+			this.setState(prevState => ({
+				isTeamLog: !prevState.isTeamLog,
+				isTeamChart: !prevState.isTeamChart
+			}));
 	}
 
 	render() {
@@ -45,7 +66,30 @@ class GameInfoContainer extends Component {
 			/>
 		);
 
-		return <div>{teamChart}</div>;
+		const teamLog = (
+			<TeamGameLog
+				awayTeam={awayTeam}
+				homeTeam={homeTeam}
+				homeTeamRoster={homeTeamRoster}
+				awayTeamRoster={awayTeamRoster}
+			/>
+		);
+
+		const chartOrLog = this.state.isTeamLog ? teamChart : teamLog;
+
+		const statSwitch = (
+			<div>
+				<h3 onClick={this.toggleTeamGameLog}>Team Game Log</h3>
+				<h3 onClick={this.toggleTeamChart}>Team Comparison</h3>
+			</div>
+		);
+
+		return (
+			<div>
+				{statSwitch}
+				{chartOrLog}
+			</div>
+		);
 	}
 }
 
