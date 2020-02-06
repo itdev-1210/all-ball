@@ -1,96 +1,82 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import TeamGameChart from "./TeamGameChart";
 import TeamGameLog from "./TeamGameLog";
 
-class GameInfoContainer extends Component {
-	constructor() {
-		super();
-		this.state = {
-			selectedGame: [],
-			isTeamLog: false,
-			isTeamChart: true
-		};
-		this.toggleTeamChart = this.toggleTeamChart.bind(this);
-		this.toggleTeamGameLog = this.toggleTeamGameLog.bind(this);
-	}
+function GameInfoContainer(props) {
+  const [selectedGame, setSelectedGame] = useState([]);
+  const [isTeamLog, setIsTeamLog] = useState(false);
+  const [isTeamChart, setIsTeamChart] = useState(true);
 
-	componentDidMount() {
-		fetch(
-			`https://www.balldontlie.io/api/v1/stats?game_ids[]=${this.props.location.state.game}&per_page=100`
-		)
-			.then(response => response.json())
-			.then(data => {
-				this.setState({
-					selectedGame: data.data
-				});
-			});
-	}
+  const getGameStats = () => {
+    fetch(
+      `https://www.balldontlie.io/api/v1/stats?game_ids[]=${props.location.state.game}&per_page=100`
+    )
+      .then(response => response.json())
+      .then(data => {
+        setSelectedGame(data.data);
+      });
+  };
 
-	toggleTeamChart() {
-		if (!this.state.isTeamLog)
-			this.setState(prevState => ({
-				isTeamLog: !prevState.isTeamLog,
-				isTeamChart: !prevState.isTeamChart
-			}));
-	}
+  useEffect(() => {
+    getGameStats();
+  }, []);
 
-	toggleTeamGameLog() {
-		if (!this.state.isTeamChart)
-			this.setState(prevState => ({
-				isTeamLog: !prevState.isTeamLog,
-				isTeamChart: !prevState.isTeamChart
-			}));
-	}
+  const toggleTeamChart = () => {
+    if (!isTeamLog) {
+      setIsTeamLog(prevState => !prevState);
+      setIsTeamChart(prevState => !prevState);
+    }
+  };
 
-	render() {
-		const { selectedGame } = this.state;
-		const teamAbbreviations = selectedGame.map(x => x.team.abbreviation);
+  const toggleTeamGameLog = () => {
+    if (!isTeamChart) {
+      setIsTeamLog(prevState => !prevState);
+      setIsTeamChart(prevState => !prevState);
+    }
+  };
 
-		const awayTeam = [...new Set(teamAbbreviations)];
-		const homeTeam = awayTeam.pop();
+  const teamAbbreviations = selectedGame.map(x => x.team.abbreviation);
 
-		const homeTeamRoster = selectedGame.filter(
-			x => x.team.abbreviation == homeTeam
-		);
-		const awayTeamRoster = selectedGame.filter(
-			x => x.team.abbreviation == awayTeam
-		);
+  const awayTeam = [...new Set(teamAbbreviations)];
+  const homeTeam = awayTeam.pop();
 
-		const teamChart = (
-			<TeamGameChart
-				awayTeam={awayTeam}
-				homeTeam={homeTeam}
-				homeTeamRoster={homeTeamRoster}
-				awayTeamRoster={awayTeamRoster}
-			/>
-		);
+  const homeTeamRoster = selectedGame.filter(
+    x => x.team.abbreviation == homeTeam
+  );
+  const awayTeamRoster = selectedGame.filter(
+    x => x.team.abbreviation == awayTeam
+  );
 
-		const teamLog = (
-			<TeamGameLog
-				awayTeam={awayTeam}
-				homeTeam={homeTeam}
-				homeTeamRoster={homeTeamRoster}
-				awayTeamRoster={awayTeamRoster}
-			/>
-		);
+  const teamChart = (
+    <TeamGameChart
+      awayTeam={awayTeam}
+      homeTeam={homeTeam}
+      homeTeamRoster={homeTeamRoster}
+      awayTeamRoster={awayTeamRoster}
+    />
+  );
 
-		const chartOrLog = this.state.isTeamLog ? teamChart : teamLog;
+  const teamLog = (
+    <TeamGameLog
+      awayTeam={awayTeam}
+      homeTeam={homeTeam}
+      homeTeamRoster={homeTeamRoster}
+      awayTeamRoster={awayTeamRoster}
+    />
+  );
 
-		const statSwitch = (
-			<div>
-				<h3 onClick={this.toggleTeamGameLog}>Team Game Log</h3>
-				<h3 onClick={this.toggleTeamChart}>Team Comparison</h3>
-			</div>
-		);
+  const chartOrLog = isTeamLog ? teamChart : teamLog;
 
-		return (
-			<div>
-				{statSwitch}
-				{chartOrLog}
-			</div>
-		);
-	}
+  return (
+    <div>
+      <div>
+        <h3 onClick={toggleTeamGameLog}>Team Game Log</h3>
+        <h3 onClick={toggleTeamChart}>Team Comparison</h3>
+      </div>
+      {chartOrLog}
+    </div>
+  );
 }
 
 export default GameInfoContainer;
