@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import PlayerSearchResults from "./PlayerSearchResults";
 import PlayerStats from "./PlayerStats";
@@ -7,231 +7,197 @@ import SelectedPlayer from "./SelectedPlayer";
 import styled from "styled-components";
 
 const PlayerOuterContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const FormContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 `;
 
 const Form = styled.form`
-	display: flex;
-	justify-content: center;
-	width: 75%;
+  display: flex;
+  justify-content: center;
+  width: 75%;
 `;
 
 const Input = styled.input`
-	width: 50%;
+  width: 50%;
 `;
 
 const GameLog = styled.h3`
-	color: ${props => (!props.log ? `red` : `gray`)};
-	margin: 10px;
-	border-bottom: ${props => (!props.log ? `2px solid red` : "none")};
-	padding: 10px;
+  color: ${props => (!props.log ? `red` : `gray`)};
+  margin: 10px;
+  border-bottom: ${props => (!props.log ? `2px solid red` : "none")};
+  padding: 10px;
 
-	:hover {
-		cursor: pointer;
-	}
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const SeasonAverage = styled.h3`
-	color: ${props => (!props.average ? `red` : `gray`)};
-	margin: 10px;
-	border-bottom: ${props => (!props.average ? `2px solid red` : "none")};
-	padding: 10px;
+  color: ${props => (!props.average ? `red` : `gray`)};
+  margin: 10px;
+  border-bottom: ${props => (!props.average ? `2px solid red` : "none")};
+  padding: 10px;
 
-	:hover {
-		cursor: pointer;
-	}
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StatSwitchContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	margin: auto;
-	margin-bottom: 20px;
-	width: 50%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 50%;
 
-	@media screen and (max-width: 500px) {
-		width: 90%;
-	}
+  @media screen and (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
-class PlayerSearch extends Component {
-	constructor() {
-		super();
-		this.state = {
-			allPlayers: [],
-			input: "",
-			loading: false,
-			playerDetails: [],
-			playerStats: [],
-			playerGameLogs: [],
-			isGameLog: false,
-			isSeasonAverage: true
-		};
-		this.handleSearch = this.handleSearch.bind(this);
-		this.handlePlayerClick = this.handlePlayerClick.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.toggleSeasonAverage = this.toggleSeasonAverage.bind(this);
-		this.toggleGameLog = this.toggleGameLog.bind(this);
-	}
+function PlayerSearch() {
+  const [player, setPlayer] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [playerBio, setPlayerBio] = useState([]);
+  const [playerStats, setPlayerStats] = useState([]);
+  const [playerGameLogs, setPlayerGameLogs] = useState([]);
+  const [isGameLog, setIsGameLog] = useState(false);
+  const [isSeasonAverage, setIsSeasonAverage] = useState(true);
 
-	handlePlayerClick(value) {
-		this.setState({
-			allPlayers: [],
-			playerDetails: [value]
-		});
-		fetch(
-			`https://www.balldontlie.io/api/v1/season_averages?season=2019&player_ids[]=${value.id}`
-		)
-			.then(response => response.json())
-			.then(data => {
-				this.setState({
-					playerStats: data.data
-				});
-			});
-		fetch(
-			`https://www.balldontlie.io/api/v1/stats?seasons[]=2019&player_ids[]=${value.id}&per_page=100`
-		)
-			.then(response => response.json())
-			.then(data => {
-				this.setState({
-					playerGameLogs: data.data
-				});
-			});
-	}
+  const handlePlayerClick = value => {
+    setPlayer([]);
+    setPlayerBio([value]);
+    fetch(
+      `https://www.balldontlie.io/api/v1/season_averages?season=2019&player_ids[]=${value.id}`
+    )
+      .then(response => response.json())
+      .then(data => {
+        setPlayerStats(data.data);
+      });
+    fetch(
+      `https://www.balldontlie.io/api/v1/stats?seasons[]=2019&player_ids[]=${value.id}&per_page=100`
+    )
+      .then(response => response.json())
+      .then(data => {
+        setPlayerGameLogs(data.data);
+      });
+  };
 
-	handleChange(event) {
-		this.setState({
-			input: event.target.value
-		});
-	}
+  const handleChange = event => {
+    setInput(event.target.value);
+  };
 
-	handleSearch(event) {
-		event.preventDefault();
-		this.setState({
-			allPlayers: [],
-			playerDetails: [],
-			playerStats: [],
-			playerGameLogs: []
-		});
-		if (this.state.input.length > 2) {
-			fetch(
-				`https://www.balldontlie.io/api/v1/players?search=${this.state.input}&per_page=100`
-			)
-				.then(response => response.json())
-				.then(data => {
-					this.setState({
-						loading: true
-					});
-					let currentPage = data.meta.current_page;
-					let totalPages = data.meta.total_pages;
-					for (let i = currentPage; i <= totalPages; i++) {
-						fetch(
-							`https://www.balldontlie.io/api/v1/players?search=${this.state.input}&per_page=100&page=` +
-								i
-						)
-							.then(response => response.json())
-							.then(data => {
-								this.setState({
-									allPlayers: this.state.allPlayers.concat(data.data),
-									loading: false
-								});
-							});
-					}
-				});
-		}
-	}
+  const handleSearch = event => {
+    event.preventDefault();
+    setPlayer([]);
+    setPlayerBio([]);
+    setPlayerStats([]);
+    setPlayerGameLogs([]);
 
-	toggleSeasonAverage() {
-		if (!this.state.isGameLog)
-			this.setState(prevState => ({
-				isGameLog: !prevState.isGameLog,
-				isSeasonAverage: !prevState.isSeasonAverage
-			}));
-	}
+    if (input.length > 2) {
+      fetch(
+        `https://www.balldontlie.io/api/v1/players?search=${input}&per_page=100`
+      )
+        .then(response => response.json())
+        .then(data => {
+          setLoading(true);
 
-	toggleGameLog() {
-		if (!this.state.isSeasonAverage)
-			this.setState(prevState => ({
-				isGameLog: !prevState.isGameLog,
-				isSeasonAverage: !prevState.isSeasonAverage
-			}));
-	}
+          const currentPage = data.meta.current_page;
+          const totalPages = data.meta.total_pages;
+          for (let i = currentPage; i <= totalPages; i++) {
+            fetch(
+              `https://www.balldontlie.io/api/v1/players?search=${input}&per_page=100&page=` +
+                i
+            )
+              .then(response => response.json())
+              .then(data => {
+                setPlayer(player => player.concat(data.data));
+                setLoading(false);
+              });
+          }
+        });
+    }
+  };
+  const toggleSeasonAverage = () => {
+    if (!isGameLog) {
+      setIsGameLog(prevState => !prevState);
+      setIsSeasonAverage(prevState => !prevState);
+    }
+  };
 
-	render() {
-		const searchedPlayers = this.state.loading ? (
-			<p> LOADING </p>
-		) : (
-			this.state.allPlayers.map((players, id) => (
-				<PlayerSearchResults
-					key={id}
-					onClick={() => {
-						this.handlePlayerClick(players);
-					}}
-					players={players}
-				/>
-			))
-		);
+  const toggleGameLog = () => {
+    if (!isSeasonAverage) {
+      setIsGameLog(prevState => !prevState);
+      setIsSeasonAverage(prevState => !prevState);
+    }
+  };
 
-		const chosenPlayer = this.state.playerDetails.map((player, id) => (
-			<SelectedPlayer key={id} player={player} />
-		));
+  const searchedPlayers = loading ? (
+    <p> LOADING </p>
+  ) : (
+    player.map((players, id) => (
+      <PlayerSearchResults
+        key={id}
+        onClick={() => {
+          handlePlayerClick(players);
+        }}
+        players={players}
+      />
+    ))
+  );
 
-		const seasonAverages =
-			this.state.playerDetails.length !== 0 ? (
-				<PlayerStats seasonStats={this.state.playerStats} />
-			) : null;
+  const chosenPlayer = playerBio.map((player, id) => (
+    <SelectedPlayer key={id} player={player} />
+  ));
 
-		const gameLogs =
-			this.state.playerDetails.length !== 0 ? (
-				<PlayerGameLogs logs={this.state.playerGameLogs} />
-			) : null;
+  const seasonAverages =
+    playerBio.length !== 0 ? <PlayerStats seasonStats={playerStats} /> : null;
 
-		const logsOrAverages = this.state.isGameLog ? seasonAverages : gameLogs;
+  const gameLogs =
+    playerBio.length !== 0 ? <PlayerGameLogs logs={playerGameLogs} /> : null;
 
-		const statSwitch =
-			this.state.playerDetails.length !== 0 ? (
-				<StatSwitchContainer>
-					<GameLog log={this.state.isGameLog} onClick={this.toggleGameLog}>
-						Game Logs
-					</GameLog>
-					<SeasonAverage
-						average={this.state.isSeasonAverage}
-						onClick={this.toggleSeasonAverage}
-					>
-						Season Averages
-					</SeasonAverage>
-				</StatSwitchContainer>
-			) : null;
+  const logsOrAverages = isGameLog ? seasonAverages : gameLogs;
 
-		return (
-			<div>
-				<FormContainer>
-					<Form onSubmit={this.handleSearch}>
-						<Input
-							type="text"
-							name="input"
-							value={this.state.input}
-							onChange={this.handleChange}
-						></Input>
-						<button>Search</button>
-					</Form>
-				</FormContainer>
+  const statSwitch =
+    playerBio.length !== 0 ? (
+      <StatSwitchContainer>
+        <GameLog log={isGameLog} onClick={toggleGameLog}>
+          Game Logs
+        </GameLog>
+        <SeasonAverage average={isSeasonAverage} onClick={toggleSeasonAverage}>
+          Season Averages
+        </SeasonAverage>
+      </StatSwitchContainer>
+    ) : null;
 
-				<PlayerOuterContainer>{searchedPlayers}</PlayerOuterContainer>
-				{chosenPlayer}
-				{statSwitch}
-				<div>{logsOrAverages}</div>
-			</div>
-		);
-	}
+  return (
+    <div>
+      <FormContainer>
+        <Form onSubmit={handleSearch}>
+          <Input
+            type="text"
+            name="input"
+            value={input}
+            onChange={handleChange}
+          ></Input>
+          <button>Search</button>
+        </Form>
+      </FormContainer>
+
+      <PlayerOuterContainer>{searchedPlayers}</PlayerOuterContainer>
+      {chosenPlayer}
+      {statSwitch}
+      <div>{logsOrAverages}</div>
+    </div>
+  );
 }
 
 export default PlayerSearch;
