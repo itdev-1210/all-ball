@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
@@ -11,195 +11,203 @@ const Table = styled.table`
 `;
 
 const TableRow = styled.tr`
-	:nth-child(even) {
-		background-color: #f2f2f2;
-	}
+  :nth-child(even) {
+    background-color: #f2f2f2;
+  }
 
-	:hover {
-		background-color: #ddd;
-	}
+  :hover {
+    background-color: #ddd;
+  }
 `;
 
 const TableHeader = styled.th`
-	background-color: lightgray;
-	color: black;
-	padding: 8px;
-	position: sticky;
-	top: 0;
+  background-color: lightgray;
+  color: black;
+  padding: 8px;
+  position: sticky;
+  top: 0;
 `;
 
 const TableContainer = styled.div`
-	height: 350px;
-	overflow: auto;
+  height: 350px;
+  overflow: auto;
 
-	@media screen and (max-width: 1024px) {
-		margin-left: 17px;
-		margin-right: 17px;
-	}
+  @media screen and (max-width: 1024px) {
+    margin-left: 17px;
+    margin-right: 17px;
+  }
 `;
 
 const TableData = styled.td``;
 
-class TeamGameLog extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isHomeTeam: false,
-			isAwayteam: true
-		};
-		this.toggleHomeTeamGameLog = this.toggleHomeTeamGameLog.bind(this);
-		this.toggleAwayTeamGameLog = this.toggleAwayTeamGameLog.bind(this);
-	}
+const TeamContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
-	toggleAwayTeamGameLog() {
-		if (!this.state.isHomeTeam)
-			this.setState(prevState => ({
-				isHomeTeam: !prevState.isHomeTeam,
-				isAwayTeam: !prevState.isAwayTeam
-			}));
-	}
+const HomeTeamButton = styled.button`
+  border: 1px solid blue;
+  border-radius: 15px 0px 0px 15px;
+  padding: 5px 20px;
+`;
 
-	toggleHomeTeamGameLog() {
-		if (this.state.isAwayTeam)
-			this.setState(prevState => ({
-				isHomeTeam: !prevState.isHomeTeam,
-				isAwayTeam: !prevState.isAwayTeam
-			}));
-	}
+const AwayTeamButton = styled.button`
+  border: 1px solid blue;
+  border-radius: 0px 15px 15px 0px;
+  padding: 5px 20px;
+`;
 
-	render() {
-		const homeTeamLog = (
-			<TableContainer>
-				<Table>
-					<thead>
-						<TableRow>
-							<TableHeader>Player</TableHeader>
-							<TableHeader>MP</TableHeader>
-							<TableHeader>PTS</TableHeader>
-							<TableHeader>FGA</TableHeader>
-							<TableHeader>FGM</TableHeader>
-							<TableHeader>FG%</TableHeader>
-							<TableHeader>FG3A</TableHeader>
-							<TableHeader>FG3M</TableHeader>
-							<TableHeader>FG3%</TableHeader>
-							<TableHeader>FTA</TableHeader>
-							<TableHeader>FTM</TableHeader>
-							<TableHeader>FT%</TableHeader>
-							<TableHeader>REB</TableHeader>
-							<TableHeader>OREB</TableHeader>
-							<TableHeader>DREB</TableHeader>
-							<TableHeader>AST</TableHeader>
-							<TableHeader>STL</TableHeader>
-							<TableHeader>BLK</TableHeader>
-						</TableRow>
-					</thead>
-					<tbody>
-						{this.props.homeTeamRoster.map((player, id) => {
-							console.log(player.player);
-							return (
-								<TableRow key={id}>
-									<TableData>
-										{player.player.first_name} {player.player.last_name}
-									</TableData>
-									<TableData>{player.min}</TableData>
-									<TableData>{player.pts}</TableData>
-									<TableData>{player.fga}</TableData>
-									<TableData>{player.fgm}</TableData>
-									<TableData>{player.fg_pct}</TableData>
-									<TableData>{player.fg3a}</TableData>
-									<TableData>{player.fg3m}</TableData>
-									<TableData>{player.fg3_pct}</TableData>
-									<TableData>{player.fta}</TableData>
-									<TableData>{player.ftm}</TableData>
-									<TableData>{player.ft_pct}</TableData>
-									<TableData>{player.reb}</TableData>
-									<TableData>{player.oreb}</TableData>
-									<TableData>{player.dreb}</TableData>
-									<TableData>{player.ast}</TableData>
-									<TableData>{player.stl}</TableData>
-									<TableData>{player.blk}</TableData>
-								</TableRow>
-							);
-						})}
-					</tbody>
-				</Table>
-			</TableContainer>
-		);
+const HomeTeamAbbreviation = styled.span``;
 
-		const awayTeamLog = (
-			<TableContainer>
-				<Table>
-					<thead>
-						<TableRow>
-							<TableHeader>Player</TableHeader>
-							<TableHeader>MP</TableHeader>
-							<TableHeader>PTS</TableHeader>
-							<TableHeader>FGA</TableHeader>
-							<TableHeader>FGM</TableHeader>
-							<TableHeader>FG%</TableHeader>
-							<TableHeader>FG3A</TableHeader>
-							<TableHeader>FG3M</TableHeader>
-							<TableHeader>FG3%</TableHeader>
-							<TableHeader>FTA</TableHeader>
-							<TableHeader>FTM</TableHeader>
-							<TableHeader>FT%</TableHeader>
-							<TableHeader>REB</TableHeader>
-							<TableHeader>OREB</TableHeader>
-							<TableHeader>DREB</TableHeader>
-							<TableHeader>AST</TableHeader>
-							<TableHeader>STL</TableHeader>
-							<TableHeader>BLK</TableHeader>
-						</TableRow>
-					</thead>
-					<tbody>
-						{this.props.awayTeamRoster.map((player, id) => {
-							console.log(player.player);
-							return (
-								<TableRow key={id}>
-									<TableData>
-										{player.player.first_name} {player.player.last_name}
-									</TableData>
-									<TableData>{player.min}</TableData>
-									<TableData>{player.pts}</TableData>
-									<TableData>{player.fga}</TableData>
-									<TableData>{player.fgm}</TableData>
-									<TableData>{player.fg_pct}</TableData>
-									<TableData>{player.fg3a}</TableData>
-									<TableData>{player.fg3m}</TableData>
-									<TableData>{player.fg3_pct}</TableData>
-									<TableData>{player.fta}</TableData>
-									<TableData>{player.ftm}</TableData>
-									<TableData>{player.ft_pct}</TableData>
-									<TableData>{player.reb}</TableData>
-									<TableData>{player.oreb}</TableData>
-									<TableData>{player.dreb}</TableData>
-									<TableData>{player.ast}</TableData>
-									<TableData>{player.stl}</TableData>
-									<TableData>{player.blk}</TableData>
-								</TableRow>
-							);
-						})}
-					</tbody>
-				</Table>
-			</TableContainer>
-		);
+const AwayTeamAbbreviation = styled.span``;
 
-		const logSwitch = (
-			<div>
-				<h3 onClick={this.toggleHomeTeamGameLog}>{this.props.homeTeam}</h3>
-				<h3 onClick={this.toggleAwayTeamGameLog}>{this.props.awayTeam}</h3>
-			</div>
-		);
+function TeamGameLog(props) {
+  const [isHomeTeam, setIsHomeTeam] = useState(false);
+  const [isAwayTeam, setIsAwayTeam] = useState(true);
 
-		const homeOrAwayTeamLog = this.state.isHomeTeam ? awayTeamLog : homeTeamLog;
+  const toggleAwayTeamGameLog = () => {
+    if (!isHomeTeam) {
+      setIsHomeTeam(prevState => !prevState);
+      setIsAwayTeam(prevState => !prevState);
+    }
+  };
 
-		return (
-			<div>
-				{logSwitch}
-				{homeOrAwayTeamLog}
-			</div>
-		);
-	}
+  const toggleHomeTeamGameLog = () => {
+    if (!isAwayTeam) {
+      setIsHomeTeam(prevState => !prevState);
+      setIsAwayTeam(prevState => !prevState);
+    }
+  };
+
+  const homeTeamLog = (
+    <TableContainer>
+      <Table>
+        <thead>
+          <TableRow>
+            <TableHeader>Player</TableHeader>
+            <TableHeader>MP</TableHeader>
+            <TableHeader>PTS</TableHeader>
+            <TableHeader>FGA</TableHeader>
+            <TableHeader>FGM</TableHeader>
+            <TableHeader>FG%</TableHeader>
+            <TableHeader>FG3A</TableHeader>
+            <TableHeader>FG3M</TableHeader>
+            <TableHeader>FG3%</TableHeader>
+            <TableHeader>FTA</TableHeader>
+            <TableHeader>FTM</TableHeader>
+            <TableHeader>FT%</TableHeader>
+            <TableHeader>REB</TableHeader>
+            <TableHeader>OREB</TableHeader>
+            <TableHeader>DREB</TableHeader>
+            <TableHeader>AST</TableHeader>
+            <TableHeader>STL</TableHeader>
+            <TableHeader>BLK</TableHeader>
+          </TableRow>
+        </thead>
+        <tbody>
+          {props.homeTeamRoster.map((player, id) => {
+            return (
+              <TableRow key={id}>
+                <TableData>
+                  {player.player.first_name} {player.player.last_name}
+                </TableData>
+                <TableData>{player.min}</TableData>
+                <TableData>{player.pts}</TableData>
+                <TableData>{player.fga}</TableData>
+                <TableData>{player.fgm}</TableData>
+                <TableData>{player.fg_pct}</TableData>
+                <TableData>{player.fg3a}</TableData>
+                <TableData>{player.fg3m}</TableData>
+                <TableData>{player.fg3_pct}</TableData>
+                <TableData>{player.fta}</TableData>
+                <TableData>{player.ftm}</TableData>
+                <TableData>{player.ft_pct}</TableData>
+                <TableData>{player.reb}</TableData>
+                <TableData>{player.oreb}</TableData>
+                <TableData>{player.dreb}</TableData>
+                <TableData>{player.ast}</TableData>
+                <TableData>{player.stl}</TableData>
+                <TableData>{player.blk}</TableData>
+              </TableRow>
+            );
+          })}
+        </tbody>
+      </Table>
+    </TableContainer>
+  );
+
+  const awayTeamLog = (
+    <TableContainer>
+      <Table>
+        <thead>
+          <TableRow>
+            <TableHeader>Player</TableHeader>
+            <TableHeader>MP</TableHeader>
+            <TableHeader>PTS</TableHeader>
+            <TableHeader>FGA</TableHeader>
+            <TableHeader>FGM</TableHeader>
+            <TableHeader>FG%</TableHeader>
+            <TableHeader>FG3A</TableHeader>
+            <TableHeader>FG3M</TableHeader>
+            <TableHeader>FG3%</TableHeader>
+            <TableHeader>FTA</TableHeader>
+            <TableHeader>FTM</TableHeader>
+            <TableHeader>FT%</TableHeader>
+            <TableHeader>REB</TableHeader>
+            <TableHeader>OREB</TableHeader>
+            <TableHeader>DREB</TableHeader>
+            <TableHeader>AST</TableHeader>
+            <TableHeader>STL</TableHeader>
+            <TableHeader>BLK</TableHeader>
+          </TableRow>
+        </thead>
+        <tbody>
+          {props.awayTeamRoster.map((player, id) => {
+            return (
+              <TableRow key={id}>
+                <TableData>
+                  {player.player.first_name} {player.player.last_name}
+                </TableData>
+                <TableData>{player.min}</TableData>
+                <TableData>{player.pts}</TableData>
+                <TableData>{player.fga}</TableData>
+                <TableData>{player.fgm}</TableData>
+                <TableData>{player.fg_pct}</TableData>
+                <TableData>{player.fg3a}</TableData>
+                <TableData>{player.fg3m}</TableData>
+                <TableData>{player.fg3_pct}</TableData>
+                <TableData>{player.fta}</TableData>
+                <TableData>{player.ftm}</TableData>
+                <TableData>{player.ft_pct}</TableData>
+                <TableData>{player.reb}</TableData>
+                <TableData>{player.oreb}</TableData>
+                <TableData>{player.dreb}</TableData>
+                <TableData>{player.ast}</TableData>
+                <TableData>{player.stl}</TableData>
+                <TableData>{player.blk}</TableData>
+              </TableRow>
+            );
+          })}
+        </tbody>
+      </Table>
+    </TableContainer>
+  );
+
+  const homeOrAwayTeamLog = isHomeTeam ? awayTeamLog : homeTeamLog;
+
+  return (
+    <div>
+      <TeamContainer>
+        <HomeTeamButton onClick={toggleHomeTeamGameLog} team={isHomeTeam}>
+          <HomeTeamAbbreviation>{props.homeTeam}</HomeTeamAbbreviation>
+        </HomeTeamButton>
+        <AwayTeamButton onClick={toggleAwayTeamGameLog}>
+          <AwayTeamAbbreviation>{props.awayTeam}</AwayTeamAbbreviation>
+        </AwayTeamButton>
+      </TeamContainer>
+      {homeOrAwayTeamLog}
+    </div>
+  );
 }
 
 export default TeamGameLog;
