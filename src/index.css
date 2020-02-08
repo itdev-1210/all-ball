@@ -2,9 +2,33 @@ html {
   font-size: 62.5%; /* =10px */
 }
 
+@media screen and (min-width: 0px) {
+  html {
+    font-size: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 0.7rem;
+  }
+}
+
 @media screen and (min-width: 1300px) {
   html {
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  html {
     font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: 0.9rem;
   }
 }
 
