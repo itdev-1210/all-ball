@@ -6,29 +6,65 @@ import GameCard from "./GameCard";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   margin: auto;
   overflow: auto;
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 0.6rem rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
     background-color: #f5f5f5;
-    margin: 0 50px;
+    margin: 0 5rem;
   }
 
   &::-webkit-scrollbar {
-    background-color: white;
+    background-color: #fffaf0;
+    height: 0.5rem;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
+    -webkit-box-shadow: inset 0 0 0.6rem rgba(0, 0, 0, 0.3);
     background-color: #555;
   }
 
-  @media screen and (max-width: 1440px) {
-    justify-content: normal;
+  @media screen and (min-width: 100px) {
+    justify-content: ${props => (props.games.length > 3 ? `normal` : "center")};
+  }
+
+  @media screen and (min-width: 345px) {
+    justify-content: ${props =>
+      props.games.length <= 4 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 360px) {
+    justify-content: ${props => (props.games.length > 4 ? `normal` : "center")};
+  }
+
+  @media screen and (min-width: 600px) {
+    justify-content: ${props => (props.games.length > 5 ? `normal` : "center")};
+  }
+
+  @media screen and (min-width: 700px) {
+    justify-content: ${props => (props.games.length > 6 ? `normal` : "center")};
+  }
+
+  @media screen and (min-width: 1000px) {
+    justify-content: ${props =>
+      props.games.length >= 9 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 1400px) {
+    justify-content: ${props =>
+      props.games.length >= 10 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 1800px) {
+    justify-content: ${props =>
+      props.games.length > 12 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 2230px) {
+    justify-content: center;
   }
 `;
 
@@ -36,7 +72,7 @@ const FlexScroll = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: nowrap;
-  padding: 17px 20px;
+  padding: 1.7rem 2rem;
 `;
 
 function GameContainer(props) {
@@ -90,7 +126,7 @@ function GameContainer(props) {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
     const addZeroToMonth = month < 10 ? `${`0${month}`}` : `${month}`;
-    const addZeroToDay = month < 10 ? `${`0${day}`}` : `${day}`;
+    const addZeroToDay = day < 10 ? `${`0${day}`}` : `${day}`;
     const selectedDate = `${year}-${addZeroToMonth}-${addZeroToDay}`;
     let gameDayMessage;
 
@@ -230,7 +266,7 @@ function GameContainer(props) {
         </form>
       </div>
 
-      <Container>
+      <Container games={games}>
         <FlexScroll>{gameResults}</FlexScroll>
       </Container>
     </div>
