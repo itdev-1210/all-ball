@@ -4,23 +4,27 @@ import styled from "styled-components";
 import { teamHexFirstColors, teamHexSecondColors } from "../teamhexcolors";
 
 const TopFiveContainer = styled.div`
-    border-radius 20px;
-    text-align: center;
-    margin-left: 20px;
-    margin-right: 20px;
-    flex: 1;
-    color: #FEFEFE;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  background: ${props => props.playerCardColor};
+  border: solid 0.35rem ${props => props.playerCardSecondColor}; 
+  border-radius 2rem;
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12),
+    0 0.1rem 0.2rem rgba(0, 0, 0, 0.24);
+  color: #fefefe;
+  flex: 1;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    :hover {
-        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-        cursor: pointer;
-      }
+  :hover {
+    box-shadow: 0 1.4rem 2.8rem rgba(0, 0, 0, 0.25),
+      0 1rem 1rem rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+  }
 
-    @media screen and (max-width:1000px) {
-        margin-top: 10px;
-    }
+  @media screen and (max-width: 1000px) {
+    margin-top: 1rem;
+  }
 `;
 
 function PlayerCard(props) {
@@ -30,10 +34,8 @@ function PlayerCard(props) {
 
   return (
     <TopFiveContainer
-      style={{
-        background: `${playerCardColor}`,
-        border: `6px solid ${playerCardSecondColor}`
-      }}
+      playerCardColor={playerCardColor}
+      playerCardSecondColor={playerCardSecondColor}
     >
       <div>
         <h2>
