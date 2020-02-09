@@ -5,19 +5,20 @@ import styled from "styled-components";
 
 const OuterContainer = styled.div`
   display: flex;
+  padding-left: 11rem;
+  padding-right: 11rem;
   flex-wrap: wrap;
-  padding: 25px;
+  flex-direction: column;
 
-  @media screen and (min-width: 768px) and (max-width: 1000px) {
-    flex-direction: column;
-    margin-left: 180px;
-    margin-right: 180px;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
   }
 
-  @media screen and (max-width: 767px) {
-    flex-direction: column;
-    margin-left: 0px;
-    margin-right: 0px;
+  @media screen and (min-width: 1300px) {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 `;
 
