@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import PlayerCard from "./PlayerCard";
+import TopPlayerForm from "./TopPlayerForm";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
@@ -90,7 +91,7 @@ function TopPlayers() {
     setStatistic(event.target.value);
   };
 
-  const handleClick = event => {
+  const handleSearch = event => {
     event.preventDefault();
     fetch(
       `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
@@ -146,71 +147,43 @@ function TopPlayers() {
       .map((playerData, i) => <PlayerCard key={i} playerData={playerData} />);
   }
 
-  const years = [];
+  const yearList = [];
   for (let i = 2020; i > 1984; i--) {
-    years.push({ year: i });
+    yearList.push({ year: i });
   }
 
-  const months = [];
+  const monthList = [];
   for (let x = 12; x > 0; x--) {
-    months.push({ month: x });
+    monthList.push({ month: x });
   }
 
-  const days = [];
+  const dayList = [];
   for (let y = 31; y > 0; y--) {
-    days.push({ day: y });
+    dayList.push({ day: y });
   }
+
+  const topPlayerForm = (
+    <TopPlayerForm
+      yearList={yearList}
+      monthList={monthList}
+      dayList={dayList}
+      statistic={statistic}
+      handleStatisticChange={handleStatisticChange}
+      handleSearch={handleSearch}
+      year={year}
+      month={month}
+      day={day}
+      handleDayChange={handleDayChange}
+      handleMonthChange={handleMonthChange}
+      handleYearChange={handleYearChange}
+    />
+  );
 
   return (
     <div>
       <div>
         <h1>Top players from {`${year}-${month}-${day}`}</h1>
-
-        <form>
-          <label>
-            Sort players by:
-            <select
-              name="statistic"
-              value={statistic}
-              onChange={handleStatisticChange}
-            >
-              <option value="points">Points</option>
-              <option value="assists">Assists</option>
-              <option value="rebounds">Rebounds</option>
-              <option value="steals">Steals</option>
-              <option value="blocks">Blocks</option>
-            </select>
-          </label>
-
-          <label>
-            Year:
-            <select name="yearList" value={year} onChange={handleYearChange}>
-              {years.map(({ value, year }) => (
-                <option value={value}>{year}</option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Month:
-            <select name="monthList" value={month} onChange={handleMonthChange}>
-              {months.map(({ value, month }) => (
-                <option value={value}>{month}</option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Day:
-            <select name="dayList" value={day} onChange={handleDayChange}>
-              {days.map(({ value, day }) => (
-                <option value={value}>{day}</option>
-              ))}
-            </select>
-          </label>
-
-          <button onClick={handleClick}>Search</button>
-        </form>
+        {topPlayerForm}
       </div>
 
       <OuterContainer>{highestPoints}</OuterContainer>
