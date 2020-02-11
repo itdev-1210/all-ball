@@ -1,67 +1,109 @@
 import React from "react";
 
-function TopPlayersSelectBox(props) {
+import styled from "styled-components";
+
+const StatisticSelect = styled.select`
+  background-color: #fffaf0;
+  border: none;
+  border: 0.1rem solid #333;
+  color: #333;
+  font-size: 1.1rem;
+  margin: 0.4rem;
+  transition: all 0.5s;
+
+  :focus {
+    outline: none;
+  }
+
+  :hover {
+    cursor: pointer;
+    background-color: #e6e1d8;
+  }
+`;
+
+const StatisticOption = styled.option`
+  background-color: #fffaf0;
+  color: #333;
+`;
+
+const DateOption = styled(StatisticOption)``;
+
+const DateSelect = styled(StatisticSelect)``;
+
+const FormsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+`;
+
+function TopPlayerForm(props) {
   return (
-    <div>
+    <FormsContainer>
       <form>
-        <label>
-          Sort players by:
-          <select
-            name="statistic"
-            value={props.statistic}
-            onChange={props.handleStatisticChange}
-          >
-            <option value="points">Points</option>
-            <option value="assists">Assists</option>
-            <option value="rebounds">Rebounds</option>
-            <option value="steals">Steals</option>
-            <option value="blocks">Blocks</option>
-          </select>
-        </label>
+        <DateSelect
+          name="yearList"
+          value={props.year}
+          onChange={props.handleYearChange}
+        >
+          <option value="" disabled select hidden>
+            Year
+          </option>
+          {props.yearList.map(({ value, year }) => (
+            <DateOption value={value}>{year}</DateOption>
+          ))}
+        </DateSelect>
+
+        <DateSelect
+          name="monthList"
+          value={props.month}
+          onChange={props.handleMonthChange}
+        >
+          <option value="" disabled select hidden>
+            Month
+          </option>
+          {props.monthList.map(({ value, month }) => (
+            <DateOption value={value}>{month}</DateOption>
+          ))}
+        </DateSelect>
 
         <label>
-          Year:
-          <select
-            name="yearList"
-            value={props.year}
-            onChange={props.handleYearChange}
-          >
-            {props.yearList.map(({ value, year }) => (
-              <option value={value}>{year}</option>
-            ))}
-          </select>
-        </label>
-
-        <label>
-          Month:
-          <select
-            name="monthList"
-            value={props.month}
-            onChange={props.handleMonthChange}
-          >
-            {props.monthList.map(({ value, month }) => (
-              <option value={value}>{month}</option>
-            ))}
-          </select>
-        </label>
-
-        <label>
-          Day:
-          <select
+          <DateSelect
             name="dayList"
             value={props.day}
             onChange={props.handleDayChange}
           >
+            <option value="" disabled select hidden>
+              Day
+            </option>
             {props.dayList.map(({ value, day }) => (
-              <option value={value}>{day}</option>
+              <DateOption value={value}>{day}</DateOption>
             ))}
-          </select>
+          </DateSelect>
         </label>
 
         <button onClick={props.handleSearch}>Search</button>
       </form>
-    </div>
+      <form>
+        <label>Sort top players by:</label>
+        <StatisticSelect
+          name="statistic"
+          value={props.statistic}
+          onChange={props.handleStatisticChange}
+        >
+          <StatisticOption value="points">Points</StatisticOption>
+          <StatisticOption value="assists">Assists</StatisticOption>
+          <StatisticOption value="rebounds">Rebounds</StatisticOption>
+          <StatisticOption value="steals">Steals</StatisticOption>
+          <StatisticOption value="blocks">Blocks</StatisticOption>
+        </StatisticSelect>
+      </form>
+    </FormsContainer>
   );
 }
 
-export default TopPlayersSelectBox;
+export default TopPlayerForm;
