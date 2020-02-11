@@ -135,9 +135,9 @@ function GameContainer(props) {
     } else if (selectedDate > today) {
       gameDayMessage = `Games scheduled on ${selectedDate}`;
     } else if (selectedDate == yesterday) {
-      gameDayMessage = `Game results from ${yesterday}`;
+      gameDayMessage = `Game results from yesterday`;
     } else if (selectedDate == today) {
-      gameDayMessage = `Games scheduled for ${today}`;
+      gameDayMessage = `Games scheduled for today`;
     } else if (selectedDate < today) {
       gameDayMessage = `Game results from ${selectedDate}`;
     }
