@@ -29,6 +29,7 @@ function TopPlayers() {
   const [year, setYear] = useState([]);
   const [month, setMonth] = useState([]);
   const [day, setDay] = useState([]);
+  const [playerHeader, setPlayerHeader] = useState("");
 
   const getMostRecentTopPlayers = () => {
     const tzOffset = new Date().getTimezoneOffset() * 350111; //offset in milliseconds
@@ -91,7 +92,30 @@ function TopPlayers() {
     setStatistic(event.target.value);
   };
 
+  const getGameMessage = () => {
+    const date = new Date();
+    const tzOffset = date.getTimezoneOffset() * 350111; // offset in milliseconds
+    const yesterday = new Date(Date.now() - 1 - tzOffset)
+      .toISOString()
+      .split("T")[0];
+    const today = date.toISOString().split("T")[0];
+    const addZeroToMonth = month < 10 ? `${`0${month}`}` : `${month}`;
+    const addZeroToDay = day < 10 ? `${`0${day}`}` : `${day}`;
+    const selectedDate = `${year}-${addZeroToMonth}-${addZeroToDay}`;
+    let topPlayerDateMessage;
+
+    if (!`${year}` || !`${month}` || !`${day}`) {
+      topPlayerDateMessage = "";
+    } else if (selectedDate < today) {
+      topPlayerDateMessage = `Top Players from ${selectedDate}`;
+    } else {
+      topPlayerDateMessage = "";
+    }
+    setPlayerHeader(topPlayerDateMessage);
+  };
+
   const handleSearch = event => {
+    getGameMessage();
     event.preventDefault();
     fetch(
       `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
@@ -182,8 +206,8 @@ function TopPlayers() {
   return (
     <div>
       <div>
-        <h1>Top players from {`${year}-${month}-${day}`}</h1>
         {topPlayerForm}
+        <h1>{playerHeader}</h1>
       </div>
 
       <OuterContainer>{highestPoints}</OuterContainer>
