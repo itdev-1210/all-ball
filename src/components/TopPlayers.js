@@ -30,6 +30,7 @@ function TopPlayers() {
   const [month, setMonth] = useState([]);
   const [day, setDay] = useState([]);
   const [playerHeader, setPlayerHeader] = useState("");
+  const [noPlayerMessage, setNoPlayerMessage] = useState("");
 
   const getMostRecentTopPlayers = () => {
     const tzOffset = new Date().getTimezoneOffset() * 350111; //offset in milliseconds
@@ -92,12 +93,8 @@ function TopPlayers() {
     setStatistic(event.target.value);
   };
 
-  const getGameMessage = () => {
+  const getPlayerMessage = () => {
     const date = new Date();
-    const tzOffset = date.getTimezoneOffset() * 350111; // offset in milliseconds
-    const yesterday = new Date(Date.now() - 1 - tzOffset)
-      .toISOString()
-      .split("T")[0];
     const today = date.toISOString().split("T")[0];
     const addZeroToMonth = month < 10 ? `${`0${month}`}` : `${month}`;
     const addZeroToDay = day < 10 ? `${`0${day}`}` : `${day}`;
@@ -107,34 +104,42 @@ function TopPlayers() {
     if (!`${year}` || !`${month}` || !`${day}`) {
       topPlayerDateMessage = "";
     } else if (selectedDate < today) {
-      topPlayerDateMessage = `Top Players from ${selectedDate}`;
-    } else {
-      topPlayerDateMessage = "";
+      topPlayerDateMessage = `Top players from ${selectedDate}`;
     }
     setPlayerHeader(topPlayerDateMessage);
+    setPlayers([]);
   };
 
   const handleSearch = event => {
-    getGameMessage();
+    setNoPlayerMessage("");
+    getPlayerMessage();
     event.preventDefault();
-    fetch(
-      `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
-    )
-      .then(response => response.json())
-      .then(data => {
-        const currentPage = data.meta.current_page;
-        const totalPages = data.meta.total_pages;
-        for (let i = currentPage; i <= totalPages; i++) {
-          fetch(
-            `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
-              i
-          )
-            .then(response => response.json())
-            .then(data => {
-              setPlayers(data.data);
-            });
-        }
-      });
+    if (`${year}` && `${month}` && `${day}`) {
+      fetch(
+        `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
+      )
+        .then(response => response.json())
+        .then(data => {
+          const currentPage = data.meta.current_page;
+          const totalPages = data.meta.total_pages;
+          if (totalPages > 0) {
+            for (let i = currentPage; i <= totalPages; i++) {
+              fetch(
+                `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
+                  i
+              )
+                .then(response => response.json())
+                .then(data => {
+                  setPlayers(data.data);
+                });
+            }
+          } else {
+            setNoPlayerMessage(
+              "No stats available for games that have not been played"
+            );
+          }
+        });
+    }
   };
 
   let highestPoints;
@@ -203,11 +208,15 @@ function TopPlayers() {
     />
   );
 
+  const playerSectionMessage = !noPlayerMessage
+    ? playerHeader
+    : noPlayerMessage;
+
   return (
     <div>
       <div>
         {topPlayerForm}
-        <h1>{playerHeader}</h1>
+        <h1>{playerSectionMessage}</h1>
       </div>
 
       <OuterContainer>{highestPoints}</OuterContainer>
