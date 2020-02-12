@@ -111,6 +111,7 @@ function TopPlayers() {
   };
 
   const handleSearch = event => {
+    players.length = 0;
     setNoPlayerMessage("");
     getPlayerMessage();
     event.preventDefault();
@@ -130,7 +131,7 @@ function TopPlayers() {
               )
                 .then(response => response.json())
                 .then(data => {
-                  setPlayers(data.data);
+                  setPlayers(players => players.concat(data.data));
                 });
             }
           } else {
