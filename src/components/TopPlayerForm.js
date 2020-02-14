@@ -50,9 +50,7 @@ function TopPlayerForm(props) {
           value={props.year}
           onChange={props.handleYearChange}
         >
-          <option value="" disabled select hidden>
-            Year
-          </option>
+          {props.year === null ? <option selected>Year</option> : null}
           {props.yearList.map(({ value, year }) => (
             <DateOption value={value}>{year}</DateOption>
           ))}
@@ -63,9 +61,7 @@ function TopPlayerForm(props) {
           value={props.month}
           onChange={props.handleMonthChange}
         >
-          <option value="" disabled select hidden>
-            Month
-          </option>
+          {props.month === null ? <option selected>Month</option> : null}
           {props.monthList.map(({ value, month }) => (
             <DateOption value={value}>{month}</DateOption>
           ))}
@@ -77,9 +73,7 @@ function TopPlayerForm(props) {
             value={props.day}
             onChange={props.handleDayChange}
           >
-            <option value="" disabled select hidden>
-              Day
-            </option>
+            {props.day === null ? <option selected>Day</option> : null}
             {props.dayList.map(({ value, day }) => (
               <DateOption value={value}>{day}</DateOption>
             ))}
