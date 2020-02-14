@@ -26,9 +26,9 @@ const OuterContainer = styled.div`
 function TopPlayers() {
   const [players, setPlayers] = useState([]);
   const [statistic, setStatistic] = useState("points");
-  const [year, setYear] = useState([]);
-  const [month, setMonth] = useState([]);
-  const [day, setDay] = useState([]);
+  const [year, setYear] = useState(sessionStorage.getItem("year"));
+  const [month, setMonth] = useState(sessionStorage.getItem("month"));
+  const [day, setDay] = useState(sessionStorage.getItem("day"));
   const [playerHeader, setPlayerHeader] = useState("");
   const [noPlayerMessage, setNoPlayerMessage] = useState("");
 
@@ -76,6 +76,18 @@ function TopPlayers() {
   useEffect(() => {
     getMostRecentTopPlayers();
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("year", year);
+  }, [year]);
+
+  useEffect(() => {
+    sessionStorage.setItem("month", month);
+  }, [month]);
+
+  useEffect(() => {
+    sessionStorage.setItem("day", day);
+  }, [day]);
 
   const handleDayChange = event => {
     setDay(event.target.value);
