@@ -30,7 +30,7 @@ const PlayerCardHeader = styled.h1`
 function TopPlayers() {
   const [players, setPlayers] = useState([]);
   const [statistic, setStatistic] = useState(
-    sessionStorage.getItem("statistic" || "points")
+    sessionStorage.getItem("statistic") || "points"
   );
   const [year, setYear] = useState(sessionStorage.getItem("year"));
   const [month, setMonth] = useState(sessionStorage.getItem("month"));
