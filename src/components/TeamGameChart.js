@@ -145,44 +145,14 @@ function TeamGameChart(props) {
 
   const data = [
     {
-      name: "FG Attempts",
-      [awayTeam]: awayFGAttempts,
-      [homeTeam]: homeFGAttempts
-    },
-    {
-      name: "FG Made",
-      [awayTeam]: awayFGMade,
-      [homeTeam]: homeFGMade
-    },
-    {
       name: "FG %",
       [awayTeam]: awayFGPercent,
       [homeTeam]: homeFGPercent
     },
     {
-      name: "FG3 Attempts",
-      [awayTeam]: awayFG3Attempts,
-      [homeTeam]: homeFG3Attempts
-    },
-    {
-      name: "FG3 Made",
-      [awayTeam]: awayFG3Made,
-      [homeTeam]: homeFG3Made
-    },
-    {
       name: "FG3 %",
       [awayTeam]: awayFG3Percent,
       [homeTeam]: homeFG3Percent
-    },
-    {
-      name: "FT Attempts",
-      [awayTeam]: awayFTAttempts,
-      [homeTeam]: homeFTAttempts
-    },
-    {
-      name: "FT Made",
-      [awayTeam]: awayFTMade,
-      [homeTeam]: homeFTMade
     },
     {
       name: "FT %",
@@ -200,7 +170,7 @@ function TeamGameChart(props) {
       [homeTeam]: homeTeamSteals
     },
     {
-      name: "Rebounds",
+      name: "Total Rebounds",
       [awayTeam]: awayTeamRebounds,
       [homeTeam]: homeTeamRebounds
     },
@@ -251,11 +221,11 @@ function TeamGameChart(props) {
           >
             {homeTeam}
           </h1>
-          <h1 style={{ marginLeft: "15px" }}>{homeTeamPoints}</h1>
+          <h1 style={{ marginLeft: "1.5rem" }}>{homeTeamPoints}</h1>
         </div>
       </TeamContainer>
       <div style={{ marginLeft: "18%" }}>
-        <ResponsiveContainer width="80%" height={750}>
+        <ResponsiveContainer width="80%" height={500}>
           <BarChart
             data={data}
             layout="vertical"
