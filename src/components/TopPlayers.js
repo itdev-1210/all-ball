@@ -23,9 +23,15 @@ const OuterContainer = styled.div`
   }
 `;
 
+const PlayerCardHeader = styled.h1`
+  text-align: center;
+`;
+
 function TopPlayers() {
   const [players, setPlayers] = useState([]);
-  const [statistic, setStatistic] = useState("points");
+  const [statistic, setStatistic] = useState(
+    sessionStorage.getItem("statistic" || "points")
+  );
   const [year, setYear] = useState(sessionStorage.getItem("year"));
   const [month, setMonth] = useState(sessionStorage.getItem("month"));
   const [day, setDay] = useState(sessionStorage.getItem("day"));
@@ -88,6 +94,10 @@ function TopPlayers() {
   useEffect(() => {
     sessionStorage.setItem("day", day);
   }, [day]);
+
+  useEffect(() => {
+    sessionStorage.setItem("statistic", statistic);
+  }, [statistic]);
 
   const handleDayChange = event => {
     setDay(event.target.value);
@@ -229,9 +239,8 @@ function TopPlayers() {
     <div>
       <div>
         {topPlayerForm}
-        <h1>{playerSectionMessage}</h1>
+        <PlayerCardHeader>{playerSectionMessage}</PlayerCardHeader>
       </div>
-
       <OuterContainer>{highestPoints}</OuterContainer>
     </div>
   );
