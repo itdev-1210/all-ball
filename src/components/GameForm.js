@@ -41,7 +41,9 @@ function GameForm(props) {
           value={props.yearOfGame}
           onChange={props.handleYearChange}
         >
-          {props.yearOfGame === null ? <option selected>Year</option> : null}
+          <option selected hidden>
+            Year
+          </option>
           {props.yearList.map(({ value, yearOfGame }) => (
             <DateOption value={value}>{yearOfGame}</DateOption>
           ))}
@@ -52,7 +54,9 @@ function GameForm(props) {
           value={props.monthOfGame}
           onChange={props.handleMonthChange}
         >
-          {props.monthOfGame === null ? <option selected>Month</option> : null}
+          <option selected hidden>
+            Month
+          </option>
           {props.monthList.map(({ value, monthOfGame }) => (
             <DateOption value={value}>{monthOfGame}</DateOption>
           ))}
@@ -64,7 +68,9 @@ function GameForm(props) {
             value={props.dayOfGame}
             onChange={props.handleDayChange}
           >
-            {props.dayOfGame === null ? <option selected>Day</option> : null}
+            <option selected hidden>
+              Day
+            </option>
             {props.dayList.map(({ value, dayOfGame }) => (
               <DateOption value={value}>{dayOfGame}</DateOption>
             ))}
