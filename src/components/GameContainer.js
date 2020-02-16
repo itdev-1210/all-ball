@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import GameCard from "./GameCard";
+import GameForm from "./GameForm";
 
 const Container = styled.div`
   display: flex;
@@ -153,7 +154,7 @@ function GameContainer(props) {
     });
   };
 
-  const handleSearchClick = event => {
+  const handleSearch = event => {
     setNoGameMessage("");
     getGameMessage();
     event.preventDefault();
@@ -207,65 +208,39 @@ function GameContainer(props) {
     gameResults = null;
   }
 
-  const years = [];
+  const yearList = [];
   for (let i = 2020; i > 1984; i--) {
-    years.push({ year: i });
+    yearList.push({ year: i });
   }
 
-  const months = [];
+  const monthList = [];
   for (let x = 12; x > 0; x--) {
-    months.push({ month: x });
+    monthList.push({ month: x });
   }
 
-  const days = [];
+  const dayList = [];
   for (let y = 31; y > 0; y--) {
-    days.push({ day: y });
+    dayList.push({ day: y });
   }
+
+  const gameForm = (
+    <GameForm
+      yearList={yearList}
+      monthList={monthList}
+      dayList={dayList}
+      handleSearch={handleSearch}
+      year={year}
+      month={month}
+      day={day}
+      handleDayChange={handleDayChange}
+      handleMonthChange={handleMonthChange}
+      handleYearChange={handleYearChange}
+    />
+  );
 
   return (
     <div>
-      <div>
-        <form>
-          <label>
-            Year:
-            <select name="yearList" value={year} onChange={handleYearChange}>
-              <option value="" disabled select hidden>
-                -
-              </option>
-              {years.map(({ value, year }) => (
-                <option value={value}>{year}</option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Month:
-            <select name="monthList" value={month} onChange={handleMonthChange}>
-              <option value="" disabled select hidden>
-                -
-              </option>
-              {months.map(({ value, month }) => (
-                <option value={value}>{month}</option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Day:
-            <select name="dayList" value={day} onChange={handleDayChange}>
-              <option value="" disabled select hidden>
-                -
-              </option>
-              {days.map(({ value, day }) => (
-                <option value={value}>{day}</option>
-              ))}
-            </select>
-          </label>
-          <button onClick={handleSearchClick}>Search</button>
-          <h1> {!noGameMessage ? gameCardHeader : noGameMessage} </h1>
-        </form>
-      </div>
-
+      {gameForm}
       <Container games={games}>
         <FlexScroll>{gameResults}</FlexScroll>
       </Container>
