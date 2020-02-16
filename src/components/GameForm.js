@@ -38,35 +38,35 @@ function GameForm(props) {
       <Form>
         <DateSelect
           name="yearList"
-          value={props.year}
+          value={props.yearOfGame}
           onChange={props.handleYearChange}
         >
-          {props.year === null ? <option selected>Year</option> : null}
-          {props.yearList.map(({ value, year }) => (
-            <DateOption value={value}>{year}</DateOption>
+          {props.yearOfGame === null ? <option selected>Year</option> : null}
+          {props.yearList.map(({ value, yearOfGame }) => (
+            <DateOption value={value}>{yearOfGame}</DateOption>
           ))}
         </DateSelect>
 
         <DateSelect
           name="monthList"
-          value={props.month}
+          value={props.monthOfGame}
           onChange={props.handleMonthChange}
         >
-          {props.month === null ? <option selected>Month</option> : null}
-          {props.monthList.map(({ value, month }) => (
-            <DateOption value={value}>{month}</DateOption>
+          {props.monthOfGame === null ? <option selected>Month</option> : null}
+          {props.monthList.map(({ value, monthOfGame }) => (
+            <DateOption value={value}>{monthOfGame}</DateOption>
           ))}
         </DateSelect>
 
         <label>
           <DateSelect
             name="dayList"
-            value={props.day}
+            value={props.dayOfGame}
             onChange={props.handleDayChange}
           >
-            {props.day === null ? <option selected>Day</option> : null}
-            {props.dayList.map(({ value, day }) => (
-              <DateOption value={value}>{day}</DateOption>
+            {props.dayOfGame === null ? <option selected>Day</option> : null}
+            {props.dayList.map(({ value, dayOfGame }) => (
+              <DateOption value={value}>{dayOfGame}</DateOption>
             ))}
           </DateSelect>
         </label>

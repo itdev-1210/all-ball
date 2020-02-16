@@ -56,7 +56,7 @@ const Container = styled.div`
 
   @media screen and (min-width: 1400px) {
     justify-content: ${props =>
-      props.games.length >= 10 ? `normal` : "center"};
+      props.games.length >= 11 ? `normal` : "center"};
   }
 
   @media screen and (min-width: 1800px) {
@@ -78,9 +78,9 @@ const FlexScroll = styled.div`
 
 function GameContainer(props) {
   const [games, setGames] = useState([]);
-  const [year, setYear] = useState([]);
-  const [month, setMonth] = useState([]);
-  const [day, setDay] = useState([]);
+  const [yearOfGame, setYearOfGame] = useState(sessionStorage.getItem("yearOfGame"));
+  const [monthOfGame, setMonthOfGame] = useState(sessionStorage.getItem("monthOfGame"));
+  const [dayOfGame, setDayOfGame] = useState(sessionStorage.getItem("dayOfGame"));
   const [gameCardHeader, setGameCardHeader] = useState("");
   const [noGameMessage, setNoGameMessage] = useState("");
 
@@ -123,16 +123,28 @@ function GameContainer(props) {
     getMostRecentGames();
   }, []);
 
+  useEffect(() => {
+    sessionStorage.setItem("yearOfGame", yearOfGame);
+  }, [yearOfGame]);
+
+  useEffect(() => {
+    sessionStorage.setItem("monthOfGame", monthOfGame);
+  }, [monthOfGame]);
+
+  useEffect(() => {
+    sessionStorage.setItem("dayOfGame", dayOfGame);
+  }, [dayOfGame]);
+
   const getGameMessage = () => {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
-    const addZeroToMonth = month < 10 ? `${`0${month}`}` : `${month}`;
-    const addZeroToDay = day < 10 ? `${`0${day}`}` : `${day}`;
-    const selectedDate = `${year}-${addZeroToMonth}-${addZeroToDay}`;
+    const addZeroToMonth = monthOfGame < 10 ? `${`0${monthOfGame}`}` : `${monthOfGame}`;
+    const addZeroToDay = dayOfGame < 10 ? `${`0${dayOfGame}`}` : `${dayOfGame}`;
+    const selectedDate = `${yearOfGame}-${addZeroToMonth}-${addZeroToDay}`;
     let gameDayMessage;
 
-    if (!`${year}` || !`${month}` || !`${day}`) {
-      gameDayMessage = "";
+    if (!`${yearOfGame}` || !`${monthOfGame}` || !`${dayOfGame}`) {
+      gameDayMessage = ""
     } else if (selectedDate > today) {
       gameDayMessage = `Games scheduled on ${selectedDate}`;
     } else if (selectedDate == yesterday) {
@@ -158,9 +170,9 @@ function GameContainer(props) {
     setNoGameMessage("");
     getGameMessage();
     event.preventDefault();
-    if (`${year}` && `${month}` && `${day}`) {
+    if (`${yearOfGame}` && `${monthOfGame}` && `${dayOfGame}`) {
       fetch(
-        `https://www.balldontlie.io/api/v1/games/?start_date=[]${year}-${month}-${day}&end_date=[]${year}-${month}-${day}&per_page=100`
+        `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
       )
         .then(response => response.json())
         .then(data => {
@@ -169,7 +181,7 @@ function GameContainer(props) {
           if (totalPages > 0) {
             for (let i = currentPage; i <= totalPages; i++) {
               fetch(
-                `https://www.balldontlie.io/api/v1/games/?start_date=[]${year}-${month}-${day}&end_date=[]${year}-${month}-${day}&per_page=100&page=${i}`
+                `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100&page=${i}`
               ).then(response => response.json());
               setGames(data.data);
             }
@@ -181,15 +193,15 @@ function GameContainer(props) {
   };
 
   const handleDayChange = event => {
-    setDay(event.target.value);
+    setDayOfGame(event.target.value);
   };
 
   const handleMonthChange = event => {
-    setMonth(event.target.value);
+    setMonthOfGame(event.target.value);
   };
 
   const handleYearChange = event => {
-    setYear(event.target.value);
+    setYearOfGame(event.target.value);
   };
 
   let gameResults;
@@ -210,17 +222,17 @@ function GameContainer(props) {
 
   const yearList = [];
   for (let i = 2020; i > 1984; i--) {
-    yearList.push({ year: i });
+    yearList.push({ yearOfGame: i });
   }
 
   const monthList = [];
   for (let x = 12; x > 0; x--) {
-    monthList.push({ month: x });
+    monthList.push({ monthOfGame: x });
   }
 
   const dayList = [];
   for (let y = 31; y > 0; y--) {
-    dayList.push({ day: y });
+    dayList.push({ dayOfGame: y });
   }
 
   const gameForm = (
@@ -229,9 +241,9 @@ function GameContainer(props) {
       monthList={monthList}
       dayList={dayList}
       handleSearch={handleSearch}
-      year={year}
-      month={month}
-      day={day}
+      yearOfGame={yearOfGame}
+      monthOfGame={monthOfGame}
+      dayOfGame={dayOfGame}
       handleDayChange={handleDayChange}
       handleMonthChange={handleMonthChange}
       handleYearChange={handleYearChange}
@@ -241,6 +253,7 @@ function GameContainer(props) {
   return (
     <div>
       {gameForm}
+      <h1>{gameCardHeader}</h1>
       <Container games={games}>
         <FlexScroll>{gameResults}</FlexScroll>
       </Container>
