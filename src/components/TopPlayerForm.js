@@ -10,6 +10,7 @@ const StatisticSelect = styled.select`
   font-size: 1.1rem;
   margin: 0.4rem;
   transition: all 0.5s;
+  margin-bottom: 1.5rem;
 
   :focus {
     outline: none;
@@ -33,7 +34,7 @@ const DateSelect = styled(StatisticSelect)``;
 const FormsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  text-align: center;
 
   @media screen and (min-width: 600px) {
     flex-direction: row;
@@ -44,44 +45,6 @@ const FormsContainer = styled.div`
 function TopPlayerForm(props) {
   return (
     <FormsContainer>
-      <form>
-        <DateSelect
-          name="yearList"
-          value={props.year}
-          onChange={props.handleYearChange}
-        >
-          {props.year === null ? <option selected>Year</option> : null}
-          {props.yearList.map(({ value, year }) => (
-            <DateOption value={value}>{year}</DateOption>
-          ))}
-        </DateSelect>
-
-        <DateSelect
-          name="monthList"
-          value={props.month}
-          onChange={props.handleMonthChange}
-        >
-          {props.month === null ? <option selected>Month</option> : null}
-          {props.monthList.map(({ value, month }) => (
-            <DateOption value={value}>{month}</DateOption>
-          ))}
-        </DateSelect>
-
-        <label>
-          <DateSelect
-            name="dayList"
-            value={props.day}
-            onChange={props.handleDayChange}
-          >
-            {props.day === null ? <option selected>Day</option> : null}
-            {props.dayList.map(({ value, day }) => (
-              <DateOption value={value}>{day}</DateOption>
-            ))}
-          </DateSelect>
-        </label>
-
-        <button onClick={props.handleSearch}>Search</button>
-      </form>
       <form>
         <label>Sort top players by:</label>
         <StatisticSelect
@@ -95,6 +58,51 @@ function TopPlayerForm(props) {
           <StatisticOption value="steals">Steals</StatisticOption>
           <StatisticOption value="blocks">Blocks</StatisticOption>
         </StatisticSelect>
+      </form>
+      <form>
+        <label>Search top players by:</label>
+        <DateSelect
+          name="yearList"
+          value={props.year}
+          onChange={props.handleYearChange}
+        >
+          <option selected hidden>
+            Year
+          </option>
+          {props.yearList.map(({ value, year }) => (
+            <DateOption value={value}>{year}</DateOption>
+          ))}
+        </DateSelect>
+
+        <DateSelect
+          name="monthList"
+          value={props.month}
+          onChange={props.handleMonthChange}
+        >
+          <option selected hidden>
+            Month
+          </option>
+          {props.monthList.map(({ value, month }) => (
+            <DateOption value={value}>{month}</DateOption>
+          ))}
+        </DateSelect>
+
+        <label>
+          <DateSelect
+            name="dayList"
+            value={props.day}
+            onChange={props.handleDayChange}
+          >
+            <option selected hidden>
+              Day
+            </option>
+            {props.dayList.map(({ value, day }) => (
+              <DateOption value={value}>{day}</DateOption>
+            ))}
+          </DateSelect>
+        </label>
+
+        <button onClick={props.handleSearch}>Search</button>
       </form>
     </FormsContainer>
   );
