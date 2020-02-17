@@ -15,12 +15,14 @@ const PlayerOuterContainer = styled.div`
 const FormContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 10rem;
 `;
 
 const Form = styled.form`
   display: flex;
   justify-content: center;
+  margin-top: ${props => (props.isClicked ? "0rem" : "10rem")};
+  transition: margin 0.5s;
   width: 75%;
 `;
 
@@ -30,9 +32,9 @@ const Input = styled.input`
 
 const GameLog = styled.h3`
   color: ${props => (!props.log ? `red` : `gray`)};
-  margin: 10px;
-  border-bottom: ${props => (!props.log ? `2px solid red` : "none")};
-  padding: 10px;
+  margin: 1rem;
+  border-bottom: ${props => (!props.log ? `0.2rem solid red` : "none")};
+  padding: 1rem;
 
   :hover {
     cursor: pointer;
@@ -41,9 +43,9 @@ const GameLog = styled.h3`
 
 const SeasonAverage = styled.h3`
   color: ${props => (!props.average ? `red` : `gray`)};
-  margin: 10px;
-  border-bottom: ${props => (!props.average ? `2px solid red` : "none")};
-  padding: 10px;
+  margin: 1rem;
+  border-bottom: ${props => (!props.average ? `0.2rem solid red` : "none")};
+  padding: 1rem;
 
   :hover {
     cursor: pointer;
@@ -54,7 +56,7 @@ const StatSwitchContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   width: 50%;
 
   @media screen and (max-width: 500px) {
@@ -71,6 +73,7 @@ function PlayerSearch() {
   const [playerGameLogs, setPlayerGameLogs] = useState([]);
   const [isGameLog, setIsGameLog] = useState(false);
   const [isSeasonAverage, setIsSeasonAverage] = useState(true);
+  const [isClicked, setIsClicked] = useState(false);
 
   const handlePlayerClick = value => {
     setPlayer([]);
@@ -89,6 +92,10 @@ function PlayerSearch() {
       .then(data => {
         setPlayerGameLogs(data.data);
       });
+  };
+
+  const slideUp = () => {
+    setIsClicked(true);
   };
 
   const handleChange = event => {
@@ -181,14 +188,14 @@ function PlayerSearch() {
   return (
     <div>
       <FormContainer>
-        <Form onSubmit={handleSearch}>
+        <Form onSubmit={handleSearch} isClicked={isClicked}>
           <Input
             type="text"
             name="input"
             value={input}
             onChange={handleChange}
           ></Input>
-          <button>Search</button>
+          <button onClick={slideUp}>Search</button>
         </Form>
       </FormContainer>
 
