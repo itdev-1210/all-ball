@@ -124,7 +124,14 @@ function TopPlayers() {
     const selectedDate = `${year}-${addZeroToMonth}-${addZeroToDay}`;
     let topPlayerDateMessage;
 
-    if (!`${year}` || !`${month}` || !`${day}`) {
+    if (
+      year === "null" ||
+      typeof year === "object" ||
+      month === "null" ||
+      typeof month === "object" ||
+      day === "null" ||
+      typeof day === "object"
+    ) {
       topPlayerDateMessage = "";
     } else if (selectedDate < today) {
       topPlayerDateMessage = `Top players from ${selectedDate}`;
