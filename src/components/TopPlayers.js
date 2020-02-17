@@ -37,6 +37,7 @@ function TopPlayers() {
   const [day, setDay] = useState(sessionStorage.getItem("day"));
   const [playerHeader, setPlayerHeader] = useState("");
   const [noPlayerMessage, setNoPlayerMessage] = useState("");
+  const [searchWarning, setSearchWarning] = useState("");
 
   const getMostRecentTopPlayers = () => {
     const tzOffset = new Date().getTimezoneOffset() * 350111; //offset in milliseconds
@@ -137,7 +138,18 @@ function TopPlayers() {
     setNoPlayerMessage("");
     getPlayerMessage();
     event.preventDefault();
+    if (
+      year === "null" ||
+      typeof year === "object" ||
+      month === "null" ||
+      typeof month === "object" ||
+      day === "null" ||
+      typeof day === "object"
+    ) {
+      return setSearchWarning("Cannot search without a year, month and day");
+    }
     if (`${year}` && `${month}` && `${day}`) {
+      setSearchWarning("");
       fetch(
         `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
       )
@@ -228,6 +240,7 @@ function TopPlayers() {
       handleDayChange={handleDayChange}
       handleMonthChange={handleMonthChange}
       handleYearChange={handleYearChange}
+      searchWarning={searchWarning}
     />
   );
 

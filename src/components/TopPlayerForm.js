@@ -60,6 +60,7 @@ function TopPlayerForm(props) {
         </StatisticSelect>
       </form>
       <form>
+        <p>{props.searchWarning}</p>
         <label>Search top players by:</label>
         <DateSelect
           name="yearList"
