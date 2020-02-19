@@ -54,21 +54,41 @@ function TopPlayers() {
       .then(data => {
         const currentPage = data.meta.current_page;
         const totalPages = data.meta.total_pages;
-        if (totalPages === 0) {
-          for (let i = currentPage; i <= 4; i++) {
-            fetch(
-              `https://www.balldontlie.io/api/v1/stats?dates[]=${twoDaysAgo}&per_page=100&page=` +
-                i
-            )
-              .then(response => response.json())
-              .then(data => {
-                setPlayers(players => players.concat(data.data));
-              });
+        if (
+          year === "null" ||
+          typeof year === "object" ||
+          month === "null" ||
+          typeof month === "object" ||
+          day === "null" ||
+          typeof day === "object"
+        ) {
+          if (totalPages === 0) {
+            for (let i = currentPage; i <= 5; i++) {
+              fetch(
+                `https://www.balldontlie.io/api/v1/stats?dates[]=${twoDaysAgo}&per_page=100&page=` +
+                  i
+              )
+                .then(response => response.json())
+                .then(data => {
+                  setPlayers(players => players.concat(data.data));
+                });
+            }
+          } else {
+            for (let i = currentPage; i <= totalPages; i++) {
+              fetch(
+                `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100&page=` +
+                  i
+              )
+                .then(response => response.json())
+                .then(data => {
+                  setPlayers(players => players.concat(data.data));
+                });
+            }
           }
         } else {
-          for (let i = currentPage; i <= totalPages; i++) {
+          for (let i = currentPage; i <= 5; i++) {
             fetch(
-              `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100&page=` +
+              `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
                 i
             )
               .then(response => response.json())
