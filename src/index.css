@@ -4,31 +4,31 @@ html {
 
 @media screen and (min-width: 0px) {
   html {
-    font-size: 0.5rem;
+    font-size: 5px;
   }
 }
 
 @media screen and (min-width: 600px) {
   html {
-    font-size: 0.7rem;
+    font-size: 8px;
   }
 }
 
 @media screen and (min-width: 1300px) {
   html {
-    font-size: 0.95rem;
+    font-size: 9px;
   }
 }
 
 @media screen and (min-width: 1600px) {
   html {
-    font-size: 1rem;
+    font-size: 10px;
   }
 }
 
 @media screen and (min-width: 1800px) {
   html {
-    font-size: 0.9rem;
+    font-size: 11px;
   }
 }
 
