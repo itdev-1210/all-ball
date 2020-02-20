@@ -10,16 +10,21 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  Bar
+  Bar,
+  LabelList
 } from "recharts";
 
 const TeamContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  margin: auto;
+  margin-bottom: 2rem;
+  width: 35rem;
 `;
 
-const TeamPoints = styled.h1`
+const TeamPoints = styled.h2`
   margin-left: 1.5rem;
+  font-size: 2rem;
 `;
 
 const AwayTeamContainer = styled.div`
@@ -28,16 +33,21 @@ const AwayTeamContainer = styled.div`
 
 const HomeTeamContainer = styled(AwayTeamContainer)``;
 
-const HomeTeamAbbreviation = styled.h1`
+const HomeTeamAbbreviation = styled.h2`
   color: ${props => props.homeTeamColor};
-  -webkit-text-stroke-width: 0.1rem;
+  font-size: 2rem;
+  -webkit-text-stroke-width: 0.04rem;
   -webkit-text-stroke-color: ${props => props.homeTeamSecondColor};
 `;
 
-const AwayTeamAbbreviation = styled.h1`
+const AwayTeamAbbreviation = styled(HomeTeamAbbreviation)`
   color: ${props => props.awayTeamColor};
-  -webkit-text-stroke-width: 0.1rem;
   -webkit-text-stroke-color: ${props => props.awayTeamSecondColor};
+`;
+
+const ChartContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 function TeamGameChart(props) {
@@ -78,9 +88,6 @@ function TeamGameChart(props) {
 
   const awayTeamSteals = awayTeamRoster.reduce((a, b) => a + b.stl, 0);
   const homeTeamSteals = homeTeamRoster.reduce((a, b) => a + b.stl, 0);
-
-  const awayTeamRebounds = awayTeamRoster.reduce((a, b) => a + b.reb, 0);
-  const homeTeamRebounds = homeTeamRoster.reduce((a, b) => a + b.reb, 0);
 
   const awayTeamOffRebounds = awayTeamRoster.reduce((a, b) => a + b.oreb, 0);
   const homeTeamOffRebounds = homeTeamRoster.reduce((a, b) => a + b.oreb, 0);
@@ -127,11 +134,6 @@ function TeamGameChart(props) {
       [homeTeam]: homeTeamSteals
     },
     {
-      name: "Total Rebounds",
-      [awayTeam]: awayTeamRebounds,
-      [homeTeam]: homeTeamRebounds
-    },
-    {
       name: "OFF Rebounds",
       [awayTeam]: awayTeamOffRebounds,
       [homeTeam]: homeTeamOffRebounds
@@ -175,15 +177,15 @@ function TeamGameChart(props) {
           <TeamPoints>{homeTeamPoints}</TeamPoints>
         </HomeTeamContainer>
       </TeamContainer>
-      <div style={{ marginLeft: "18%" }}>
-        <ResponsiveContainer width="80%" height={500}>
+      <ChartContainer>
+        <ResponsiveContainer width="95%" height={500}>
           <BarChart
             data={data}
             layout="vertical"
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <XAxis type="number" />
-            <YAxis type="category" dataKey="name" />
+            <YAxis type="category" dataKey="name" display={"flex"} />
             <Tooltip />
             <Legend />
             <Bar
@@ -191,16 +193,20 @@ function TeamGameChart(props) {
               fill={`${awayTeamColor}`}
               stroke={`${awayTeamSecondColor}`}
               strokeWidth={3}
-            />
+            >
+              <LabelList dataKey={`${awayTeam}`} position="right" />
+            </Bar>
             <Bar
               dataKey={`${homeTeam}`}
               fill={`${homeTeamColor}`}
               stroke={`${homeTeamSecondColor}`}
               strokeWidth={3}
-            />
+            >
+              <LabelList dataKey={`${homeTeam}`} position="right" />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </ChartContainer>
     </div>
   );
 }
