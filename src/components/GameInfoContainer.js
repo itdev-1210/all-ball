@@ -2,6 +2,32 @@ import React, { useState, useEffect } from "react";
 
 import TeamGameChart from "./TeamGameChart";
 import TeamGameLog from "./TeamGameLog";
+import styled from "styled-components";
+
+const ComparisonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  width: 50rem;
+`;
+
+const GameLog = styled.h3`
+  color: ${props => (!props.isTeamLog ? `red` : `gray`)};
+  border-bottom: ${props => (!props.isTeamLog ? `0.2rem solid red` : "none")};
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const TeamChart = styled.h3`
+  color: ${props => (!props.isTeamChart ? `red` : `gray`)};
+  border-bottom: ${props => (!props.isTeamChart ? `0.2rem solid red` : "none")};
+
+  :hover {
+    cursor: pointer;
+  }
+`;
 
 function GameInfoContainer(props) {
   const [selectedGame, setSelectedGame] = useState([]);
@@ -70,10 +96,22 @@ function GameInfoContainer(props) {
 
   return (
     <div>
-      <div>
-        <h3 onClick={toggleTeamGameLog}>Team Game Log</h3>
-        <h3 onClick={toggleTeamChart}>Team Comparison</h3>
-      </div>
+      <ComparisonContainer>
+        <GameLog
+          style={{ fontSize: "2rem" }}
+          onClick={toggleTeamGameLog}
+          isTeamLog={isTeamLog}
+        >
+          Team Game Log
+        </GameLog>
+        <TeamChart
+          style={{ fontSize: "2rem" }}
+          onClick={toggleTeamChart}
+          isTeamChart={isTeamChart}
+        >
+          Team Comparison
+        </TeamChart>
+      </ComparisonContainer>
       {chartOrLog}
     </div>
   );
