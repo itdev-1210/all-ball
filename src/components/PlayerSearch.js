@@ -21,7 +21,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-top: ${props => (props.isClicked ? "0rem" : "10rem")};
+  margin-top: ${props => (props.isClicked ? "-2rem" : "10rem")};
   transition: margin 0.5s;
   width: 75%;
 `;
@@ -32,20 +32,18 @@ const Input = styled.input`
 
 const GameLog = styled.h3`
   color: ${props => (!props.log ? `red` : `gray`)};
-  margin: 1rem;
   border-bottom: ${props => (!props.log ? `0.2rem solid red` : "none")};
-  padding: 1rem;
+  margin: 0rem 1rem;
+  padding: 0rem 0.5rem 0.7rem 0.5rem;
 
   :hover {
     cursor: pointer;
   }
 `;
 
-const SeasonAverage = styled.h3`
+const SeasonAverage = styled(GameLog)`
   color: ${props => (!props.average ? `red` : `gray`)};
-  margin: 1rem;
   border-bottom: ${props => (!props.average ? `0.2rem solid red` : "none")};
-  padding: 1rem;
 
   :hover {
     cursor: pointer;
@@ -56,11 +54,11 @@ const StatSwitchContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: auto;
-  margin-bottom: 2rem;
-  width: 50%;
+  margin-bottom: 3rem;
+  width: 90%;
 
-  @media screen and (max-width: 500px) {
-    width: 90%;
+  @media screen and (min-width: 500px) {
+    width: 50%;
   }
 `;
 

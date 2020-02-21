@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { teamHexFirstColors, teamHexSecondColors } from "../teamhexcolors";
 
 const NameContainer = styled.div`
+  color: #fefefe;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
 `;
 
 const TeamNameContainer = styled.div`
@@ -25,14 +26,19 @@ const LastName = styled(FirstName)`
   margin-left: 1.3rem;
 `;
 
+const TeamName = styled.h2`
+  font-size 2rem
+`;
+
 const ProportionContainer = styled(TeamNameContainer)``;
 
 const VerticalLine = styled.div`
   border-right: 0.2rem solid #fefefe;
+  color: #fefefe;
   height: 3rem;
-  margin-left: 2rem;
-  margin-right: 1rem;
-  margin-top: 1.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.2rem;
+  margin-top: 0.5rem;
 `;
 
 const BioInnerContainer = styled.div`
@@ -40,12 +46,12 @@ const BioInnerContainer = styled.div`
   border: solid 0.35rem ${props => props.playerCardSecondColor};
   border-radius: 1.5rem;
   color: #fefefe;
-  margin: auto;
-  margin-bottom: 2rem;
-  width: 50%;
+  margin: 4rem auto;
+  padding: 2rem 0rem;
+  width: 40rem;
 
-  @media screen and (max-width: 500px) {
-    width: 90%;
+  @media screen and (min-width: 600px) {
+    width: 50rem;
   }
 `;
 
@@ -74,7 +80,7 @@ function SelectedPlayer(props) {
         <LastName>{props.player.last_name}</LastName>
       </NameContainer>
       <TeamNameContainer>
-        <h2>{props.player.team.full_name}</h2>
+        <TeamName>{props.player.team.full_name}</TeamName>
       </TeamNameContainer>
       {heightAndWeight}
     </BioInnerContainer>
