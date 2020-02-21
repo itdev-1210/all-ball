@@ -4,31 +4,32 @@ html {
 
 @media screen and (min-width: 0px) {
   html {
-    font-size: 5px;
+    font-size: 7px;
   }
 }
 
 @media screen and (min-width: 600px) {
   html {
-    font-size: 8px;
-  }
-}
-
-@media screen and (min-width: 1300px) {
-  html {
     font-size: 9px;
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 900px) {
+  html {
+    font-size: 9.5px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
   html {
     font-size: 10px;
   }
 }
 
+
 @media screen and (min-width: 1800px) {
   html {
-    font-size: 11px;
+    font-size: 10.5px;
   }
 }
 
