@@ -70,7 +70,7 @@ function GameCard(props) {
   const homeTeam = props.gameData.home_team.abbreviation;
   const awayTeam = props.gameData.visitor_team.abbreviation;
   const awayScore = props.gameData.visitor_team_score;
-  const homeScore = props.gameData.visitor_team_score;
+  const homeScore = props.gameData.home_team_score;
 
   const homeTeamColor = teamHexFirstColors[homeTeam];
   const awayTeamColor = teamHexFirstColors[awayTeam];
