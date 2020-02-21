@@ -30,13 +30,14 @@ const HomeTeamContainer = styled.div`
 `;
 
 const HomeTeam = styled.h2`
-  color: #fefefe;
+  color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
 `;
 
 const HomeTeamScore = styled(HomeTeam)`
+  color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   margin-bottom: 0.3rem;
   margin-top: 0.2rem;
   margin-left: 1.5rem;
@@ -50,12 +51,15 @@ const AtSymbol = styled.span`
   margin-top: 0.1rem;
 `;
 
-const AwayTeam = styled(HomeTeam)`
+const AwayTeam = styled.h2`
+  color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
+  font-size: 1.3rem;
   margin-bottom: 0.1rem;
   margin-top: 0.92rem;
 `;
 
 const AwayTeamScore = styled(HomeTeamScore)`
+  color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
   margin-bottom: 0.1rem;
   margin-top: 1rem;
 `;
@@ -65,6 +69,8 @@ const AwayTeamContainer = styled(HomeTeamContainer)``;
 function GameCard(props) {
   const homeTeam = props.gameData.home_team.abbreviation;
   const awayTeam = props.gameData.visitor_team.abbreviation;
+  const awayScore = props.gameData.visitor_team_score;
+  const homeScore = props.gameData.visitor_team_score;
 
   const homeTeamColor = teamHexFirstColors[homeTeam];
   const awayTeamColor = teamHexFirstColors[awayTeam];
@@ -78,13 +84,13 @@ function GameCard(props) {
         }}
       >
         <AwayTeamContainer>
-          <AwayTeam> {props.gameData.visitor_team.abbreviation} </AwayTeam>
-          <AwayTeamScore> {props.gameData.visitor_team_score}</AwayTeamScore>
+          <AwayTeam awayTeam={awayTeam}> {awayTeam} </AwayTeam>
+          <AwayTeamScore awayTeam={awayTeam}> {awayScore}</AwayTeamScore>
         </AwayTeamContainer>
         <AtSymbol>@</AtSymbol>
         <HomeTeamContainer>
-          <HomeTeam>{props.gameData.home_team.abbreviation} </HomeTeam>
-          <HomeTeamScore>{props.gameData.home_team_score}</HomeTeamScore>
+          <HomeTeam homeTeam={homeTeam}>{homeTeam} </HomeTeam>
+          <HomeTeamScore homeTeam={homeTeam}>{homeScore}</HomeTeamScore>
         </HomeTeamContainer>
       </BoxScore>
     </CardContainer>
