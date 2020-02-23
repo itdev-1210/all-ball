@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Table = styled.table`
-  border: 1px solid #ddd;
+  border: 0.2rem solid #ddd;
+  font-size: 1.3rem
   margin: auto;
-  padding; 8px;
+  padding; 0.8rem;
   text-align: left;
   width: 75%;
 `;
@@ -23,7 +24,7 @@ const TableRow = styled.tr`
 const TableHeader = styled.th`
   background-color: lightgray;
   color: black;
-  padding: 8px;
+  padding: 0.8rem;
   position: sticky;
   top: 0;
 `;
@@ -43,18 +44,35 @@ const TableData = styled.td``;
 const TeamContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin: 3rem auto;
 `;
 
 const HomeTeamButton = styled.button`
-  border: 1px solid blue;
-  border-radius: 15px 0px 0px 15px;
-  padding: 5px 20px;
+  background-color: ${props => (!props.isHomeTeam ? `#4787ff` : `white`)};
+  border: 0.2rem solid #4787ff;
+  border-radius: 1.5rem 0rem 0rem 1.5rem;
+  color: ${props => (!props.isHomeTeam ? `#fffaf0` : `#4787ff`)};
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0.4rem 3rem;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const AwayTeamButton = styled.button`
-  border: 1px solid blue;
-  border-radius: 0px 15px 15px 0px;
-  padding: 5px 20px;
+  background-color: ${props => (!props.isAwayTeam ? `#4787ff` : `white`)};
+  border: 0.2rem solid #4787ff;
+  border-radius: 0rem 1.5rem 1.5rem 0rem;
+  color: ${props => (!props.isAwayTeam ? `#fffaf0` : `#4787ff`)};
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0.4rem 3rem;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const HomeTeamAbbreviation = styled.span``;
@@ -198,10 +216,10 @@ function TeamGameLog(props) {
   return (
     <div>
       <TeamContainer>
-        <HomeTeamButton onClick={toggleHomeTeamGameLog} team={isHomeTeam}>
+        <HomeTeamButton onClick={toggleHomeTeamGameLog} isHomeTeam={isHomeTeam}>
           <HomeTeamAbbreviation>{props.homeTeam}</HomeTeamAbbreviation>
         </HomeTeamButton>
-        <AwayTeamButton onClick={toggleAwayTeamGameLog}>
+        <AwayTeamButton onClick={toggleAwayTeamGameLog} isAwayTeam={isAwayTeam}>
           <AwayTeamAbbreviation>{props.awayTeam}</AwayTeamAbbreviation>
         </AwayTeamButton>
       </TeamContainer>
