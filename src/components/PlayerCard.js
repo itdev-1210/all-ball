@@ -42,6 +42,18 @@ const FGContainer = styled.div`
   justify-content: space-around;
   margin: auto;
   width: 60%;
+
+  @media screen and (min-width: 750px) {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1000px) {
+    width: 90%;
+  }
+
+  @media screen and (min-width: 1300px) {
+    width: 70%;
+  }
 `;
 
 const FG3Container = styled(FGContainer)``;
@@ -50,7 +62,12 @@ const RebContainer = styled(FGContainer)``;
 const FoulAndTOContainer = styled(FGContainer)``;
 
 const BackSideStat = styled.h3`
- margin 0.8rem;
+  margin: 0.8rem;
+
+  @media screen and (min-width: 750px) {
+    margin-right: 0rem;
+    margin-left: 0rem;
+  }
 `;
 function PlayerCard(props) {
   const teamAbbreviation = props.playerData.team.abbreviation;
@@ -94,13 +111,9 @@ function PlayerCard(props) {
             <LastName>{props.playerData.player.last_name}</LastName>
           </NameContainer>
           <h3>Points: {pts}</h3>
-
           <h3>Assists: {ast}</h3>
-
           <h3>Rebounds: {reb}</h3>
-
           <h3>Steals: {stl}</h3>
-
           <h3>Blocks: {blk}</h3>
         </FrontSide>
         <BackSide
