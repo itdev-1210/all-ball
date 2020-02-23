@@ -2,6 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 import { teamHexFirstColors, teamHexSecondColors } from "../teamhexcolors";
+import Flippy, { FrontSide, BackSide } from "react-flippy";
 
 const NameContainer = styled.div`
   display: flex;
@@ -15,12 +16,6 @@ const LastName = styled.h2`
 `;
 
 const TopFiveContainer = styled.div`
-  background: ${props => props.playerCardColor};
-  border: solid 0.35rem ${props => props.playerCardSecondColor}; 
-  border-radius 2rem;
-  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12),
-    0 0.1rem 0.2rem rgba(0, 0, 0, 0.24);
-  color: ${props => (props.teamAbbreviation === "SAS" ? "#222" : "#fefefe")};
   flex: 1;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -29,8 +24,6 @@ const TopFiveContainer = styled.div`
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   :hover {
-    box-shadow: 0 1.4rem 2.8rem rgba(0, 0, 0, 0.25),
-      0 1rem 1rem rgba(0, 0, 0, 0.22);
     cursor: pointer;
   }
 
@@ -40,10 +33,46 @@ const TopFiveContainer = styled.div`
   }
 `;
 
+const BackStatsContainer = styled.div`
+  margin-top: 0.9rem;
+`;
+
+const FGContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  width: 60%;
+`;
+
+const FG3Container = styled(FGContainer)``;
+const FTContainer = styled(FGContainer)``;
+const RebContainer = styled(FGContainer)``;
+const FoulAndTOContainer = styled(FGContainer)``;
+
+const BackSideStat = styled.h3`
+ margin 0.8rem;
+`;
 function PlayerCard(props) {
   const teamAbbreviation = props.playerData.team.abbreviation;
   const playerCardColor = teamHexFirstColors[teamAbbreviation];
   const playerCardSecondColor = teamHexSecondColors[teamAbbreviation];
+  const {
+    pts,
+    stl,
+    ast,
+    reb,
+    blk,
+    fg3a,
+    fg3m,
+    fga,
+    fgm,
+    fta,
+    ftm,
+    oreb,
+    dreb,
+    pf,
+    turnover
+  } = props.playerData;
 
   return (
     <TopFiveContainer
@@ -51,19 +80,62 @@ function PlayerCard(props) {
       playerCardSecondColor={playerCardSecondColor}
       teamAbbreviation={teamAbbreviation}
     >
-      <NameContainer>
-        <FirstName>{props.playerData.player.first_name} </FirstName>
-        <LastName>{props.playerData.player.last_name}</LastName>
-      </NameContainer>
-      <h3>Points: {props.playerData.pts}</h3>
+      <Flippy flipOnHover={false} flipOnClick={true} flipDirection="horizontal">
+        <FrontSide
+          style={{
+            background: playerCardColor,
+            borderRadius: "2rem",
+            border: `solid 0.35rem ${playerCardSecondColor}`,
+            color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`
+          }}
+        >
+          <NameContainer>
+            <FirstName>{props.playerData.player.first_name} </FirstName>
+            <LastName>{props.playerData.player.last_name}</LastName>
+          </NameContainer>
+          <h3>Points: {pts}</h3>
 
-      <h3>Assists: {props.playerData.ast}</h3>
+          <h3>Assists: {ast}</h3>
 
-      <h3>Rebounds: {props.playerData.reb}</h3>
+          <h3>Rebounds: {reb}</h3>
 
-      <h3>Steals: {props.playerData.stl}</h3>
+          <h3>Steals: {stl}</h3>
 
-      <h3>Blocks: {props.playerData.blk}</h3>
+          <h3>Blocks: {blk}</h3>
+        </FrontSide>
+        <BackSide
+          style={{
+            background: playerCardColor,
+            borderRadius: "2rem",
+            border: `solid 0.35rem ${playerCardSecondColor}`,
+            color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`,
+            fontSize: "1.1rem"
+          }}
+        >
+          <BackStatsContainer>
+            <FGContainer>
+              <BackSideStat>FGA: {fga} </BackSideStat>
+              <BackSideStat>FGM: {fgm}</BackSideStat>
+            </FGContainer>
+            <FG3Container>
+              <BackSideStat>FG3A: {fg3a}</BackSideStat>
+              <BackSideStat> FG3M: {fg3m}</BackSideStat>
+            </FG3Container>
+            <FTContainer>
+              <BackSideStat>FTA: {fta} </BackSideStat>
+              <BackSideStat>FTM: {ftm}</BackSideStat>
+            </FTContainer>
+            <RebContainer>
+              <BackSideStat>OREB: {oreb} </BackSideStat>
+              <BackSideStat>DREB: {dreb}</BackSideStat>
+            </RebContainer>
+            <FoulAndTOContainer>
+              <BackSideStat>PF: {pf} </BackSideStat>
+              <BackSideStat>TO: {turnover}</BackSideStat>
+            </FoulAndTOContainer>
+          </BackStatsContainer>
+        </BackSide>
+      </Flippy>
     </TopFiveContainer>
   );
 }
