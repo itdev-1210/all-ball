@@ -7,13 +7,22 @@ import styled from "styled-components";
 const ComparisonContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  font-size: 1.3rem;
   margin: auto;
-  width: 50rem;
+  margin-bottom: 0rem;
+  width: 35rem;
+
+  @media screen and (min-width: 600px) {
+    width: 50rem
+  }
 `;
 
 const GameLog = styled.h3`
   color: ${props => (!props.isTeamLog ? `red` : `gray`)};
   border-bottom: ${props => (!props.isTeamLog ? `0.2rem solid red` : "none")};
+  font-size: 1.3rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0.5rem;
 
   :hover {
     cursor: pointer;
@@ -23,6 +32,9 @@ const GameLog = styled.h3`
 const TeamChart = styled.h3`
   color: ${props => (!props.isTeamChart ? `red` : `gray`)};
   border-bottom: ${props => (!props.isTeamChart ? `0.2rem solid red` : "none")};
+  font-size: 1.3rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0.5rem;
 
   :hover {
     cursor: pointer;
@@ -98,14 +110,12 @@ function GameInfoContainer(props) {
     <div>
       <ComparisonContainer>
         <GameLog
-          style={{ fontSize: "2rem" }}
           onClick={toggleTeamGameLog}
           isTeamLog={isTeamLog}
         >
           Team Game Log
         </GameLog>
         <TeamChart
-          style={{ fontSize: "2rem" }}
           onClick={toggleTeamChart}
           isTeamChart={isTeamChart}
         >
