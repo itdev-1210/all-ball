@@ -76,11 +76,21 @@ const FlexScroll = styled.div`
   padding: 1.7rem 2rem;
 `;
 
+const GameHeader = styled.h1`
+  text-align: center;
+`;
+
 function GameContainer(props) {
   const [games, setGames] = useState([]);
-  const [yearOfGame, setYearOfGame] = useState(sessionStorage.getItem("yearOfGame"));
-  const [monthOfGame, setMonthOfGame] = useState(sessionStorage.getItem("monthOfGame"));
-  const [dayOfGame, setDayOfGame] = useState(sessionStorage.getItem("dayOfGame"));
+  const [yearOfGame, setYearOfGame] = useState(
+    sessionStorage.getItem("yearOfGame")
+  );
+  const [monthOfGame, setMonthOfGame] = useState(
+    sessionStorage.getItem("monthOfGame")
+  );
+  const [dayOfGame, setDayOfGame] = useState(
+    sessionStorage.getItem("dayOfGame")
+  );
   const [gameCardHeader, setGameCardHeader] = useState("");
   const [noGameMessage, setNoGameMessage] = useState("");
 
@@ -99,17 +109,34 @@ function GameContainer(props) {
       .then(response => response.json())
       .then(data => {
         const totalPages = data.meta.total_pages;
-        if (totalPages === 0) {
-          fetch(
-            `https://www.balldontlie.io/api/v1/games/?start_date=[]${twoDaysAgo}&end_date=[]${twoDaysAgo}&per_page=100`
-          )
-            .then(response => response.json())
-            .then(data => {
-              setGames(data.data);
-            });
+        if (
+          yearOfGame === "null" ||
+          typeof yearOfGame === "object" ||
+          monthOfGame === "null" ||
+          typeof monthOfGame === "object" ||
+          dayOfGame === "null" ||
+          typeof dayOfGame === "object"
+        ) {
+          if (totalPages === 0) {
+            fetch(
+              `https://www.balldontlie.io/api/v1/games/?start_date=[]${twoDaysAgo}&end_date=[]${twoDaysAgo}&per_page=100`
+            )
+              .then(response => response.json())
+              .then(data => {
+                setGames(data.data);
+              });
+          } else {
+            fetch(
+              `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100`
+            )
+              .then(response => response.json())
+              .then(data => {
+                setGames(data.data);
+              });
+          }
         } else {
           fetch(
-            `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100`
+            `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
           )
             .then(response => response.json())
             .then(data => {
@@ -138,13 +165,14 @@ function GameContainer(props) {
   const getGameMessage = () => {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
-    const addZeroToMonth = monthOfGame < 10 ? `${`0${monthOfGame}`}` : `${monthOfGame}`;
+    const addZeroToMonth =
+      monthOfGame < 10 ? `${`0${monthOfGame}`}` : `${monthOfGame}`;
     const addZeroToDay = dayOfGame < 10 ? `${`0${dayOfGame}`}` : `${dayOfGame}`;
     const selectedDate = `${yearOfGame}-${addZeroToMonth}-${addZeroToDay}`;
     let gameDayMessage;
 
     if (!`${yearOfGame}` || !`${monthOfGame}` || !`${dayOfGame}`) {
-      gameDayMessage = ""
+      gameDayMessage = "";
     } else if (selectedDate > today) {
       gameDayMessage = `Games scheduled on ${selectedDate}`;
     } else if (selectedDate == yesterday) {
@@ -250,10 +278,14 @@ function GameContainer(props) {
     />
   );
 
+  const gameSectionMessage = !noGameMessage
+    ? gameCardHeader
+    : noGameMessage;
+
   return (
     <div>
       {gameForm}
-      <h1>{gameCardHeader}</h1>
+      <GameHeader>{gameSectionMessage}</GameHeader>
       <Container games={games}>
         <FlexScroll>{gameResults}</FlexScroll>
       </Container>
