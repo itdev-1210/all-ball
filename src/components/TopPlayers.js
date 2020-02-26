@@ -38,8 +38,12 @@ function TopPlayers() {
   const [playerHeader, setPlayerHeader] = useState("");
   const [noPlayerMessage, setNoPlayerMessage] = useState("");
   const [searchWarning, setSearchWarning] = useState("");
+  const [areStatsAvailable, setAreStatsAvailable] = useState(
+    sessionStorage.getItem("areStatsAvailable")
+  );
 
   const getMostRecentTopPlayers = () => {
+    setNoPlayerMessage("");
     const tzOffset = new Date().getTimezoneOffset() * 350111; //offset in milliseconds
     const yesterday = new Date(Date.now() - 1 - tzOffset)
       .toISOString()
@@ -71,6 +75,7 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  setPlayerHeader(`Top players from ${year}-${month}-${day}`);
                 });
             }
           } else {
@@ -82,6 +87,7 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  setPlayerHeader("Top players from yesterday");
                 });
             }
           }
@@ -94,6 +100,11 @@ function TopPlayers() {
               .then(response => response.json())
               .then(data => {
                 setPlayers(players => players.concat(data.data));
+                areStatsAvailable === "true"
+                  ? setPlayerHeader(`Top players from ${year}-${month}-${day}`)
+                  : setNoPlayerMessage(
+                      "No stats available for games that have not been played"
+                    );
               });
           }
         }
@@ -193,9 +204,11 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  sessionStorage.setItem("areStatsAvailable", true);
                 });
             }
           } else {
+            sessionStorage.setItem("areStatsAvailable", false);
             setNoPlayerMessage(
               "No stats available for games that have not been played"
             );
