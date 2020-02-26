@@ -56,7 +56,7 @@ const Container = styled.div`
 
   @media screen and (min-width: 1400px) {
     justify-content: ${props =>
-      props.games.length >= 11 ? `normal` : "center"};
+      props.games.length >= 13 ? `normal` : "center"};
   }
 
   @media screen and (min-width: 1800px) {
@@ -93,6 +93,9 @@ function GameContainer(props) {
   );
   const [gameCardHeader, setGameCardHeader] = useState("");
   const [noGameMessage, setNoGameMessage] = useState("");
+  const [areGamesAvailable, setAreGamesAvailable] = useState(
+    sessionStorage.getItem("areGamesAvailable")
+  );
 
   const tzOffset = new Date().getTimezoneOffset() * 350111; // offset in milliseconds
   const yesterday = new Date(Date.now() - 1 - tzOffset)
@@ -124,6 +127,9 @@ function GameContainer(props) {
               .then(response => response.json())
               .then(data => {
                 setGames(data.data);
+                setGameCardHeader(
+                  `Top players from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
+                );
               });
           } else {
             fetch(
@@ -132,6 +138,7 @@ function GameContainer(props) {
               .then(response => response.json())
               .then(data => {
                 setGames(data.data);
+                setGameCardHeader("Game results from yesterday");
               });
           }
         } else {
@@ -141,6 +148,13 @@ function GameContainer(props) {
             .then(response => response.json())
             .then(data => {
               setGames(data.data);
+              areGamesAvailable === "true"
+                ? setGameCardHeader(
+                    `Top players from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
+                  )
+                : setNoGameMessage(
+                    "No stats available for games that have not been played"
+                  );
             });
         }
       });
@@ -212,8 +226,10 @@ function GameContainer(props) {
                 `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100&page=${i}`
               ).then(response => response.json());
               setGames(data.data);
+              sessionStorage.setItem("areGamesAvailable", true);
             }
           } else {
+            sessionStorage.setItem("areGamesAvailable", false);
             setNoGameMessage("No games scheduled. Try a different date!");
           }
         });
@@ -278,9 +294,7 @@ function GameContainer(props) {
     />
   );
 
-  const gameSectionMessage = !noGameMessage
-    ? gameCardHeader
-    : noGameMessage;
+  const gameSectionMessage = !noGameMessage ? gameCardHeader : noGameMessage;
 
   return (
     <div>
