@@ -5,10 +5,22 @@ import { teamHexFirstColors } from "../teamhexcolors";
 
 const CardContainer = styled.div`
   align-items: center;
-  display: flex;
+  display: inline;
   flex-wrap: nowrap;
   justify-content: center;
   padding: 1rem 0.2rem;
+`;
+
+const GameStatusContainer = styled.div`
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 700;
+  justify-content: center;
+`;
+
+const GameTime = styled.p`
+  margin-left: ${props =>
+    props.gameStatus.includes("Qtr") ? "0.5rem" : "0rem"};
 `;
 
 const BoxScore = styled.div`
@@ -79,6 +91,12 @@ function GameCard(props) {
 
   return (
     <CardContainer>
+      <GameStatusContainer gameStatus={props.gameData.status}>
+        <p>{props.gameData.status} </p>
+        <GameTime gameStatus={props.gameData.status}>
+          {props.gameData.time}
+        </GameTime>
+      </GameStatusContainer>
       <BoxScore
         onClick={props.onClick}
         style={{
