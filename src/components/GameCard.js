@@ -60,7 +60,7 @@ const AtSymbolContainer = styled.div`
 `;
 
 const AtSymbol = styled.span`
-  color: #fefefe
+  color: #fefefe;
   font-size: 0.9rem;
   font-weight: 700;
 `;
@@ -105,14 +105,18 @@ function GameCard(props) {
       >
         <AwayTeamContainer>
           <AwayTeam awayTeam={awayTeam}> {awayTeam} </AwayTeam>
-          <AwayTeamScore awayTeam={awayTeam}> {awayScore}</AwayTeamScore>
+          <AwayTeamScore awayTeam={awayTeam}>
+            {awayScore !== 0 && awayScore}
+          </AwayTeamScore>
         </AwayTeamContainer>
         <AtSymbolContainer>
           <AtSymbol>@</AtSymbol>
         </AtSymbolContainer>
         <HomeTeamContainer>
           <HomeTeam homeTeam={homeTeam}>{homeTeam} </HomeTeam>
-          <HomeTeamScore homeTeam={homeTeam}>{homeScore}</HomeTeamScore>
+          <HomeTeamScore homeTeam={homeTeam}>
+            {homeScore !== 0 && homeScore}
+          </HomeTeamScore>
         </HomeTeamContainer>
       </BoxScore>
     </CardContainer>
