@@ -1,42 +1,58 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import { teamHexFirstColors, teamHexSecondColors } from "../teamhexcolors";
+import styled from "styled-components";
 
 const PlayerInnerContainer = styled.div`
-    border: 1px solid black;
+  background-color: ${props => props.playerCardColor};
+  border: 0.2rem solid ${props => props.playerCardSecondColor};
+  color: ${props => (props.teamAbbreviation === "SAS" ? "#222" : "#fefefe")};
+  display: inline;
+  flex: 0 1 20%;
+  font-size: 1.2rem;
+  list-style: none;
+  margin: 0.3rem;
+  padding: 0.7rem;
+  text-align: center;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 414px) {
     display: flex;
-    flex: 0 1 20%;
     justify-content: center;
-    list-style: none;
-    margin: 3px;
-    padding: 20px 10px;
+    padding: 2rem 1rem;
+  }
+`;
 
-    @media screen and (max-width:414px) {
-        font-size: 12px;
-        display: inline;
-        text-align: center;
-        padding: 7px;
-    }
-`
-
-const PlayerFirstName = styled.div`
-`
+const PlayerFirstName = styled.div``;
 
 const PlayerLastName = styled.div`
-    margin-left: 5px;
+  margin-left: 0;
 
-    @media screen and (max-width:414px) {
-        margin-left: 0px;
-    }
-`
+  @media screen and (min-width: 414px) {
+    margin-left: 0.5rem;
+  }
+`;
 
 function PlayerSearchResults(props) {
-    return (
-        <PlayerInnerContainer onClick={props.onClick} style={{flex: '0 1 20%'}}>
-            <PlayerFirstName>{props.players.first_name}</PlayerFirstName>
-             <PlayerLastName>{props.players.last_name}</PlayerLastName>
-        </PlayerInnerContainer>
-    );
+  const teamAbbreviation = props.players.team.abbreviation;
+
+  const playerCardColor = teamHexFirstColors[teamAbbreviation];
+  const playerCardSecondColor = teamHexSecondColors[teamAbbreviation];
+
+  return (
+    <PlayerInnerContainer
+      onClick={props.onClick}
+      playerCardColor={playerCardColor}
+      playerCardSecondColor={playerCardSecondColor}
+      teamAbbreviation={teamAbbreviation}
+    >
+      <PlayerFirstName>{props.players.first_name}</PlayerFirstName>
+      <PlayerLastName>{props.players.last_name}</PlayerLastName>
+    </PlayerInnerContainer>
+  );
 }
 
 export default PlayerSearchResults;

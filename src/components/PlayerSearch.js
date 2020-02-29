@@ -10,6 +10,7 @@ const PlayerOuterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 1.6rem;
 `;
 
 const FormContainer = styled.div`
