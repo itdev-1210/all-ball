@@ -8,7 +8,7 @@ const CardContainer = styled.div`
   display: inline;
   flex-wrap: nowrap;
   justify-content: center;
-  padding: 1rem 0.2rem;
+  padding: 0rem 0.2rem 1rem 0.2rem;
 `;
 
 const GameStatusContainer = styled.div`
@@ -16,11 +16,17 @@ const GameStatusContainer = styled.div`
   font-size: 1.1rem;
   font-weight: 700;
   justify-content: center;
+  margin-top: 0rem;
 `;
 
 const GameTime = styled.p`
   margin-left: ${props =>
     props.gameStatus.includes("Qtr") ? "0.5rem" : "0rem"};
+  margin-top: 0rem;
+`;
+
+const GameStatus = styled.p`
+  margin-top: 0rem;
 `;
 
 const BoxScore = styled.div`
@@ -100,7 +106,7 @@ function GameCard(props) {
   return (
     <CardContainer>
       <GameStatusContainer gameStatus={props.gameData.status}>
-        <p>{props.gameData.status} </p>
+        <GameStatus>{props.gameData.status}</GameStatus>
         <GameTime gameStatus={props.gameData.status}>
           {props.gameData.time}
         </GameTime>
@@ -112,7 +118,7 @@ function GameCard(props) {
         }}
       >
         <AwayTeamContainer awayScore={awayScore}>
-          <AwayTeam awayTeam={awayTeam}> {awayTeam} </AwayTeam>
+          <AwayTeam awayTeam={awayTeam}>{awayTeam}</AwayTeam>
           <AwayTeamScore awayTeam={awayTeam} awayScore={awayScore}>
             {awayScore}
           </AwayTeamScore>
@@ -121,7 +127,7 @@ function GameCard(props) {
           <AtSymbol>@</AtSymbol>
         </AtSymbolContainer>
         <HomeTeamContainer homeScore={homeScore}>
-          <HomeTeam homeTeam={homeTeam}>{homeTeam} </HomeTeam>
+          <HomeTeam homeTeam={homeTeam}>{homeTeam}</HomeTeam>
           <HomeTeamScore homeTeam={homeTeam} homeScore={homeScore}>
             {homeScore}
           </HomeTeamScore>

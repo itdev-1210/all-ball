@@ -31,7 +31,7 @@ const NavBarList = styled.ul`
   display: flex;
   justify-content: center;
   list-style: none;
-  margin: 2.5rem auto 6rem;
+  margin: 2.5rem auto 4rem;
 `;
 
 const StyledLink = styled(Link)`
@@ -54,7 +54,9 @@ const LogoLink = styled.li`
   -webkit-text-stroke-width: 0.2rem;
 `;
 
-const SearchLink = styled(HomeLink)``;
+const SearchLink = styled(HomeLink)`
+  margin-left: -2rem;
+`;
 
 class NavBar extends Component {
   render() {

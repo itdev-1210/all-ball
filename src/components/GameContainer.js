@@ -19,7 +19,7 @@ const Container = styled.div`
 
   &::-webkit-scrollbar {
     background-color: #fffaf0;
-    height: 0.5rem;
+    height: 0.8rem;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -73,11 +73,12 @@ const FlexScroll = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: nowrap;
-  padding: 1.7rem 2rem;
+  padding: 0rem 2rem 1.7rem 2rem;
 `;
 
 const GameHeader = styled.h1`
   text-align: center;
+  margin: 3rem auto;
 `;
 
 function GameContainer(props) {
@@ -128,7 +129,7 @@ function GameContainer(props) {
               .then(data => {
                 setGames(data.data);
                 setGameCardHeader(
-                  `Top players from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
+                  `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                 );
               });
           } else {
@@ -150,7 +151,7 @@ function GameContainer(props) {
               setGames(data.data);
               areGamesAvailable === "true"
                 ? setGameCardHeader(
-                    `Top players from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
+                    `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                   )
                 : setNoGameMessage(
                     "No stats available for games that have not been played"
