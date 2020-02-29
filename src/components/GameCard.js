@@ -39,20 +39,24 @@ const BoxScore = styled.div`
 
 const HomeTeamContainer = styled.div`
   display: flex;
+  padding-left: ${props => props.homeScore === 0 && "1rem"};
+  padding-right: ${props => props.homeScore === 0 && "1rem"};
 `;
 
 const HomeTeam = styled.h2`
   color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
+  margin: auto;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
 `;
 
 const HomeTeamScore = styled(HomeTeam)`
   color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
+  display: ${props => props.homeScore === 0 && "none"};
   margin-bottom: 0.3rem;
-  margin-top: 0.2rem;
   margin-left: 1.5rem;
+  margin-top: 0.2rem;
 `;
 
 const AtSymbolContainer = styled.div`
@@ -68,14 +72,18 @@ const AtSymbol = styled.span`
 const AwayTeam = styled.h2`
   color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
+  margin: auto;
   margin-bottom: 0.1rem;
   margin-top: 0.92rem;
 `;
 
-const AwayTeamScore = styled(HomeTeamScore)`
+const AwayTeamScore = styled.h2`
   color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
+  display: ${props => props.awayScore === 0 && "none"};
+  font-size: 1.3rem;
   margin-bottom: 0.1rem;
-  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-top: 0.9rem;
 `;
 
 const AwayTeamContainer = styled(HomeTeamContainer)``;
@@ -103,19 +111,19 @@ function GameCard(props) {
           background: `linear-gradient(to bottom, ${awayTeamColor} 50%, ${homeTeamColor} 50%)`
         }}
       >
-        <AwayTeamContainer>
+        <AwayTeamContainer awayScore={awayScore}>
           <AwayTeam awayTeam={awayTeam}> {awayTeam} </AwayTeam>
-          <AwayTeamScore awayTeam={awayTeam}>
-            {awayScore !== 0 && awayScore}
+          <AwayTeamScore awayTeam={awayTeam} awayScore={awayScore}>
+            {awayScore}
           </AwayTeamScore>
         </AwayTeamContainer>
         <AtSymbolContainer>
           <AtSymbol>@</AtSymbol>
         </AtSymbolContainer>
-        <HomeTeamContainer>
+        <HomeTeamContainer homeScore={homeScore}>
           <HomeTeam homeTeam={homeTeam}>{homeTeam} </HomeTeam>
-          <HomeTeamScore homeTeam={homeTeam}>
-            {homeScore !== 0 && homeScore}
+          <HomeTeamScore homeTeam={homeTeam} homeScore={homeScore}>
+            {homeScore}
           </HomeTeamScore>
         </HomeTeamContainer>
       </BoxScore>
