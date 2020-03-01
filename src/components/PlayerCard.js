@@ -7,12 +7,25 @@ import Flippy, { FrontSide, BackSide } from "react-flippy";
 const NameContainer = styled.div`
   display: flex;
   justify-content: center;
+
+  @media screen and (min-width: 600px) and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
-const FirstName = styled.h2``;
+const FirstName = styled.h2`
+  @media screen and (min-width: 600px) and (max-width: 1000px) {
+    margin-bottom: 0.3rem;
+  }
+`;
 
 const LastName = styled.h2`
   margin-left: 0.6rem;
+
+  @media screen and (min-width: 600px) and (max-width: 1000px) {
+    margin-left: 0rem;
+    margin-top: 0rem;
+  }
 `;
 
 const TopFiveContainer = styled.div`
