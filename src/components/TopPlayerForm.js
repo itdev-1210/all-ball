@@ -2,6 +2,18 @@ import React from "react";
 
 import styled from "styled-components";
 
+const FormsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 7rem;
+  text-align: center;
+
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+`;
+
 const StatisticSelect = styled.select`
   background-color: #fffaf0;
   border: none;
@@ -27,20 +39,23 @@ const StatisticOption = styled.option`
   color: #333;
 `;
 
+const DateForm = styled.form`
+  margin-top: 2rem;
+
+  @media screen and (min-width: 600px) {
+    margin-top: 0rem;
+  }
+`;
+
+const SearchWarning = styled.p`
+  color: red;
+  display: ${props => props.warning.length === 0 && "none"};
+  margin-top: -2.2rem;
+`;
+
 const DateOption = styled(StatisticOption)``;
 
 const DateSelect = styled(StatisticSelect)``;
-
-const FormsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  @media screen and (min-width: 600px) {
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-`;
 
 function TopPlayerForm(props) {
   return (
@@ -59,8 +74,10 @@ function TopPlayerForm(props) {
           <StatisticOption value="blocks">Blocks</StatisticOption>
         </StatisticSelect>
       </form>
-      <form>
-        <p>{props.searchWarning}</p>
+      <DateForm>
+        <SearchWarning warning={props.searchWarning}>
+          {props.searchWarning}
+        </SearchWarning>
         <label>Search top players by:</label>
         <DateSelect
           name="yearList"
@@ -104,7 +121,7 @@ function TopPlayerForm(props) {
         </label>
 
         <button onClick={props.handleSearch}>Search</button>
-      </form>
+      </DateForm>
     </FormsContainer>
   );
 }
