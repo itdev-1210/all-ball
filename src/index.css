@@ -54,9 +54,6 @@ code {
 }
 
 @media screen and (max-width: 767px) {
-  input,
-  select,
-  option,
   select:active,
   input:active,
   textarea:active {
