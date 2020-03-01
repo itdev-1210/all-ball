@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Table = styled.table`
   border: 0.2rem solid #ddd;
-  font-size: 1.3rem
+  font-size: 1rem
   margin: auto;
   padding; 0.8rem;
   text-align: left;
@@ -26,20 +26,30 @@ const TableHeader = styled.th`
   color: black;
   padding: 0.8rem;
   position: sticky;
+  text-align: center;
   top: 0;
 `;
 
 const TableContainer = styled.div`
-  height: 350px;
+  height: 45rem;
   overflow: auto;
+  margin-left: 1.7rem;
+  margin-right: 1.7rem;
 
-  @media screen and (max-width: 1024px) {
-    margin-left: 17px;
-    margin-right: 17px;
+  @media screen and (min-width: 365px) {
+    height: 50rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-left: 0rem;
+    margin-right: 0rem;
   }
 `;
 
-const TableData = styled.td``;
+const TableData = styled.td`
+  padding: 2rem;
+  text-align: center;
+`;
 
 const TeamContainer = styled.div`
   display: flex;
@@ -133,13 +143,13 @@ function TeamGameLog(props) {
                 <TableData>{player.pts}</TableData>
                 <TableData>{player.fga}</TableData>
                 <TableData>{player.fgm}</TableData>
-                <TableData>{player.fg_pct}</TableData>
+                <TableData>{player.fg_pct}%</TableData>
                 <TableData>{player.fg3a}</TableData>
                 <TableData>{player.fg3m}</TableData>
-                <TableData>{player.fg3_pct}</TableData>
+                <TableData>{player.fg3_pct}%</TableData>
                 <TableData>{player.fta}</TableData>
                 <TableData>{player.ftm}</TableData>
-                <TableData>{player.ft_pct}</TableData>
+                <TableData>{player.ft_pct}%</TableData>
                 <TableData>{player.reb}</TableData>
                 <TableData>{player.oreb}</TableData>
                 <TableData>{player.dreb}</TableData>
