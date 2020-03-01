@@ -10,7 +10,7 @@ html {
 
 @media screen and (min-width: 350px) {
   html {
-    font-size: 8px;
+    font-size: 7.5px;
   }
 }
 
@@ -54,6 +54,9 @@ code {
 }
 
 @media screen and (max-width: 767px) {
+  input,
+  select,
+  option,
   select:active,
   input:active,
   textarea:active {
