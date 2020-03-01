@@ -8,6 +8,12 @@ const FormContainer = styled.div`
 
 const Form = styled.form``;
 
+const SearchWarning = styled.p`
+  color: red;
+  display: ${props => props.warning.length === 0 && "none"};
+  margin-top: -2.2rem;
+`;
+
 const DateOption = styled.option`
   background-color: #fffaf0;
   color: #333;
@@ -36,6 +42,10 @@ function GameForm(props) {
   return (
     <FormContainer>
       <Form>
+        <SearchWarning warning={props.searchWarning}>
+          {props.searchWarning}
+        </SearchWarning>
+        <label>Search for games by:</label>
         <DateSelect
           name="yearList"
           value={props.yearOfGame}

@@ -94,6 +94,7 @@ function GameContainer(props) {
   );
   const [gameCardHeader, setGameCardHeader] = useState("");
   const [noGameMessage, setNoGameMessage] = useState("");
+  const [searchWarning, setSearchWarning] = useState("");
   const [areGamesAvailable, setAreGamesAvailable] = useState(
     sessionStorage.getItem("areGamesAvailable")
   );
@@ -213,7 +214,18 @@ function GameContainer(props) {
     setNoGameMessage("");
     getGameMessage();
     event.preventDefault();
+    if (
+      yearOfGame === "null" ||
+      typeof yearOfGame === "object" ||
+      monthOfGame === "null" ||
+      typeof monthOfGame === "object" ||
+      dayOfGame === "null" ||
+      typeof dayOfGame === "object"
+    ) {
+      return setSearchWarning("Cannot search without a year, month and day");
+    }
     if (`${yearOfGame}` && `${monthOfGame}` && `${dayOfGame}`) {
+      setSearchWarning("");
       fetch(
         `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
       )
@@ -292,6 +304,7 @@ function GameContainer(props) {
       handleDayChange={handleDayChange}
       handleMonthChange={handleMonthChange}
       handleYearChange={handleYearChange}
+      searchWarning={searchWarning}
     />
   );
 
