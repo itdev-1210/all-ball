@@ -55,7 +55,8 @@ code {
 
 @media screen and (max-width: 767px) {
   select:active,
-  input:active,
+  select:focus,
+  input:focus,
   textarea:active {
     font-size: 16px;
   }
