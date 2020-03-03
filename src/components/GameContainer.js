@@ -154,9 +154,7 @@ function GameContainer(props) {
                 ? setGameCardHeader(
                     `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                   )
-                : setNoGameMessage(
-                    "No stats available for games that have not been played"
-                  );
+                : setNoGameMessage("No games scheduled for this date");
             });
         }
       });
@@ -187,16 +185,23 @@ function GameContainer(props) {
     const selectedDate = `${yearOfGame}-${addZeroToMonth}-${addZeroToDay}`;
     let gameDayMessage;
 
-    if (!`${yearOfGame}` || !`${monthOfGame}` || !`${dayOfGame}`) {
-      gameDayMessage = "";
+    if (
+      yearOfGame === "null" ||
+      typeof yearOfGame === "object" ||
+      monthOfGame === "null" ||
+      typeof monthOfGame === "object" ||
+      dayOfGame === "null" ||
+      typeof dayOfGame === "object"
+    ) {
+      gameDayMessage = "Game results from yesterday";
     } else if (selectedDate > today) {
-      gameDayMessage = `Games scheduled on ${selectedDate}`;
+      gameDayMessage = `Games scheduled on ${yearOfGame}-${monthOfGame}-${dayOfGame}`;
     } else if (selectedDate == yesterday) {
       gameDayMessage = `Game results from yesterday`;
     } else if (selectedDate == today) {
       gameDayMessage = `Games scheduled for today`;
     } else if (selectedDate < today) {
-      gameDayMessage = `Game results from ${selectedDate}`;
+      gameDayMessage = `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`;
     }
     setGameCardHeader(gameDayMessage);
   };
@@ -243,7 +248,7 @@ function GameContainer(props) {
             }
           } else {
             sessionStorage.setItem("areGamesAvailable", false);
-            setNoGameMessage("No games scheduled. Try a different date!");
+            setNoGameMessage("No games scheduled for this date");
           }
         });
     }
