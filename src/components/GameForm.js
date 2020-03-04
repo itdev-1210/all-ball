@@ -42,10 +42,11 @@ function GameForm(props) {
   return (
     <FormContainer>
       <Form>
+      <p>{sessionStorage.getItem("noDateExistsForGames")}</p>
         <SearchWarning warning={props.searchWarning}>
           {props.searchWarning}
         </SearchWarning>
-        <label>Search for games by:</label>
+        <label>Search games by:</label>
         <DateSelect
           name="yearList"
           value={props.yearOfGame}

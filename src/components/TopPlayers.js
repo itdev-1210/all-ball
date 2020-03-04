@@ -6,10 +6,10 @@ import styled from "styled-components";
 
 const OuterContainer = styled.div`
   display: flex;
-  padding-left: 11rem;
-  padding-right: 11rem;
   flex-wrap: wrap;
   flex-direction: column;
+  padding-left: 11rem;
+  padding-right: 11rem;
 
   @media screen and (min-width: 600px) {
     flex-direction: row;
@@ -43,6 +43,10 @@ function TopPlayers() {
   );
 
   const getMostRecentTopPlayers = () => {
+    if (sessionStorage.getItem("noDateExistsForPlayers") !== null) {
+      setSearchWarning("");
+      return sessionStorage.getItem("noDateExistsForPlayers");
+    }
     setNoPlayerMessage("");
     const tzOffset = new Date().getTimezoneOffset() * 350111; //offset in milliseconds
     const yesterday = new Date(Date.now() - 1 - tzOffset)
@@ -100,7 +104,8 @@ function TopPlayers() {
               .then(response => response.json())
               .then(data => {
                 setPlayers(players => players.concat(data.data));
-                areStatsAvailable === "true"
+                areStatsAvailable === "true" ||
+                sessionStorage.getItem("noDateExistsForPlayers") !== null
                   ? setPlayerHeader(`Top players from ${year}-${month}-${day}`)
                   : setNoPlayerMessage(
                       "No stats available for games that have not been played"
@@ -109,6 +114,18 @@ function TopPlayers() {
           }
         }
       });
+  };
+
+  const getDaysInMonth = () => {
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (daysInMonth < day) {
+      sessionStorage.setItem(
+        "noDateExistsForPlayers",
+        "This date does not exist"
+      );
+    } else {
+      sessionStorage.removeItem("noDateExistsForPlayers");
+    }
   };
 
   useEffect(() => {
@@ -155,7 +172,9 @@ function TopPlayers() {
     const selectedDate = `${year}-${addZeroToMonth}-${addZeroToDay}`;
     let topPlayerDateMessage;
 
-    if (
+    if (sessionStorage.getItem("noDateExistsForPlayers") !== null) {
+      topPlayerDateMessage = "";
+    } else if (
       year === "null" ||
       typeof year === "object" ||
       month === "null" ||
@@ -168,10 +187,10 @@ function TopPlayers() {
       topPlayerDateMessage = `Top players from ${selectedDate}`;
     }
     setPlayerHeader(topPlayerDateMessage);
-    setPlayers([]);
   };
 
   const handleSearch = event => {
+    getDaysInMonth();
     players.length = 0;
     setNoPlayerMessage("");
     getPlayerMessage();
@@ -185,6 +204,10 @@ function TopPlayers() {
       typeof day === "object"
     ) {
       return setSearchWarning("Cannot search without a year, month and day");
+    }
+    if (sessionStorage.getItem("noDateExistsForPlayers") !== null) {
+      setSearchWarning("");
+      return sessionStorage.getItem("noDateExistsForPlayers");
     }
     if (`${year}` && `${month}` && `${day}`) {
       setSearchWarning("");

@@ -105,6 +105,10 @@ function GameContainer(props) {
     .split("T")[0];
 
   const getMostRecentGames = () => {
+    if (sessionStorage.getItem("noDateExistsForGames") !== null) {
+      setSearchWarning("");
+      return sessionStorage.getItem("noDateExistsForGames");
+    }
     const twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2))
       .toISOString()
       .split("T")[0];
@@ -150,7 +154,8 @@ function GameContainer(props) {
             .then(response => response.json())
             .then(data => {
               setGames(data.data);
-              areGamesAvailable === "true"
+              areGamesAvailable === "true" ||
+              sessionStorage.getItem("noDateExistsForGames") !== null
                 ? setGameCardHeader(
                     `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                   )
@@ -158,6 +163,18 @@ function GameContainer(props) {
             });
         }
       });
+  };
+
+  const getDaysInMonth = () => {
+    const daysInMonth = new Date(yearOfGame, monthOfGame, 0).getDate();
+    if (daysInMonth < dayOfGame) {
+      sessionStorage.setItem(
+        "noDateExistsForGames",
+        "This date does not exist"
+      );
+    } else {
+      sessionStorage.removeItem("noDateExistsForGames");
+    }
   };
 
   useEffect(() => {
@@ -185,7 +202,9 @@ function GameContainer(props) {
     const selectedDate = `${yearOfGame}-${addZeroToMonth}-${addZeroToDay}`;
     let gameDayMessage;
 
-    if (
+    if (sessionStorage.getItem("noDateExistsForGames") !== null) {
+      gameDayMessage = "";
+    } else if (
       yearOfGame === "null" ||
       typeof yearOfGame === "object" ||
       monthOfGame === "null" ||
@@ -216,6 +235,7 @@ function GameContainer(props) {
   };
 
   const handleSearch = event => {
+    getDaysInMonth();
     setNoGameMessage("");
     getGameMessage();
     event.preventDefault();
@@ -228,6 +248,11 @@ function GameContainer(props) {
       typeof dayOfGame === "object"
     ) {
       return setSearchWarning("Cannot search without a year, month and day");
+    }
+    if (sessionStorage.getItem("noDateExistsForGames") !== null) {
+      games.length = 0;
+      setSearchWarning("");
+      return sessionStorage.getItem("noDateExistsForGames");
     }
     if (`${yearOfGame}` && `${monthOfGame}` && `${dayOfGame}`) {
       setSearchWarning("");

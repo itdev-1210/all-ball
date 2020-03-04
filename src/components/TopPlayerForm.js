@@ -5,7 +5,7 @@ import styled from "styled-components";
 const FormsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 7rem;
+  margin-top: 5rem;
   text-align: center;
 
   @media screen and (min-width: 600px) {
@@ -75,6 +75,7 @@ function TopPlayerForm(props) {
         </StatisticSelect>
       </form>
       <DateForm>
+        <p>{sessionStorage.getItem("noDateExistsForPlayers")}</p>
         <SearchWarning warning={props.searchWarning}>
           {props.searchWarning}
         </SearchWarning>
