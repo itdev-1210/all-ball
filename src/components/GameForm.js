@@ -24,9 +24,12 @@ const DateSelect = styled.select`
   border: none;
   border: 0.1rem solid #333;
   color: #333;
-  font-size: 1.1rem;
+  font-size: 16px;
   margin: 0.4rem;
+  padding: 2px;
   transition: all 0.5s;
+  transform-origin: top left;
+  transform: scale(0.8);
 
   :focus {
     outline: none;
