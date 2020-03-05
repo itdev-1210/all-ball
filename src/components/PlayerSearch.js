@@ -28,7 +28,15 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
+  font-size: 16px;
+  transition: all 0.5s;
+  transform-origin: top left;
+  transform: scale(0.8);
   width: 50%;
+
+  :focus {
+    outline: none;
+  }
 `;
 
 const GameLog = styled.h3`
