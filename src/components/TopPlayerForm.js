@@ -64,9 +64,9 @@ const DateSelect = styled(StatisticSelect)``;
 function TopPlayerForm(props) {
   return (
     <FormsContainer>
-      <form>
-        <label>Sort top players by:</label>
+      <form aria-label="Sort top players by points, assists, rebounds, steals, and blocks">
         <StatisticSelect
+          aria-label="List of points, assists, rebounds, steals, and blocks"
           name="statistic"
           value={props.statistic}
           onChange={props.handleStatisticChange}
@@ -78,13 +78,13 @@ function TopPlayerForm(props) {
           <StatisticOption value="blocks">Blocks</StatisticOption>
         </StatisticSelect>
       </form>
-      <DateForm>
+      <DateForm aria-label="Search for top players by date">
         <p>{sessionStorage.getItem("noDateExistsForPlayers")}</p>
         <SearchWarning warning={props.searchWarning}>
           {props.searchWarning}
         </SearchWarning>
-        <label>Search top players by:</label>
         <DateSelect
+          aria-label="List of years from 1985 to current year"
           name="yearList"
           value={props.year}
           onChange={props.handleYearChange}
@@ -96,8 +96,8 @@ function TopPlayerForm(props) {
             <DateOption value={value}>{year}</DateOption>
           ))}
         </DateSelect>
-
         <DateSelect
+          aria-label="List of Months represented as 1 to 12"
           name="monthList"
           value={props.month}
           onChange={props.handleMonthChange}
@@ -109,9 +109,9 @@ function TopPlayerForm(props) {
             <DateOption value={value}>{month}</DateOption>
           ))}
         </DateSelect>
-
         <label>
           <DateSelect
+            aria-label="Numbers of Days in a month represented as 1 to 31"
             name="dayList"
             value={props.day}
             onChange={props.handleDayChange}
@@ -124,7 +124,6 @@ function TopPlayerForm(props) {
             ))}
           </DateSelect>
         </label>
-
         <button onClick={props.handleSearch}>Search</button>
       </DateForm>
     </FormsContainer>

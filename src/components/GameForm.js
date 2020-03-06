@@ -44,13 +44,13 @@ const DateSelect = styled.select`
 function GameForm(props) {
   return (
     <FormContainer>
-      <Form>
-      <p>{sessionStorage.getItem("noDateExistsForGames")}</p>
+      <Form aria-label="Search for game results or upcoming games by date">
+        <p>{sessionStorage.getItem("noDateExistsForGames")}</p>
         <SearchWarning warning={props.searchWarning}>
           {props.searchWarning}
         </SearchWarning>
-        <label>Search games by:</label>
         <DateSelect
+          aria-label="List of years from 1985 to current year"
           name="yearList"
           value={props.yearOfGame}
           onChange={props.handleYearChange}
@@ -64,6 +64,7 @@ function GameForm(props) {
         </DateSelect>
 
         <DateSelect
+          aria-label="List of Months represented as 1 to 12"
           name="monthList"
           value={props.monthOfGame}
           onChange={props.handleMonthChange}
@@ -78,6 +79,7 @@ function GameForm(props) {
 
         <label>
           <DateSelect
+            aria-label="List of Days in a month represented as 1 to 31"
             name="dayList"
             value={props.dayOfGame}
             onChange={props.handleDayChange}
