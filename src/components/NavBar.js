@@ -54,9 +54,7 @@ const LogoLink = styled.li`
   -webkit-text-stroke-width: 0.2rem;
 `;
 
-const SearchLink = styled(HomeLink)`
-  margin-left: -2rem;
-`;
+const SearchLink = styled(HomeLink)``;
 
 class NavBar extends Component {
   render() {
