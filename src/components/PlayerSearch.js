@@ -29,6 +29,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   font-size: 16px;
+  border: 1px solid #333;
   transition: all 0.5s;
   transform-origin: top left;
   transform: scale(0.8);
@@ -68,6 +69,24 @@ const StatSwitchContainer = styled.div`
 
   @media screen and (min-width: 500px) {
     width: 50%;
+  }
+`;
+
+const SearchButton = styled.div`
+  background-color: #333;
+  border: 0.1rem solid #333
+  color: #fffaf0;
+  font-size: 16px;
+  padding: 2px;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  transition: all 0.5s;
+  transform-origin: top left;
+  transform: scale(0.8);
+
+  :hover {
+    cursor: pointer;
+    background-color: #5a5a5a;
   }
 `;
 
@@ -202,7 +221,7 @@ function PlayerSearch() {
             value={input}
             onChange={handleChange}
           ></Input>
-          <button onClick={slideUp}>Search</button>
+          <SearchButton onClick={slideUp}>Search</SearchButton>
         </Form>
       </FormContainer>
 

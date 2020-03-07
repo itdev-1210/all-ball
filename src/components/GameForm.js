@@ -41,6 +41,25 @@ const DateSelect = styled.select`
   }
 `;
 
+const SearchButton = styled.button`
+  background-color: #333;
+  border: 0.1rem solid #333
+  color: #fffaf0;
+  font-size: 16px;
+  margin: 0.4rem;
+  padding: 2px;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  transition: all 0.5s;
+  transform-origin: top left;
+  transform: scale(0.8);
+
+  :hover {
+    cursor: pointer;
+    background-color: #5a5a5a;
+  }
+  `;
+
 function GameForm(props) {
   return (
     <FormContainer>
@@ -93,7 +112,7 @@ function GameForm(props) {
           </DateSelect>
         </label>
 
-        <button onClick={props.handleSearch}>Search</button>
+        <SearchButton onClick={props.handleSearch}>Search</SearchButton>
       </Form>
     </FormContainer>
   );
