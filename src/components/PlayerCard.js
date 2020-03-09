@@ -56,7 +56,7 @@ const FGContainer = styled.div`
   margin: auto;
   width: 60%;
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 600px) {
     width: 100%;
   }
 
@@ -68,6 +68,15 @@ const FGContainer = styled.div`
     width: 70%;
   }
 `;
+
+const PointAndAssistContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ReboundAndStealContainer = styled(PointAndAssistContainer)``;
+
+const BlockContainer = styled(PointAndAssistContainer)``;
 
 const FG3Container = styled(FGContainer)``;
 const FTContainer = styled(FGContainer)``;
@@ -123,11 +132,17 @@ function PlayerCard(props) {
             <FirstName>{props.playerData.player.first_name} </FirstName>
             <LastName>{props.playerData.player.last_name}</LastName>
           </NameContainer>
-          <h3>Points: {pts}</h3>
-          <h3>Assists: {ast}</h3>
-          <h3>Rebounds: {reb}</h3>
-          <h3>Steals: {stl}</h3>
-          <h3>Blocks: {blk}</h3>
+          <PointAndAssistContainer>
+            <h3>PTS: {pts}</h3>
+            <h3>ASTS: {ast}</h3>
+          </PointAndAssistContainer>
+          <ReboundAndStealContainer>
+            <h3>REBS: {reb}</h3>
+            <h3>STLS: {stl}</h3>
+          </ReboundAndStealContainer>
+          <BlockContainer>
+            <h3>BLKS: {blk}</h3>
+          </BlockContainer>
         </FrontSide>
         <BackSide
           style={{
