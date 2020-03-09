@@ -99,7 +99,7 @@ function GameContainer(props) {
     sessionStorage.getItem("areGamesAvailable")
   );
 
-  const tzOffset = new Date().getTimezoneOffset() * 350111; // offset in milliseconds
+  const tzOffset = new Date().getTimezoneOffset() * 450111; // offset in milliseconds
   const yesterday = new Date(Date.now() - 1 - tzOffset)
     .toISOString()
     .split("T")[0];
