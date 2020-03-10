@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const FormsContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-top: 5rem;
+  flex-direction: column-reverse;
+  margin-top: 4rem;
   text-align: center;
 
   @media screen and (min-width: 600px) {
@@ -16,13 +16,13 @@ const FormsContainer = styled.div`
 
 const StatisticSelect = styled.select`
   background-color: #fffaf0;
-  border: none;
   border: 0.1rem solid #333;
   color: #333;
   font-size: 16px;
   margin: 0.4rem;
   transition: all 0.5s;
   margin-bottom: 1.5rem;
+  margin-top: 2.423rem;
   padding: 2px;
   transition: all 0.5s;
   transform-origin: top left;
@@ -45,21 +45,26 @@ const StatisticOption = styled.option`
 
 const DateForm = styled.form`
   margin-top: 2rem;
-
-  @media screen and (min-width: 600px) {
-    margin-top: 0rem;
-  }
+  position: relative;
 `;
 
-const SearchWarning = styled.p`
+const NoDateSelectedWarning = styled.p`
   color: red;
-  display: ${props => props.warning.length === 0 && "none"};
-  margin-top: -2.2rem;
+  font-size: 1.2rem;
+  margin: auto;
+  margin-bottom: 1rem;
+  position: absolute;
+  top: -2.4rem;
+  width: 100%;
 `;
+
+const NoDateExistsWarning = styled(NoDateSelectedWarning)``;
 
 const DateOption = styled(StatisticOption)``;
 
-const DateSelect = styled(StatisticSelect)``;
+const DateSelect = styled(StatisticSelect)`
+  margin: 0.4rem;
+`;
 
 const SearchButton = styled.button`
   background-color: #333;
@@ -72,7 +77,7 @@ const SearchButton = styled.button`
   padding-left: 1rem;
   transition: all 0.5s;
   transform-origin: top left;
-  transform: scale(0.8);
+  transform: scale(0.9);
 
   :hover {
     cursor: pointer;
@@ -81,6 +86,9 @@ const SearchButton = styled.button`
 `;
 
 function TopPlayerForm(props) {
+  const noDateExists = sessionStorage.getItem("noDateExistsForPlayers");
+  const noDateSelected = props.searchWarning;
+
   return (
     <FormsContainer>
       <form aria-label="Sort top players by points, assists, rebounds, steals, and blocks">
@@ -98,10 +106,12 @@ function TopPlayerForm(props) {
         </StatisticSelect>
       </form>
       <DateForm aria-label="Search for top players by date">
-        <p>{sessionStorage.getItem("noDateExistsForPlayers")}</p>
-        <SearchWarning warning={props.searchWarning}>
-          {props.searchWarning}
-        </SearchWarning>
+        <NoDateExistsWarning noDateExists={noDateExists}>
+          {noDateExists}
+        </NoDateExistsWarning>
+        <NoDateSelectedWarning noDateSelected={noDateSelected}>
+          {noDateSelected}
+        </NoDateSelectedWarning>
         <DateSelect
           aria-label="List of years from 1985 to current year"
           name="yearList"
