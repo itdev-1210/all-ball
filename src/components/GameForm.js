@@ -6,13 +6,21 @@ const FormContainer = styled.div`
   text-align: center;
 `;
 
-const Form = styled.form``;
-
-const SearchWarning = styled.p`
-  color: red;
-  display: ${props => props.warning.length === 0 && "none"};
-  margin-top: -2.2rem;
+const Form = styled.form`
+  position: relative;
 `;
+
+const NoDateSelectedWarning = styled.p`
+  color: red;
+  font-size: 1.2rem;
+  margin: auto;
+  margin-bottom: 1rem;
+  position: absolute;
+  top: -2.4rem;
+  width: 100%;
+`;
+
+const NoDateExistsWarning = styled(NoDateSelectedWarning)``;
 
 const DateOption = styled.option`
   background-color: #fffaf0;
@@ -52,7 +60,7 @@ const SearchButton = styled.button`
   padding-left: 1rem;
   transition: all 0.5s;
   transform-origin: top left;
-  transform: scale(0.8);
+  transform: scale(0.9);
 
   :hover {
     cursor: pointer;
@@ -61,13 +69,18 @@ const SearchButton = styled.button`
   `;
 
 function GameForm(props) {
+  const noDateExists = sessionStorage.getItem("noDateExistsForGames");
+  const noDateSelected = props.searchWarning;
+
   return (
     <FormContainer>
       <Form aria-label="Search for game results or upcoming games by date">
-        <p>{sessionStorage.getItem("noDateExistsForGames")}</p>
-        <SearchWarning warning={props.searchWarning}>
-          {props.searchWarning}
-        </SearchWarning>
+        <NoDateExistsWarning noDateExists={noDateExists}>
+          {noDateExists}
+        </NoDateExistsWarning>
+        <NoDateSelectedWarning noDateSelected={noDateSelected}>
+          {noDateSelected}
+        </NoDateSelectedWarning>
         <DateSelect
           aria-label="List of years from 1985 to current year"
           name="yearList"
