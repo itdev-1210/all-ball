@@ -72,7 +72,7 @@ const StatSwitchContainer = styled.div`
   }
 `;
 
-const SearchButton = styled.div`
+const SearchButton = styled.button`
   background-color: #333;
   border: 0.1rem solid #333
   color: #fffaf0;
@@ -152,6 +152,7 @@ function PlayerSearch() {
             )
               .then(response => response.json())
               .then(data => {
+                slideUp();
                 setPlayer(player => player.concat(data.data));
                 setLoading(false);
               });
@@ -221,7 +222,7 @@ function PlayerSearch() {
             value={input}
             onChange={handleChange}
           ></Input>
-          <SearchButton onClick={slideUp}>Search</SearchButton>
+          <SearchButton>Search</SearchButton>
         </Form>
       </FormContainer>
 
