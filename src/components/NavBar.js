@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const HomeLink = styled.li`
@@ -34,13 +34,36 @@ const NavBarList = styled.ul`
   margin: 2.5rem auto 4rem;
 `;
 
-const StyledLink = styled(Link)`
+const NavLogoLinkToHome = styled(NavLink)`
+  color: #333;
   text-decoration: none;
 
   :visited {
     color: #333;
     decoration: none;
     text-decoration: none;
+  }
+`;
+
+const NavLinkToHome = styled(NavLink)`
+  color: #333;
+  text-decoration: none;
+
+  :visited {
+    color: #333;
+    decoration: none;
+    text-decoration: none;
+  }
+
+  &.active {
+    direction: ltr;
+    list-style: disc;
+  }
+`;
+
+const NavLinkToPlayerSearch = styled(NavLinkToHome)`
+  &.active {
+    direction: rtl;
   }
 `;
 
@@ -61,15 +84,15 @@ class NavBar extends Component {
     return (
       <nav>
         <NavBarList>
-          <StyledLink to="/">
+          <NavLinkToHome to="/" exact>
             <HomeLink>home</HomeLink>
-          </StyledLink>
-          <StyledLink to="/">
+          </NavLinkToHome>
+          <NavLogoLinkToHome to="/" exact>
             <LogoLink>all ball</LogoLink>
-          </StyledLink>
-          <StyledLink to="/playersearch">
+          </NavLogoLinkToHome>
+          <NavLinkToPlayerSearch to="/playersearch" exact>
             <SearchLink>player search</SearchLink>
-          </StyledLink>
+          </NavLinkToPlayerSearch>
         </NavBarList>
       </nav>
     );
