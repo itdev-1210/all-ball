@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -24,6 +24,14 @@ const HomeLink = styled.li`
 
   :hover::after {
     transform: scaleX(1);
+  }
+
+  @media (hover: none) {
+    font-size: 1.5rem !important;
+
+    :after {
+      content: none;
+    }
   }
 `;
 
@@ -79,24 +87,22 @@ const LogoLink = styled.li`
 
 const SearchLink = styled(HomeLink)``;
 
-class NavBar extends Component {
-  render() {
-    return (
-      <nav>
-        <NavBarList>
-          <NavLinkToHome to="/" exact>
-            <HomeLink>home</HomeLink>
-          </NavLinkToHome>
-          <NavLogoLinkToHome to="/" exact>
-            <LogoLink>all ball</LogoLink>
-          </NavLogoLinkToHome>
-          <NavLinkToPlayerSearch to="/playersearch" exact>
-            <SearchLink>player search</SearchLink>
-          </NavLinkToPlayerSearch>
-        </NavBarList>
-      </nav>
-    );
-  }
+function NavBar() {
+  return (
+    <nav>
+      <NavBarList>
+        <NavLinkToHome to="/" exact>
+          <HomeLink>home</HomeLink>
+        </NavLinkToHome>
+        <NavLogoLinkToHome to="/" exact>
+          <LogoLink>all ball</LogoLink>
+        </NavLogoLinkToHome>
+        <NavLinkToPlayerSearch to="/playersearch" exact>
+          <SearchLink>player search</SearchLink>
+        </NavLinkToPlayerSearch>
+      </NavBarList>
+    </nav>
+  );
 }
 
 export default NavBar;
