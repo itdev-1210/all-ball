@@ -7,6 +7,7 @@ import Flippy, { FrontSide, BackSide } from "react-flippy";
 const NameContainer = styled.div`
   display: flex;
   justify-content: center;
+  letter-spacing: 0.06rem;
 
   @media screen and (min-width: 600px) and (max-width: 1000px) {
     flex-direction: column;
