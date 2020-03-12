@@ -8,6 +8,10 @@ const FormContainer = styled.div`
 
 const Form = styled.form`
   position: relative;
+
+  @media screen and (min-width: 1400px) {
+    margin-top: 8rem;
+  }
 `;
 
 const NoDateSelectedWarning = styled.p`
