@@ -9,6 +9,10 @@ const CardContainer = styled.div`
   flex-wrap: nowrap;
   justify-content: center;
   padding: 0rem 0.2rem 1rem 0.2rem;
+
+  @media screen and (min-width: 600px) {
+    padding: 0rem 0.4rem 1rem 0.4rem;
+  }
 `;
 
 const GameStatusContainer = styled.div`
@@ -52,6 +56,7 @@ const HomeTeamContainer = styled.div`
 const HomeTeam = styled.h2`
   color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
+  letter-spacing: ${props => props.homeTeam.includes('I') ? '0.2rem' : '0.08rem'}
   margin: auto;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
@@ -60,6 +65,7 @@ const HomeTeam = styled.h2`
 const HomeTeamScore = styled(HomeTeam)`
   color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   display: ${props => props.homeScore === 0 && "none"};
+  letter-spacing: 0rem;
   margin-bottom: 0.3rem;
   margin-left: 1.5rem;
   margin-top: 0.2rem;
@@ -78,6 +84,7 @@ const AtSymbol = styled.span`
 const AwayTeam = styled.h2`
   color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
+  letter-spacing: ${props => props.awayTeam.includes('I') ? '0.2rem' : '0.08rem'}
   margin: auto;
   margin-bottom: 0.1rem;
   margin-top: 0.92rem;
