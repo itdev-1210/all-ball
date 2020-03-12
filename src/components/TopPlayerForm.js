@@ -12,6 +12,14 @@ const FormsContainer = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
   }
+
+  @media screen and (min-width: 1100px) {
+    margin-top: 1rem;
+  }
+
+  @media screen and (min-width: 1400px) {
+    margin-top: 5rem;
+  }
 `;
 
 const StatisticSelect = styled.select`
