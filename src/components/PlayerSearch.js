@@ -11,6 +11,8 @@ const PlayerOuterContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 1.6rem;
+  transition: opacity 1s;
+  opacity: ${props => (props.isVisible ? "1" : "0")};
 `;
 
 const FormContainer = styled.div`
@@ -22,7 +24,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-top: ${props => (props.isClicked ? "-2rem" : "10rem")};
+  margin-top: ${props => (props.isClicked ? "-3rem" : "10rem")};
   transition: margin 0.5s;
   width: 75%;
 `;
@@ -34,10 +36,6 @@ const Input = styled.input`
   transform-origin: top left;
   transform: scale(0.8);
   width: 50%;
-
-  :focus {
-    outline: none;
-  }
 `;
 
 const GameLog = styled.h3`
@@ -100,6 +98,7 @@ function PlayerSearch() {
   const [isGameLog, setIsGameLog] = useState(false);
   const [isSeasonAverage, setIsSeasonAverage] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const handlePlayerClick = value => {
     setPlayer([]);
@@ -126,6 +125,7 @@ function PlayerSearch() {
 
   const handleChange = event => {
     setInput(event.target.value);
+    resetIsVisible();
   };
 
   const handleSearch = event => {
@@ -134,6 +134,7 @@ function PlayerSearch() {
     setPlayerBio([]);
     setPlayerStats([]);
     setPlayerGameLogs([]);
+    slideUp();
 
     if (input.length > 2) {
       fetch(
@@ -152,14 +153,24 @@ function PlayerSearch() {
             )
               .then(response => response.json())
               .then(data => {
-                slideUp();
                 setPlayer(player => player.concat(data.data));
                 setLoading(false);
+                fadePlayers();
               });
           }
         });
     }
   };
+
+  const fadePlayers = () => {
+    const timer = setTimeout(() => setIsVisible(true), 1000);
+    return () => clearTimeout(timer);
+  };
+
+  const resetIsVisible = () => {
+    setIsVisible(false);
+  };
+
   const toggleSeasonAverage = () => {
     if (!isGameLog) {
       setIsGameLog(prevState => !prevState);
@@ -226,7 +237,9 @@ function PlayerSearch() {
         </Form>
       </FormContainer>
 
-      <PlayerOuterContainer>{searchedPlayers}</PlayerOuterContainer>
+      <PlayerOuterContainer isVisible={isVisible}>
+        {searchedPlayers}
+      </PlayerOuterContainer>
       {chosenPlayer}
       {statSwitch}
       <div>{logsOrAverages}</div>
