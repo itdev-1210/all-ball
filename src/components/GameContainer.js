@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import GameCard from "./GameCard";
 import GameForm from "./GameForm";
+import GameCardSkeletonLoader from "./GameCardSkeletonLoader";
 
 const Container = styled.div`
   display: flex;
@@ -98,6 +99,7 @@ function GameContainer(props) {
   const [areGamesAvailable, setAreGamesAvailable] = useState(
     sessionStorage.getItem("areGamesAvailable")
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const tzOffset = new Date().getTimezoneOffset() * 450111; // offset in milliseconds
   const yesterday = new Date(Date.now() - 1 - tzOffset)
@@ -109,6 +111,7 @@ function GameContainer(props) {
       setSearchWarning("");
       return sessionStorage.getItem("noDateExistsForGames");
     }
+    setIsLoading(true);
     const twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2))
       .toISOString()
       .split("T")[0];
@@ -133,6 +136,7 @@ function GameContainer(props) {
               .then(response => response.json())
               .then(data => {
                 setGames(data.data);
+                setIsLoading(false);
                 setGameCardHeader(
                   `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                 );
@@ -144,6 +148,7 @@ function GameContainer(props) {
               .then(response => response.json())
               .then(data => {
                 setGames(data.data);
+                setIsLoading(false);
                 setGameCardHeader("Game results from yesterday");
               });
           }
@@ -154,6 +159,7 @@ function GameContainer(props) {
             .then(response => response.json())
             .then(data => {
               setGames(data.data);
+              setIsLoading(false);
               areGamesAvailable === "true" ||
               sessionStorage.getItem("noDateExistsForGames") !== null
                 ? setGameCardHeader(
@@ -255,6 +261,7 @@ function GameContainer(props) {
       return sessionStorage.getItem("noDateExistsForGames");
     }
     if (`${yearOfGame}` && `${monthOfGame}` && `${dayOfGame}`) {
+      setIsLoading(true);
       setSearchWarning("");
       fetch(
         `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
@@ -269,9 +276,11 @@ function GameContainer(props) {
                 `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100&page=${i}`
               ).then(response => response.json());
               setGames(data.data);
+              setIsLoading(false);
               sessionStorage.setItem("areGamesAvailable", true);
             }
           } else {
+            setIsLoading(false);
             sessionStorage.setItem("areGamesAvailable", false);
             setNoGameMessage("No games scheduled for this date");
           }
@@ -343,9 +352,11 @@ function GameContainer(props) {
   return (
     <div>
       {gameForm}
-      <GameHeader>{gameSectionMessage}</GameHeader>
+      <GameHeader>{!isLoading && gameSectionMessage}</GameHeader>
       <Container games={games}>
-        <FlexScroll>{gameResults}</FlexScroll>
+        <FlexScroll>
+          {isLoading ? <GameCardSkeletonLoader /> : gameResults}
+        </FlexScroll>
       </Container>
     </div>
   );
