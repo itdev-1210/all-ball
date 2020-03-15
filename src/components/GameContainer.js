@@ -111,7 +111,6 @@ function GameContainer(props) {
       setSearchWarning("");
       return sessionStorage.getItem("noDateExistsForGames");
     }
-    setIsLoading(true);
     const twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2))
       .toISOString()
       .split("T")[0];
@@ -130,6 +129,7 @@ function GameContainer(props) {
           typeof dayOfGame === "object"
         ) {
           if (totalPages === 0) {
+            setIsLoading(true);
             fetch(
               `https://www.balldontlie.io/api/v1/games/?start_date=[]${twoDaysAgo}&end_date=[]${twoDaysAgo}&per_page=100`
             )
@@ -142,6 +142,7 @@ function GameContainer(props) {
                 );
               });
           } else {
+            setIsLoading(true);
             fetch(
               `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100`
             )
@@ -153,6 +154,7 @@ function GameContainer(props) {
               });
           }
         } else {
+          areGamesAvailable === "true" && setIsLoading(true);
           fetch(
             `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
           )
