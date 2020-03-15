@@ -102,7 +102,7 @@ padding: 0.7rem 13rem;
 width: 2rem;
 `;
 
-const CardSkeleton = () => {
+const GameCardSkeletonLoader = () => {
   return (
     <div>
       <Header />
@@ -132,4 +132,4 @@ const CardSkeleton = () => {
   );
 };
 
-export default CardSkeleton;
+export default GameCardSkeletonLoader;
