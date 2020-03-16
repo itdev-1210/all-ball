@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import PlayerCard from "./PlayerCard";
 import TopPlayerForm from "./TopPlayerForm";
+import PlayerCardSkeletonLoader from "./PlayerCardSkeletonLoader";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
   padding-left: 11rem;
@@ -41,6 +43,7 @@ function TopPlayers() {
   const [areStatsAvailable, setAreStatsAvailable] = useState(
     sessionStorage.getItem("areStatsAvailable")
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const getMostRecentTopPlayers = () => {
     if (sessionStorage.getItem("noDateExistsForPlayers") !== null) {
@@ -71,6 +74,7 @@ function TopPlayers() {
           typeof day === "object"
         ) {
           if (totalPages === 0) {
+            setIsLoading(true);
             for (let i = currentPage; i <= 5; i++) {
               fetch(
                 `https://www.balldontlie.io/api/v1/stats?dates[]=${twoDaysAgo}&per_page=100&page=` +
@@ -79,11 +83,13 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  setIsLoading(false);
                   setPlayerHeader(`Top players from ${year}-${month}-${day}`);
                 });
             }
           } else {
             for (let i = currentPage; i <= totalPages; i++) {
+              setIsLoading(true);
               fetch(
                 `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100&page=` +
                   i
@@ -91,12 +97,14 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  setIsLoading(false);
                   setPlayerHeader("Top players from yesterday");
                 });
             }
           }
         } else {
           for (let i = currentPage; i <= 5; i++) {
+            areStatsAvailable === "true" && setIsLoading(true);
             fetch(
               `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
                 i
@@ -104,6 +112,7 @@ function TopPlayers() {
               .then(response => response.json())
               .then(data => {
                 setPlayers(players => players.concat(data.data));
+                setIsLoading(false);
                 areStatsAvailable === "true" ||
                 sessionStorage.getItem("noDateExistsForPlayers") !== null
                   ? setPlayerHeader(`Top players from ${year}-${month}-${day}`)
@@ -210,6 +219,7 @@ function TopPlayers() {
       return sessionStorage.getItem("noDateExistsForPlayers");
     }
     if (`${year}` && `${month}` && `${day}`) {
+      setIsLoading(true);
       setSearchWarning("");
       fetch(
         `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
@@ -227,10 +237,12 @@ function TopPlayers() {
                 .then(response => response.json())
                 .then(data => {
                   setPlayers(players => players.concat(data.data));
+                  setIsLoading(false);
                   sessionStorage.setItem("areStatsAvailable", true);
                 });
             }
           } else {
+            setIsLoading(false);
             sessionStorage.setItem("areStatsAvailable", false);
             setNoPlayerMessage(
               "No stats available for games that have not been played"
@@ -315,9 +327,13 @@ function TopPlayers() {
     <div>
       <div>
         {topPlayerForm}
-        <PlayerCardHeader>{playerSectionMessage}</PlayerCardHeader>
+        <PlayerCardHeader>
+          {!isLoading && playerSectionMessage}
+        </PlayerCardHeader>
       </div>
-      <OuterContainer>{highestPoints}</OuterContainer>
+      <OuterContainer>
+        {isLoading ? <PlayerCardSkeletonLoader /> : highestPoints}
+      </OuterContainer>
     </div>
   );
 }
