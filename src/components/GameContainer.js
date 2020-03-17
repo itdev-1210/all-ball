@@ -129,18 +129,7 @@ function GameContainer(props) {
           typeof dayOfGame === "object"
         ) {
           if (totalPages === 0) {
-            setIsLoading(true);
-            fetch(
-              `https://www.balldontlie.io/api/v1/games/?start_date=[]${twoDaysAgo}&end_date=[]${twoDaysAgo}&per_page=100`
-            )
-              .then(response => response.json())
-              .then(data => {
-                setGames(data.data);
-                setIsLoading(false);
-                setGameCardHeader(
-                  `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
-                );
-              });
+            setGameCardHeader("Search for game results by date");
           } else {
             setIsLoading(true);
             fetch(

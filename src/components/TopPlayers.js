@@ -55,9 +55,6 @@ function TopPlayers() {
     const yesterday = new Date(Date.now() - 1 - tzOffset)
       .toISOString()
       .split("T")[0];
-    const twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2))
-      .toISOString()
-      .split("T")[0];
     fetch(
       `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100`
     )
@@ -74,19 +71,7 @@ function TopPlayers() {
           typeof day === "object"
         ) {
           if (totalPages === 0) {
-            setIsLoading(true);
-            for (let i = currentPage; i <= 5; i++) {
-              fetch(
-                `https://www.balldontlie.io/api/v1/stats?dates[]=${twoDaysAgo}&per_page=100&page=` +
-                  i
-              )
-                .then(response => response.json())
-                .then(data => {
-                  setPlayers(players => players.concat(data.data));
-                  setIsLoading(false);
-                  setPlayerHeader(`Top players from ${year}-${month}-${day}`);
-                });
-            }
+            setPlayerHeader("Search for the best players by date");
           } else {
             for (let i = currentPage; i <= totalPages; i++) {
               setIsLoading(true);
