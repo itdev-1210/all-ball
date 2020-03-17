@@ -4,8 +4,10 @@ import styled from "styled-components";
 
 const Table = styled.table`
   border: 0.2rem solid #ddd;
-  font-size: 1rem
+  color: #333
+  font-size: 1.3rem
   margin: auto;
+  margin-bottom: 6rem;
   padding; 0.8rem;
   text-align: left;
   width: 75%;
@@ -17,7 +19,7 @@ const TableRow = styled.tr`
   }
 
   :hover {
-    background-color: #ddd;
+    background-color: #ffff6e;
   }
 `;
 
@@ -31,14 +33,9 @@ const TableHeader = styled.th`
 `;
 
 const TableContainer = styled.div`
-  height: 45rem;
   overflow: auto;
   margin-left: 1.7rem;
   margin-right: 1.7rem;
-
-  @media screen and (min-width: 365px) {
-    height: 50rem;
-  }
 
   @media screen and (min-width: 1024px) {
     margin-left: 0rem;
@@ -49,6 +46,12 @@ const TableContainer = styled.div`
 const TableData = styled.td`
   padding: 2rem;
   text-align: center;
+  white-space: nowrap;
+
+  :first-child {
+    font-weight: bold;
+    letter-spacing: 0.08rem;
+  }
 `;
 
 const TeamContainer = styled.div`
