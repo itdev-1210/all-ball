@@ -56,7 +56,8 @@ const HomeTeamContainer = styled.div`
 const HomeTeam = styled.h2`
   color: ${props => (props.homeTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
-  letter-spacing: ${props => props.homeTeam.includes('I') ? '0.2rem' : '0.08rem'}
+  letter-spacing: ${props =>
+    props.homeTeam.includes("I") ? "0.2rem" : "0.08rem"}
   margin: auto;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
@@ -84,7 +85,8 @@ const AtSymbol = styled.span`
 const AwayTeam = styled.h2`
   color: ${props => (props.awayTeam === "SAS" ? "#222" : "#fefefe")};
   font-size: 1.3rem;
-  letter-spacing: ${props => props.awayTeam.includes('I') ? '0.2rem' : '0.08rem'}
+  letter-spacing: ${props =>
+    props.awayTeam.includes("I") ? "0.2rem" : "0.08rem"}
   margin: auto;
   margin-bottom: 0.1rem;
   margin-top: 0.92rem;
@@ -102,18 +104,21 @@ const AwayTeamScore = styled.h2`
 const AwayTeamContainer = styled(HomeTeamContainer)``;
 
 function GameCard(props) {
+  const gameDate = props.gameData.date.split("T")[0];
   const homeTeam = props.gameData.home_team.abbreviation;
   const awayTeam = props.gameData.visitor_team.abbreviation;
   const awayScore = props.gameData.visitor_team_score;
   const homeScore = props.gameData.home_team_score;
-
+  const today = new Date().toISOString().split("T")[0];
   const homeTeamColor = teamHexFirstColors[homeTeam];
   const awayTeamColor = teamHexFirstColors[awayTeam];
 
   return (
     <CardContainer>
       <GameStatusContainer gameStatus={props.gameData.status}>
-        <GameStatus>{props.gameData.status}</GameStatus>
+        <GameStatus>
+          {gameDate < today && homeScore === 0 ? "DNP" : props.gameData.status}
+        </GameStatus>
         <GameTime gameStatus={props.gameData.status}>
           {props.gameData.time}
         </GameTime>
