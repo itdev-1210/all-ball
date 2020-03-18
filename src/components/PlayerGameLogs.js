@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 const Table = styled.table`
   border: 1px solid #ddd;
+  font-size: 1.3rem;
+  color: #333;
   margin: auto;
   padding; 8px;
   text-align: left;
@@ -16,7 +18,7 @@ const TableRow = styled.tr`
   }
 
   :hover {
-    background-color: #ddd;
+    background-color: #ffff6e;
   }
 `;
 
@@ -29,13 +31,24 @@ const TableHeader = styled.th`
 `;
 
 const TableContainer = styled.div`
-  height: 25rem;
-  margin: auto;
   overflow: auto;
-  width: 80%;
+  margin-left: 1.7rem;
+  margin-right: 1.7rem;
+
+  @media screen and (min-width: 1024px) {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
 `;
 
-const TableData = styled.td``;
+const TableData = styled.td`
+  white-space: nowrap;
+  padding: 2rem;
+
+  :first-child {
+    font-weight: bold;
+  }
+`;
 
 function PlayerGameLogs(props) {
   return (
