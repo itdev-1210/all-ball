@@ -137,12 +137,12 @@ function TeamGameChart(props) {
       [homeTeam]: homeTeamSteals
     },
     {
-      name: "O Rebounds",
+      name: "OFF Rebs",
       [awayTeam]: awayTeamOffRebounds,
       [homeTeam]: homeTeamOffRebounds
     },
     {
-      name: "D Rebounds",
+      name: "OFF Rebs",
       [awayTeam]: awayTeamDefRebounds,
       [homeTeam]: homeTeamDefRebounds
     },
