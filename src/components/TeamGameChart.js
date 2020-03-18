@@ -47,7 +47,10 @@ const AwayTeamAbbreviation = styled(HomeTeamAbbreviation)`
 
 const ChartContainer = styled.div`
   display: flex;
+  font-size: 1.3rem;
+  font-weight: bold;
   justify-content: center;
+  margin-bottom: 2rem;
 `;
 
 function TeamGameChart(props) {
@@ -134,12 +137,12 @@ function TeamGameChart(props) {
       [homeTeam]: homeTeamSteals
     },
     {
-      name: "OFF Rebounds",
+      name: "O Rebounds",
       [awayTeam]: awayTeamOffRebounds,
       [homeTeam]: homeTeamOffRebounds
     },
     {
-      name: "DEF Rebounds",
+      name: "D Rebounds",
       [awayTeam]: awayTeamDefRebounds,
       [homeTeam]: homeTeamDefRebounds
     },
