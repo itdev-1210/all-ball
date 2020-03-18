@@ -27,6 +27,7 @@ const TableHeader = styled.th`
   color: black;
   padding: 8px;
   position: sticky;
+  text-align: center;
   top: 0;
 `;
 

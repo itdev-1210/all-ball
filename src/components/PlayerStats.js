@@ -28,6 +28,7 @@ const TableHeader = styled.th`
   padding: 8px;
   position: sticky;
   top: 0;
+  text-align: center;
 `;
 
 const TableContainer = styled.div`
