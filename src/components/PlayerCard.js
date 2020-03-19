@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { teamHexFirstColors, teamHexSecondColors } from "../teamhexcolors";
 import Flippy, { FrontSide, BackSide } from "react-flippy";
+import flipIcon from "../assets/flipIcon.png";
 
 const NameContainer = styled.div`
   display: flex;
@@ -70,6 +71,21 @@ const FGContainer = styled.div`
   }
 `;
 
+const FlipIcon = styled.img`
+  bottom: 5px;
+  display: block;
+  filter: ${props =>
+    props.teamAbbreviation !== "SAS" &&
+    "invert(100%) sepia(0%) saturate(3167%) hue-rotate(130deg) brightness(95%) contrast(80%)"};
+  height: 2rem;
+  position: absolute;
+  transform: scaleX(-1);
+  right: 4px;
+  width: 2rem;
+  -webkit-transform: scaleX(-1);
+  z-index: 10;
+`;
+
 const PointAndAssistContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -129,6 +145,10 @@ function PlayerCard(props) {
             color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`
           }}
         >
+          <FlipIcon
+            teamAbbreviation={teamAbbreviation}
+            src={flipIcon}
+          ></FlipIcon>
           <NameContainer>
             <FirstName>{props.playerData.player.first_name} </FirstName>
             <LastName>{props.playerData.player.last_name}</LastName>
@@ -155,6 +175,10 @@ function PlayerCard(props) {
           }}
         >
           <BackStatsContainer>
+            <FlipIcon
+              teamAbbreviation={teamAbbreviation}
+              src={flipIcon}
+            ></FlipIcon>
             <FGContainer>
               <BackSideStat>FGA: {fga} </BackSideStat>
               <BackSideStat>FGM: {fgm}</BackSideStat>
