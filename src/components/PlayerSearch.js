@@ -163,7 +163,7 @@ function PlayerSearch() {
   };
 
   const fadePlayers = () => {
-    const timer = setTimeout(() => setIsVisible(true), 1000);
+    const timer = setTimeout(() => setIsVisible(true), 500);
     return () => clearTimeout(timer);
   };
 
