@@ -111,9 +111,6 @@ function GameContainer(props) {
       setSearchWarning("");
       return sessionStorage.getItem("noDateExistsForGames");
     }
-    const twoDaysAgo = new Date(new Date().setDate(new Date().getDate() - 2))
-      .toISOString()
-      .split("T")[0];
     fetch(
       `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}`
     )
