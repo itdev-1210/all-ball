@@ -49,14 +49,27 @@ const TopFiveContainer = styled.div`
 `;
 
 const BackStatsContainer = styled.div`
-  margin-top: 0.9rem;
+  margin-top: -0.15rem;
+  white-space: nowrap;
+
+  @media screen and (min-width: 360px) {
+    margin-top: 0.3rem;
+  }
+
+  @media screen and (min-width: 900px) {
+    margin-top: 0.7rem;
+  }
+
+  @media screen and (min-width: 1000px) {
+    margin-top: 0rem;
+  }
 `;
 
 const FGContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: auto;
-  width: 60%;
+  width: 90%;
 
   @media screen and (min-width: 600px) {
     width: 100%;
