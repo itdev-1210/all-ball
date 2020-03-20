@@ -133,7 +133,8 @@ function PlayerSearch() {
   };
 
   const handleChange = event => {
-    setInput(event.target.value);
+    let validatedValue = event.target.value.replace(/[^A-z]/gi, "");
+    setInput(validatedValue);
     resetIsVisible();
   };
 
@@ -241,6 +242,7 @@ function PlayerSearch() {
             name="input"
             value={input}
             onChange={handleChange}
+            maxLength="25"
           ></Input>
           <SearchButton>Search</SearchButton>
         </Form>
