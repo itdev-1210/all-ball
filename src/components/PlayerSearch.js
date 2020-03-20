@@ -24,8 +24,9 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-top: ${props => (props.isClicked ? "-3rem" : "10rem")};
-  transition: margin 0.5s;
+  transform: ${props =>
+    props.isClicked ? "translateY(0rem)" : "translateY(12rem)"};
+  transition: transform 0.5s;
   width: 75%;
 `;
 
