@@ -75,6 +75,7 @@ const SearchButton = styled.button`
   border: 0.1rem solid #333
   color: #fffaf0;
   font-size: 16px;
+  margin-left: -4rem;
   padding: 2px;
   padding-right: 1rem;
   padding-left: 1rem;
@@ -85,6 +86,14 @@ const SearchButton = styled.button`
   :hover {
     cursor: pointer;
     background-color: #5a5a5a;
+  }
+
+  @media screen and (min-width: 600px) {
+    margin-left:-7rem
+  }
+
+  @media screen and (min-width: 1300px) {
+    margin-left:-9rem
   }
 `;
 
