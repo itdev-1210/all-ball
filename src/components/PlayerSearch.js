@@ -244,6 +244,7 @@ function PlayerSearch() {
             value={input}
             onChange={handleChange}
             maxLength="25"
+            placeholder="Search for players by name"
           ></Input>
           <SearchButton>Search</SearchButton>
         </Form>
