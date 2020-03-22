@@ -29,7 +29,7 @@ const PlayerCardHeader = styled.h1`
   text-align: center;
 `;
 
-function TopPlayers() {
+function TopPlayers(props) {
   const [players, setPlayers] = useState([]);
   const [statistic, setStatistic] = useState(
     sessionStorage.getItem("statistic") || "points"
@@ -84,6 +84,11 @@ function TopPlayers() {
                   setPlayers(players => players.concat(data.data));
                   setIsLoading(false);
                   setPlayerHeader("Top players from yesterday");
+                })
+                .catch(error => {
+                  if (error) {
+                    redirectError();
+                  }
                 });
             }
           }
@@ -104,8 +109,18 @@ function TopPlayers() {
                   : setNoPlayerMessage(
                       "No stats available for games that have not been played"
                     );
+              })
+              .catch(error => {
+                if (error) {
+                  redirectError();
+                }
               });
           }
+        }
+      })
+      .catch(error => {
+        if (error) {
+          redirectError();
         }
       });
   };
@@ -224,6 +239,11 @@ function TopPlayers() {
                   setPlayers(players => players.concat(data.data));
                   setIsLoading(false);
                   sessionStorage.setItem("areStatsAvailable", true);
+                })
+                .catch(error => {
+                  if (error) {
+                    redirectError();
+                  }
                 });
             }
           } else {
@@ -233,12 +253,22 @@ function TopPlayers() {
               "No stats available for games that have not been played"
             );
           }
+        })
+        .catch(error => {
+          if (error) {
+            redirectError();
+          }
         });
     }
   };
 
-  let highestPoints;
+  const redirectError = () => {
+    props.history.push({
+      pathname: "/error"
+    });
+  };
 
+  let highestPoints;
   if (statistic === "assists") {
     highestPoints = []
       .concat(players)

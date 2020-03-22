@@ -137,6 +137,11 @@ function GameContainer(props) {
                 setGames(data.data);
                 setIsLoading(false);
                 setGameCardHeader("Game results from yesterday");
+              })
+              .catch(error => {
+                if (error) {
+                  redirectError();
+                }
               });
           }
         } else {
@@ -154,7 +159,17 @@ function GameContainer(props) {
                     `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`
                   )
                 : setNoGameMessage("No games scheduled for this date");
+            })
+            .catch(error => {
+              if (error) {
+                redirectError();
+              }
             });
+        }
+      })
+      .catch(error => {
+        if (error) {
+          redirectError();
         }
       });
   };
@@ -272,8 +287,19 @@ function GameContainer(props) {
             sessionStorage.setItem("areGamesAvailable", false);
             setNoGameMessage("No games scheduled for this date");
           }
+        })
+        .catch(error => {
+          if (error) {
+            redirectError();
+          }
         });
     }
+  };
+
+  const redirectError = () => {
+    props.history.push({
+      pathname: "/error"
+    });
   };
 
   const handleDayChange = event => {
