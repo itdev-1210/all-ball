@@ -63,8 +63,23 @@ const SearchButton = styled.button`
   }
 `;
 
+const NoPlayerMessageContainer = styled.div`
+  color: #333;
+  display: flex;
+  font-size: 1.3rem;
+  font-weight: bold;
+  justify-content: center;
+  transform: translateY(15rem);
+`;
+
 function PlayerSearchForm(props) {
-  const { handleSearch, isClicked, handleChange, input } = props;
+  const {
+    handleSearch,
+    isClicked,
+    handleChange,
+    input,
+    noPlayerMessage
+  } = props;
 
   return (
     <div>
@@ -81,6 +96,7 @@ function PlayerSearchForm(props) {
           <SearchButton>Search</SearchButton>
         </Form>
       </FormContainer>
+      <NoPlayerMessageContainer>{noPlayerMessage}</NoPlayerMessageContainer>
     </div>
   );
 }
