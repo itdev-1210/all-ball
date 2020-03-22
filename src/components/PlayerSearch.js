@@ -59,6 +59,7 @@ function PlayerSearch() {
   const [isSeasonAverage, setIsSeasonAverage] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [noPlayerMessage, setNoPlayerMessage] = useState("");
 
   const handlePlayerClick = value => {
     setPlayer([]);
@@ -91,11 +92,11 @@ function PlayerSearch() {
 
   const handleSearch = event => {
     event.preventDefault();
+    resetNoPlayerMessage();
     setPlayer([]);
     setPlayerBio([]);
     setPlayerStats([]);
     setPlayerGameLogs([]);
-    slideUp();
 
     if (input.length > 2) {
       fetch(
@@ -107,6 +108,11 @@ function PlayerSearch() {
 
           const currentPage = data.meta.current_page;
           const totalPages = data.meta.total_pages;
+          if (totalPages === 0) {
+            return setNoPlayerMessage(
+              `No players found with the name '${input}'`
+            );
+          }
           for (let i = currentPage; i <= totalPages; i++) {
             fetch(
               `https://www.balldontlie.io/api/v1/players?search=${input}&per_page=100&page=` +
@@ -114,6 +120,7 @@ function PlayerSearch() {
             )
               .then(response => response.json())
               .then(data => {
+                slideUp();
                 setPlayer(player => player.concat(data.data));
                 setLoading(false);
                 fadePlayers();
@@ -126,6 +133,10 @@ function PlayerSearch() {
   const fadePlayers = () => {
     const timer = setTimeout(() => setIsVisible(true), 500);
     return () => clearTimeout(timer);
+  };
+
+  const resetNoPlayerMessage = () => {
+    setNoPlayerMessage("");
   };
 
   const resetIsVisible = () => {
@@ -190,6 +201,7 @@ function PlayerSearch() {
       isClicked={isClicked}
       handleChange={handleChange}
       input={input}
+      noPlayerMessage={noPlayerMessage}
     />
   );
 
