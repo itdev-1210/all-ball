@@ -69,7 +69,8 @@ const NoPlayerMessageContainer = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
   justify-content: center;
-  transform: translateY(15rem);
+  transform: ${props =>
+    props.isClicked ? "translateY(3rem)" : "translateY(15rem)"};
 `;
 
 function PlayerSearchForm(props) {
@@ -96,7 +97,9 @@ function PlayerSearchForm(props) {
           <SearchButton>Search</SearchButton>
         </Form>
       </FormContainer>
-      <NoPlayerMessageContainer>{noPlayerMessage}</NoPlayerMessageContainer>
+      <NoPlayerMessageContainer isClicked={isClicked}>
+        {noPlayerMessage}
+      </NoPlayerMessageContainer>
     </div>
   );
 }
