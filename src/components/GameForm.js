@@ -66,7 +66,6 @@ const SearchButton = styled.button`
   color: #fffaf0;
   font-size: 1.7rem;
   margin: 0.4rem;
-  padding: 2px;
   padding-right: 1rem;
   padding-left: 1rem;
   transition: background-color 0.5s;
