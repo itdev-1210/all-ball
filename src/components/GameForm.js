@@ -76,6 +76,7 @@ const SearchButton = styled.button`
   }
   
   @media (hover: none) {
+    background-color: #333 !important;
     font-size: 16px;
     transition: all 0.5s;
     transform-origin: top left;
