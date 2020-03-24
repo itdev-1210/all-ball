@@ -85,7 +85,7 @@ function PlayerSearch() {
   };
 
   const handleChange = event => {
-    let validatedValue = event.target.value.replace(/[^A-z]/gi, "");
+    let validatedValue = event.target.value.replace(/[^A-z ]/gi, "");
     setInput(validatedValue);
     resetIsVisible();
   };
