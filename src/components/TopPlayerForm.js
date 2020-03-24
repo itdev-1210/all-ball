@@ -24,17 +24,14 @@ const FormsContainer = styled.div`
 
 const StatisticSelect = styled.select`
   background-color: #fffaf0;
+  border: none;
   border: 0.1rem solid #333;
   color: #333;
-  font-size: 16px;
-  margin: 0.4rem;
-  transition: all 0.5s;
+  font-size: 1.7rem
   margin-bottom: 1.5rem;
-  margin-top: 2.423rem;
+  margin-top: 2.5rem;
   padding: 2px;
-  transition: all 0.5s;
-  transform-origin: top left;
-  transform: scale(0.8);
+  transition: background-color 0.5s;
 
   :focus {
     outline: none;
@@ -43,6 +40,14 @@ const StatisticSelect = styled.select`
   :hover {
     cursor: pointer;
     background-color: #e6e1d8;
+  }
+
+  @media (hover: none) {
+    font-size: 16px;
+    margin-left: 0rem;
+    margin-right: 0rem;
+    transform-origin: top left;
+    transform: scale(0.8);
   }
 `;
 
@@ -71,25 +76,30 @@ const NoDateExistsWarning = styled(NoDateSelectedWarning)``;
 const DateOption = styled(StatisticOption)``;
 
 const DateSelect = styled(StatisticSelect)`
-  margin: 0.4rem;
+  margin: 0.4rem 0.8rem;
 `;
 
 const SearchButton = styled.button`
   background-color: #333;
   border: 0.1rem solid #333
   color: #fffaf0;
-  font-size: 16px;
+  font-size: 1.7rem;
   margin: 0.4rem;
   padding: 2px;
   padding-right: 1rem;
   padding-left: 1rem;
-  transition: all 0.5s;
-  transform-origin: top left;
-  transform: scale(0.9);
+  transition: background-color 0.5s;
 
   :hover {
     cursor: pointer;
     background-color: #5a5a5a;
+  }
+
+  @media (hover: none) {
+    font-size: 16px;
+    transition: all 0.5s;
+    transform-origin: top left;
+    transform: scale(0.8);
   }
 `;
 

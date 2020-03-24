@@ -36,12 +36,10 @@ const DateSelect = styled.select`
   border: none;
   border: 0.1rem solid #333;
   color: #333;
-  font-size: 16px;
-  margin: 0.4rem;
+  font-size: 1.7rem
+  margin: 0.4rem 0.8rem;
   padding: 2px;
-  transition: all 0.5s;
-  transform-origin: top left;
-  transform: scale(0.8);
+  transition: background-color 0.5s;
 
   :focus {
     outline: none;
@@ -51,24 +49,38 @@ const DateSelect = styled.select`
     cursor: pointer;
     background-color: #e6e1d8;
   }
+
+  @media (hover: none) {
+    font-size: 16px;
+    margin-left: 0rem;
+    margin-right: 0rem;
+    transition: all 0.5s;
+    transform-origin: top left;
+    transform: scale(0.8);
+  }
 `;
 
 const SearchButton = styled.button`
   background-color: #333;
   border: 0.1rem solid #333
   color: #fffaf0;
-  font-size: 16px;
+  font-size: 1.7rem;
   margin: 0.4rem;
   padding: 2px;
   padding-right: 1rem;
   padding-left: 1rem;
-  transition: all 0.5s;
-  transform-origin: top left;
-  transform: scale(0.9);
+  transition: background-color 0.5s;
 
   :hover {
     cursor: pointer;
     background-color: #5a5a5a;
+  }
+  
+  @media (hover: none) {
+    font-size: 16px;
+    transition: all 0.5s;
+    transform-origin: top left;
+    transform: scale(0.8);
   }
   `;
 
