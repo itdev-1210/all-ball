@@ -1,7 +1,7 @@
 export const teamHexFirstColors = {
   ATL: "#E03A3E",
-  BKN: "#000000",
   BOS: "#007A33",
+  BKN: "#000000",
   CHA: "#1D1160",
   CHI: "#CE1141",
   CLE: "#860038",
@@ -33,8 +33,8 @@ export const teamHexFirstColors = {
 
 export const teamHexSecondColors = {
   ATL: "#C1D32F",
-  BKN: "#FFFFFF",
   BOS: "#BA9653",
+  BKN: "#FFFFFF",
   CHA: "#00788C",
   CHI: "#000000",
   CLE: "#FDBB30",
