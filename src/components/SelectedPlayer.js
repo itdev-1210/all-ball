@@ -26,17 +26,19 @@ const LastName = styled(FirstName)`
 `;
 
 const TeamName = styled.h2`
-  font-size 2rem
+  font-size: 2rem;
 `;
 
-const ProportionContainer = styled(TeamNameContainer)``;
+const ProportionContainer = styled(TeamNameContainer)`
+  font-size: 1.3rem;
+`;
 
 const VerticalLine = styled.div`
   border-right: 0.2rem solid;
   height: 3rem;
   margin-left: 1.5rem;
   margin-right: 1.2rem;
-  margin-top: 0.5rem;
+  margin-top: 0.9rem;
 `;
 
 const BioInnerContainer = styled.div`
