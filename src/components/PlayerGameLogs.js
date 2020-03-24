@@ -1,5 +1,6 @@
 import React from "react";
 
+import { teamHexFirstColors } from "../teamhexcolors";
 import styled from "styled-components";
 
 const Table = styled.table`
@@ -89,11 +90,24 @@ function PlayerGameLogs(props) {
             )
             .map((stats, id) => {
               const gameDate = stats.game.date.split("T")[0];
+              const homeTeamId = stats.game.home_team_id;
+              const awayTeamId = stats.game.visitor_team_id;
+
+              let opponentAbbreviation;
+              if (stats.game.visitor_team_id === stats.team.id) {
+                opponentAbbreviation = Object.keys(teamHexFirstColors)[
+                  homeTeamId - 1
+                ];
+              } else if (stats.game.home_team_id === stats.team.id) {
+                opponentAbbreviation = Object.keys(teamHexFirstColors)[
+                  awayTeamId - 1
+                ];
+              }
               return (
                 <TableRow key={id}>
                   <TableData>{gameDate}</TableData>
                   <TableData>{stats.team.abbreviation}</TableData>
-                  <TableData>{stats.game.home_team_id}</TableData>
+                  <TableData>{opponentAbbreviation}</TableData>
                   <TableData>{stats.min}</TableData>
                   <TableData>{stats.pts}</TableData>
                   <TableData>{stats.fga}</TableData>
