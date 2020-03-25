@@ -9,7 +9,8 @@ const PlayerInnerContainer = styled.div`
   color: ${props => (props.teamAbbreviation === "SAS" ? "#222" : "#fefefe")};
   display: inline;
   flex: 0 1 20%;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
   list-style: none;
   margin: 0.3rem;
   padding: 0.7rem;
