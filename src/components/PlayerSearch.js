@@ -38,6 +38,7 @@ const SeasonAverage = styled(GameLog)`
 
 const StatSwitchContainer = styled.div`
   display: flex;
+  font-size: 1.35rem;
   justify-content: center;
   margin: auto;
   margin-bottom: 3rem;
