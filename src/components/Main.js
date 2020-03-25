@@ -1,18 +1,26 @@
-import React, { Component } from 'react';
+import React from "react";
 
-import TopPlayers from './TopPlayers'
-import GameContainer from './GameContainer'
+import TopPlayers from "./TopPlayers";
+import GameContainer from "./GameContainer";
 
-class Main extends Component {
-    state = {}
-    render() {
-        return (
-            <div>
-                <GameContainer />
-                <TopPlayers />
-            </div>
-        );
+function Main() {
+  document.body.addEventListener("mousedown", () => {
+    document.body.classList.add("using-mouse");
+  });
+
+  // Re-enable focus styling when Tab is pressed
+  document.body.addEventListener("keydown", event => {
+    if (event.keyCode === 9) {
+      document.body.classList.remove("using-mouse");
     }
+  });
+
+  return (
+    <div>
+      <GameContainer />
+      <TopPlayers />
+    </div>
+  );
 }
 
 export default Main;
