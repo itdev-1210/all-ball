@@ -69,6 +69,11 @@ const Container = styled.div`
       props.games.length > 12 ? `normal` : "center"};
   }
 
+  @media screen and (min-width: 1220px) {
+    justify-content: ${props =>
+      props.games.length > 13 ? `normal` : "center"};
+  }
+
   @media screen and (min-width: 1400px) {
     justify-content: ${props =>
       props.games.length >= 14 ? `normal` : "center"};
