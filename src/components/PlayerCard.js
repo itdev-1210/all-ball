@@ -52,7 +52,7 @@ const BackStatsContainer = styled.div`
   margin-top: -0.15rem;
   white-space: nowrap;
 
-  @media screen and (min-width: 360px) {
+  @media screen and (min-width: 376px) {
     margin-top: 0.3rem;
   }
 
