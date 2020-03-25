@@ -41,10 +41,6 @@ const DateSelect = styled.select`
   padding: 2px;
   transition: background-color 0.5s;
 
-  :focus {
-    outline: none;
-  }
-
   :hover {
     cursor: pointer;
     background-color: #e6e1d8;
