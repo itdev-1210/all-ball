@@ -90,6 +90,8 @@ const AwayTeam = styled.h2`
   margin: auto;
   margin-bottom: 0.1rem;
   margin-top: 0.92rem;
+  padding: ${props =>
+    props.awayScore === 0 && props.homeScore === 0 && "0rem 1.6rem"}
 `;
 
 const AwayTeamScore = styled.h2`
@@ -130,7 +132,13 @@ function GameCard(props) {
         }}
       >
         <AwayTeamContainer awayScore={awayScore}>
-          <AwayTeam awayTeam={awayTeam}>{awayTeam}</AwayTeam>
+          <AwayTeam
+            awayTeam={awayTeam}
+            awayScore={awayScore}
+            homeScore={homeScore}
+          >
+            {awayTeam}
+          </AwayTeam>
           <AwayTeamScore awayTeam={awayTeam} awayScore={awayScore}>
             {awayScore}
           </AwayTeamScore>
