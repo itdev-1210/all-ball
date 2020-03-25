@@ -42,27 +42,41 @@ const Container = styled.div`
     justify-content: ${props => (props.games.length > 4 ? `normal` : "center")};
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 500px) {
     justify-content: ${props => (props.games.length > 5 ? `normal` : "center")};
   }
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 600px) {
     justify-content: ${props => (props.games.length > 6 ? `normal` : "center")};
+  }
+
+  @media screen and (min-width: 700px) {
+    justify-content: ${props =>
+      props.games.length >= 6 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 768px) {
+    justify-content: ${props => (props.games.length > 8 ? `normal` : "center")};
   }
 
   @media screen and (min-width: 1000px) {
     justify-content: ${props =>
-      props.games.length >= 9 ? `normal` : "center"};
+      props.games.length >= 12 ? `normal` : "center"};
+  }
+
+  @media screen and (min-width: 1175px) {
+    justify-content: ${props =>
+      props.games.length > 12 ? `normal` : "center"};
   }
 
   @media screen and (min-width: 1400px) {
     justify-content: ${props =>
-      props.games.length >= 13 ? `normal` : "center"};
+      props.games.length >= 14 ? `normal` : "center"};
   }
 
-  @media screen and (min-width: 1800px) {
+  @media screen and (min-width: 1500px) {
     justify-content: ${props =>
-      props.games.length > 12 ? `normal` : "center"};
+      props.games.length > 14 ? `normal` : "center"};
   }
 
   @media screen and (min-width: 2230px) {
