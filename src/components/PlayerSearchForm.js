@@ -46,7 +46,7 @@ const SearchButton = styled.button`
   font-size: 1.7rem;
   padding-right: 1rem;
   padding-left: 1rem;
-  transition: all 0.5s;
+  transition: background-color 0.5s;
 
   :hover {
     cursor: pointer;
