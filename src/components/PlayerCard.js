@@ -36,11 +36,6 @@ const TopFiveContainer = styled.div`
   margin-right: 0.5rem;
   margin-top: 1rem;
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-  :hover {
-    cursor: pointer;
-  }
 
   @media screen and (min-width: 1500px) {
     margin-left: 2rem;
@@ -136,7 +131,7 @@ function PlayerCard(props) {
       teamAbbreviation={teamAbbreviation}
     >
       <Flippy flipOnHover={false} flipOnClick={true} flipDirection="horizontal">
-        <FrontSide
+        <FrontSide className="frontAndBackCard"
           style={{
             background: playerCardColor,
             borderRadius: "2rem",
@@ -164,7 +159,7 @@ function PlayerCard(props) {
             <h3>BLKS: {blk}</h3>
           </BlockContainer>
         </FrontSide>
-        <BackSide
+        <BackSide className="frontAndBackCard"
           style={{
             background: playerCardColor,
             borderRadius: "2rem",

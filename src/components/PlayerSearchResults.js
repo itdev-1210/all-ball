@@ -18,6 +18,7 @@ const PlayerInnerContainer = styled.div`
 
   :hover {
     cursor: pointer;
+    opacity: 0.8;
   }
 
   @media screen and (min-width: 414px) {

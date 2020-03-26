@@ -57,3 +57,8 @@ body {
 body.using-mouse :focus {
   outline: none;
 }
+
+.frontAndBackCard:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
