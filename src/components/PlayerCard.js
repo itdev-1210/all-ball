@@ -101,11 +101,15 @@ const RebContainer = styled(FGContainer)``;
 const FoulAndTOContainer = styled(FGContainer)``;
 
 const BackSideStat = styled.h3`
-  margin: 0.8rem;
+  margin: 0.8rem 3rem;
 
-  @media screen and (min-width: 1100px) {
-    margin-left: 2rem;
-    margin-right: 2rem;
+  @media screen and (min-width: 600px) {
+    margin: 0.8rem;
+  }
+
+  @media screen and (min-width: 950px) {
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
 `;
 
