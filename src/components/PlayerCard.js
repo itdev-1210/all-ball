@@ -49,20 +49,7 @@ const TopFiveContainer = styled.div`
 `;
 
 const BackStatsContainer = styled.div`
-  margin-top: -0.15rem;
   white-space: nowrap;
-
-  @media screen and (min-width: 376px) {
-    margin-top: 0.3rem;
-  }
-
-  @media screen and (min-width: 900px) {
-    margin-top: 0.7rem;
-  }
-
-  @media screen and (min-width: 1000px) {
-    margin-top: 0rem;
-  }
 `;
 
 const FGContainer = styled.div`
@@ -116,10 +103,18 @@ const FoulAndTOContainer = styled(FGContainer)``;
 const BackSideStat = styled.h3`
   margin: 0.8rem;
 
-  @media screen and (min-width: 750px) {
-    margin-right: 0rem;
-    margin-left: 0rem;
+  @media screen and (min-width: 1100px) {
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
+`;
+
+const BackStatsInnerContainer = styled.div`
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 `;
 function PlayerCard(props) {
   const teamAbbreviation = props.playerData.team.abbreviation;
@@ -192,26 +187,28 @@ function PlayerCard(props) {
               teamAbbreviation={teamAbbreviation}
               src={flipIcon}
             ></FlipIcon>
-            <FGContainer>
-              <BackSideStat>FGA: {fga} </BackSideStat>
-              <BackSideStat>FGM: {fgm}</BackSideStat>
-            </FGContainer>
-            <FG3Container>
-              <BackSideStat>FG3A: {fg3a}</BackSideStat>
-              <BackSideStat> FG3M: {fg3m}</BackSideStat>
-            </FG3Container>
-            <FTContainer>
-              <BackSideStat>FTA: {fta} </BackSideStat>
-              <BackSideStat>FTM: {ftm}</BackSideStat>
-            </FTContainer>
-            <RebContainer>
-              <BackSideStat>OREB: {oreb} </BackSideStat>
-              <BackSideStat>DREB: {dreb}</BackSideStat>
-            </RebContainer>
-            <FoulAndTOContainer>
-              <BackSideStat>PF: {pf} </BackSideStat>
-              <BackSideStat>TO: {turnover}</BackSideStat>
-            </FoulAndTOContainer>
+            <BackStatsInnerContainer>
+              <FGContainer>
+                <BackSideStat>FGA: {fga} </BackSideStat>
+                <BackSideStat>FGM: {fgm}</BackSideStat>
+              </FGContainer>
+              <FG3Container>
+                <BackSideStat>FG3A: {fg3a}</BackSideStat>
+                <BackSideStat> FG3M: {fg3m}</BackSideStat>
+              </FG3Container>
+              <FTContainer>
+                <BackSideStat>FTA: {fta} </BackSideStat>
+                <BackSideStat>FTM: {ftm}</BackSideStat>
+              </FTContainer>
+              <RebContainer>
+                <BackSideStat>OREB: {oreb} </BackSideStat>
+                <BackSideStat>DREB: {dreb}</BackSideStat>
+              </RebContainer>
+              <FoulAndTOContainer>
+                <BackSideStat>PF: {pf} </BackSideStat>
+                <BackSideStat>TO: {turnover}</BackSideStat>
+              </FoulAndTOContainer>
+            </BackStatsInnerContainer>
           </BackStatsContainer>
         </BackSide>
       </Flippy>
