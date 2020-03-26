@@ -48,27 +48,8 @@ const TopFiveContainer = styled.div`
   }
 `;
 
-const BackStatsContainer = styled.div`
+const BackOfCardContainer = styled.div`
   white-space: nowrap;
-`;
-
-const FGContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: auto;
-  width: 90%;
-
-  @media screen and (min-width: 600px) {
-    width: 100%;
-  }
-
-  @media screen and (min-width: 1000px) {
-    width: 90%;
-  }
-
-  @media screen and (min-width: 1300px) {
-    width: 70%;
-  }
 `;
 
 const FlipIcon = styled.img`
@@ -95,11 +76,6 @@ const ReboundAndStealContainer = styled(PointAndAssistContainer)``;
 
 const BlockContainer = styled(PointAndAssistContainer)``;
 
-const FG3Container = styled(FGContainer)``;
-const FTContainer = styled(FGContainer)``;
-const RebContainer = styled(FGContainer)``;
-const FoulAndTOContainer = styled(FGContainer)``;
-
 const BackSideStat = styled.h3`
   margin: 0.8rem 3rem;
 
@@ -113,13 +89,24 @@ const BackSideStat = styled.h3`
   }
 `;
 
-const BackStatsInnerContainer = styled.div`
+const BackStatsContainer = styled.div`
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
 `;
+
+const FGContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const FG3Container = styled(FGContainer)``;
+const FTContainer = styled(FGContainer)``;
+const RebContainer = styled(FGContainer)``;
+const FoulAndTOContainer = styled(FGContainer)``;
+
 function PlayerCard(props) {
   const teamAbbreviation = props.playerData.team.abbreviation;
   const playerCardColor = teamHexFirstColors[teamAbbreviation];
@@ -186,12 +173,12 @@ function PlayerCard(props) {
             fontSize: "1.1rem"
           }}
         >
-          <BackStatsContainer>
+          <BackOfCardContainer>
             <FlipIcon
               teamAbbreviation={teamAbbreviation}
               src={flipIcon}
             ></FlipIcon>
-            <BackStatsInnerContainer>
+            <BackStatsContainer>
               <FGContainer>
                 <BackSideStat>FGA: {fga} </BackSideStat>
                 <BackSideStat>FGM: {fgm}</BackSideStat>
@@ -212,8 +199,8 @@ function PlayerCard(props) {
                 <BackSideStat>PF: {pf} </BackSideStat>
                 <BackSideStat>TO: {turnover}</BackSideStat>
               </FoulAndTOContainer>
-            </BackStatsInnerContainer>
-          </BackStatsContainer>
+            </BackStatsContainer>
+          </BackOfCardContainer>
         </BackSide>
       </Flippy>
     </TopFiveContainer>
