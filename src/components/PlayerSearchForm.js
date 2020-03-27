@@ -1,4 +1,5 @@
 import React from "react";
+import magnifyingGlass from "../assets/magnifyingGlass.png";
 
 import styled from "styled-components";
 
@@ -18,8 +19,12 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   font-size: 1.7rem;
   border: 1px solid #333;
+  border-radius: 2rem 0rem 0rem 2rem;
+  border-right: none;
+  padding: 1.5rem 0rem 1.5rem 1.5rem;
   width: 90%;
 
   @media screen and (min-width: 600px) {
@@ -31,6 +36,7 @@ const Input = styled.input`
   }
 
   @media (hover: none) {
+    // border: 1px solid #333;
     font-size: 16px;
     transition: all 0.5s;
     transition: all 0.5s;
@@ -40,8 +46,11 @@ const Input = styled.input`
 `;
 
 const SearchButton = styled.button`
-  background-color: #333;
+  background: #333;
   border: 0.1rem solid #333;
+  border-left: none;
+  border-radius: 0rem 2rem 2rem 0rem;
+  box-shadow: 7px -1px 15px rgba(0, 0, 0, 0.2);
   color: #fffaf0;
   font-size: 1.7rem;
   padding-right: 1rem;
@@ -49,12 +58,11 @@ const SearchButton = styled.button`
   transition: background-color 0.5s;
 
   :hover {
+    background-color: #F5CC30; 
     cursor: pointer;
-    background-color: #5a5a5a;
   }
 
-  @media (hover: none) {
-    background-color: #333 !important;
+  @media (hover: none) { 
     font-size: 16px;
     transition: all 0.5s;
     transform-origin: top left;
@@ -71,6 +79,13 @@ const NoPlayerMessageContainer = styled.div`
   justify-content: center;
   transform: ${props =>
     props.isClicked ? "translateY(3rem)" : "translateY(15rem)"};
+`;
+
+const MagnifyingGlassIcon = styled.img`
+  filter: invert(100%) sepia(0%) saturate(3167%) hue-rotate(130deg)
+    brightness(200%) contrast(100%);
+  vertical-align: middle;
+  width: 2.5rem;
 `;
 
 function PlayerSearchForm(props) {
@@ -92,9 +107,11 @@ function PlayerSearchForm(props) {
             value={input}
             onChange={handleChange}
             maxLength="25"
-            placeholder="Search for players by name"
+            placeholder="search for players by name"
           ></Input>
-          <SearchButton>Search</SearchButton>
+          <SearchButton>
+            <MagnifyingGlassIcon src={magnifyingGlass}></MagnifyingGlassIcon>
+          </SearchButton>
         </Form>
       </FormContainer>
       <NoPlayerMessageContainer isClicked={isClicked}>
