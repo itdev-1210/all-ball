@@ -8,6 +8,7 @@ const Table = styled.table`
   font-size: 1.3rem;
   color: #333;
   margin: auto;
+  margin-bottom: 5rem;
   padding; 8px;
   text-align: left;
   width: 75%;
