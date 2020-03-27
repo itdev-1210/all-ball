@@ -19,11 +19,11 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  font-size: 1.7rem;
-  border: 1px solid #333;
+  border: 0.1rem solid #333;
   border-radius: 2rem 0rem 0rem 2rem;
   border-right: none;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  font-size: 1.7rem;
   padding: 1.5rem 0rem 1.5rem 1.5rem;
   width: 90%;
 
@@ -36,7 +36,6 @@ const Input = styled.input`
   }
 
   @media (hover: none) {
-    // border: 1px solid #333;
     font-size: 16px;
     transition: all 0.5s;
     transition: all 0.5s;
@@ -58,16 +57,36 @@ const SearchButton = styled.button`
   transition: background-color 0.5s;
 
   :hover {
-    background-color: #F5CC30; 
+    background-color: #f5cc30;
     cursor: pointer;
   }
 
-  @media (hover: none) { 
+  @media (hover: none) {
     font-size: 16px;
+    margin-left: -8rem;
     transition: all 0.5s;
     transform-origin: top left;
     transform: scale(0.8);
-    margin-left: -5rem;
+
+    @media screen and (min-width: 430px) {
+      margin-left: -10rem;
+    }
+
+    @media screen and (min-width: 532px) {
+      margin-left: -12rem;
+    }
+
+    @media screen and (min-width: 600px) {
+      margin-left: -8rem;
+    }
+
+    @media screen and (min-width: 752px) {
+      margin-left: -9rem;
+    }
+
+    @media screen and (min-width: 980px) {
+      margin-left: -11rem;
+    }
   }
 `;
 
