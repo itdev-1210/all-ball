@@ -1,5 +1,6 @@
 import React from "react";
 
+import downArrow from "../assets/downArrow.png";
 import styled from "styled-components";
 
 const FormContainer = styled.div`
@@ -32,14 +33,19 @@ const DateOption = styled.option`
 `;
 
 const DateSelect = styled.select`
+  background: url(${downArrow}) no-repeat;
   background-color: #fffaf0;
-  border: none;
+  background-position: right;
+  background-size: 2.7rem 1.7rem;
   border: 0.1rem solid #333;
+  border-radius: 1rem;
   color: #333;
-  font-size: 1.7rem
-  margin: 0.4rem 0.8rem;
-  padding: 2px;
+  font-size: 1.7rem;
+  margin: 2.4rem 0.8rem 0.2rem 0.8rem;
+  padding: 1rem 4rem 1rem 1rem;
   transition: background-color 0.5s;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 
   :hover {
     cursor: pointer;
@@ -50,7 +56,6 @@ const DateSelect = styled.select`
     font-size: 16px;
     margin-left: 0rem;
     margin-right: 0rem;
-    transition: all 0.5s;
     transform-origin: top left;
     transform: scale(0.8);
   }

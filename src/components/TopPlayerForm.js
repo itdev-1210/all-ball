@@ -1,5 +1,6 @@
 import React from "react";
 
+import downArrow from "../assets/downArrow.png";
 import styled from "styled-components";
 
 const FormsContainer = styled.div`
@@ -23,15 +24,20 @@ const FormsContainer = styled.div`
 `;
 
 const StatisticSelect = styled.select`
+  background: url(${downArrow}) no-repeat;
   background-color: #fffaf0;
-  border: none;
+  background-position: right;
+  background-size: 2.7rem 1.7rem;
   border: 0.1rem solid #333;
+  border-radius: 1rem;
   color: #333;
-  font-size: 1.7rem
+  font-size: 1.7rem;
   margin-bottom: 1.5rem;
   margin-top: 2.5rem;
-  padding: 2px;
+  padding: 1rem 4rem 1rem 1rem;
   transition: background-color 0.5s;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 
   :hover {
     cursor: pointer;
