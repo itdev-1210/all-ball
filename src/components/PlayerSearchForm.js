@@ -37,6 +37,7 @@ const Input = styled.input`
 
   @media (hover: none) {
     font-size: 16px;
+    outline: none;
     transition: all 0.5s;
     transition: all 0.5s;
     transform-origin: top left;
@@ -62,8 +63,10 @@ const SearchButton = styled.button`
   }
 
   @media (hover: none) {
+    background-color: #333 !important;
     font-size: 16px;
     margin-left: -8rem;
+    outline: none;
     transition: all 0.5s;
     transform-origin: top left;
     transform: scale(0.8);
