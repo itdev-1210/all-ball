@@ -64,16 +64,16 @@ const DateSelect = styled.select`
 const SearchButton = styled.button`
   background-color: #333;
   border: 0.1rem solid #333
+  border-radius: 1rem;
   color: #fffaf0;
   font-size: 1.7rem;
   margin: 0.4rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
   transition: background-color 0.5s;
 
   :hover {
     cursor: pointer;
-    background-color: #5a5a5a;
+    background-color: #f5cc30;
   }
   
   @media (hover: none) {
