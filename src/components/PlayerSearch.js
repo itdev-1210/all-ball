@@ -213,8 +213,8 @@ function PlayerSearch() {
         {searchedPlayers}
       </PlayerOuterContainer>
       {chosenPlayer}
-      {statSwitch}
-      <div>{logsOrAverages}</div>
+      {playerStats.length !== 0 && statSwitch}
+      <div>{playerStats.length !== 0 && logsOrAverages}</div>
     </div>
   );
 }
