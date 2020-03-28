@@ -340,7 +340,9 @@ function GameContainer(props) {
       <GameCard
         key={id}
         onClick={() => {
-          handleGameClick(gameData);
+          gameData.home_team_score > 0 &&
+            gameData.visitor_team_score > 0 &&
+            handleGameClick(gameData);
         }}
         gameData={gameData}
       />
