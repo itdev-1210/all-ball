@@ -65,8 +65,12 @@ function TeamGameChart(props) {
   const awayFGMade = awayTeamRoster.reduce((a, b) => a + b.fgm, 0);
   const homeFGMade = homeTeamRoster.reduce((a, b) => a + b.fgm, 0);
 
-  const awayFGPercent = (awayFGMade / awayFGAttempts).toFixed(2) * 100;
-  const homeFGPercent = (homeFGMade / homeFGAttempts).toFixed(2) * 100;
+  const awayFGPercent = Math.round(
+    (awayFGMade / awayFGAttempts).toFixed(2) * 100
+  );
+  const homeFGPercent = Math.round(
+    (homeFGMade / homeFGAttempts).toFixed(2) * 100
+  );
 
   const awayFG3Attempts = awayTeamRoster.reduce((a, b) => a + b.fg3a, 0);
   const homeFG3Attempts = homeTeamRoster.reduce((a, b) => a + b.fg3a, 0);
@@ -74,8 +78,12 @@ function TeamGameChart(props) {
   const awayFG3Made = awayTeamRoster.reduce((a, b) => a + b.fg3m, 0);
   const homeFG3Made = homeTeamRoster.reduce((a, b) => a + b.fg3m, 0);
 
-  const awayFG3Percent = (awayFG3Made / awayFG3Attempts).toFixed(2) * 100;
-  const homeFG3Percent = (homeFG3Made / homeFG3Attempts).toFixed(2) * 100;
+  const awayFG3Percent = Math.round(
+    (awayFG3Made / awayFG3Attempts).toFixed(2) * 100
+  );
+  const homeFG3Percent = Math.round(
+    (homeFG3Made / homeFG3Attempts).toFixed(2) * 100
+  );
 
   const awayFTAttempts = awayTeamRoster.reduce((a, b) => a + b.fta, 0);
   const homeFTAttempts = homeTeamRoster.reduce((a, b) => a + b.fta, 0);
@@ -83,8 +91,12 @@ function TeamGameChart(props) {
   const awayFTMade = awayTeamRoster.reduce((a, b) => a + b.ftm, 0);
   const homeFTMade = homeTeamRoster.reduce((a, b) => a + b.ftm, 0);
 
-  const awayFTPercent = (awayFTMade / awayFTAttempts).toFixed(2) * 100;
-  const homeFTPercent = (homeFTMade / homeFTAttempts).toFixed(2) * 100;
+  const awayFTPercent = Math.round(
+    (awayFTMade / awayFTAttempts).toFixed(2) * 100
+  );
+  const homeFTPercent = Math.round(
+    (homeFTMade / homeFTAttempts).toFixed(2) * 100
+  );
 
   const awayTeamAssists = awayTeamRoster.reduce((a, b) => a + b.ast, 0);
   const homeTeamAssists = homeTeamRoster.reduce((a, b) => a + b.ast, 0);
