@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const Table = styled.table`
   border: 0.2rem solid #ddd;
-  color: #333
-  font-size: 1.3rem
+  color: #333;
+  font-size: 1.3rem;
   margin: auto;
   margin-bottom: 6rem;
   padding; 0.8rem;
@@ -61,10 +61,10 @@ const TeamContainer = styled.div`
 `;
 
 const HomeTeamButton = styled.button`
-  background-color: ${props => (!props.isHomeTeam ? `#4787ff` : `white`)};
+  background-color: ${(props) => (!props.isHomeTeam ? `#4787ff` : `white`)};
   border: 0.2rem solid #4787ff;
   border-radius: 1.5rem 0rem 0rem 1.5rem;
-  color: ${props => (!props.isHomeTeam ? `#fffaf0` : `#4787ff`)};
+  color: ${(props) => (!props.isHomeTeam ? `#fffaf0` : `#4787ff`)};
   font-size: 1.1rem;
   font-weight: 800;
   padding: 0.4rem 3rem;
@@ -75,10 +75,10 @@ const HomeTeamButton = styled.button`
 `;
 
 const AwayTeamButton = styled.button`
-  background-color: ${props => (!props.isAwayTeam ? `#4787ff` : `white`)};
+  background-color: ${(props) => (!props.isAwayTeam ? `#4787ff` : `white`)};
   border: 0.2rem solid #4787ff;
   border-radius: 0rem 1.5rem 1.5rem 0rem;
-  color: ${props => (!props.isAwayTeam ? `#fffaf0` : `#4787ff`)};
+  color: ${(props) => (!props.isAwayTeam ? `#fffaf0` : `#4787ff`)};
   font-size: 1.1rem;
   font-weight: 800;
   padding: 0.4rem 3rem;
@@ -98,15 +98,15 @@ function TeamGameLog(props) {
 
   const toggleAwayTeamGameLog = () => {
     if (!isHomeTeam) {
-      setIsHomeTeam(prevState => !prevState);
-      setIsAwayTeam(prevState => !prevState);
+      setIsHomeTeam((prevState) => !prevState);
+      setIsAwayTeam((prevState) => !prevState);
     }
   };
 
   const toggleHomeTeamGameLog = () => {
     if (!isAwayTeam) {
-      setIsHomeTeam(prevState => !prevState);
-      setIsAwayTeam(prevState => !prevState);
+      setIsHomeTeam((prevState) => !prevState);
+      setIsAwayTeam((prevState) => !prevState);
     }
   };
 
@@ -203,13 +203,13 @@ function TeamGameLog(props) {
                 <TableData>{player.pts}</TableData>
                 <TableData>{player.fga}</TableData>
                 <TableData>{player.fgm}</TableData>
-                <TableData>{player.fg_pct}</TableData>
+                <TableData>{player.fg_pct}%</TableData>
                 <TableData>{player.fg3a}</TableData>
                 <TableData>{player.fg3m}</TableData>
-                <TableData>{player.fg3_pct}</TableData>
+                <TableData>{player.fg3_pct}%</TableData>
                 <TableData>{player.fta}</TableData>
                 <TableData>{player.ftm}</TableData>
-                <TableData>{player.ft_pct}</TableData>
+                <TableData>{player.ft_pct}%</TableData>
                 <TableData>{player.reb}</TableData>
                 <TableData>{player.oreb}</TableData>
                 <TableData>{player.dreb}</TableData>
