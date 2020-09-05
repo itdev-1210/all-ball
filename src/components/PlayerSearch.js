@@ -11,14 +11,19 @@ const PlayerOuterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 1.6rem;
+  margin: 1.6rem 20px 30px;
+  max-width: 1300px;
   transition: opacity 1s;
-  opacity: ${props => (props.isVisible ? "1" : "0")};
+  opacity: ${(props) => (props.isVisible ? "1" : "0")};
+
+  @media screen and (min-width: 600px) {
+    margin: 1.6rem auto 30px;
+  }
 `;
 
 const GameLog = styled.h3`
-  color: ${props => (!props.log ? `red` : `gray`)};
-  border-bottom: ${props => (!props.log ? `0.2rem solid red` : "none")};
+  color: ${(props) => (!props.log ? `red` : `gray`)};
+  border-bottom: ${(props) => (!props.log ? `0.2rem solid red` : "none")};
   margin: 0rem 1rem;
   padding: 0rem 0.5rem 0.7rem 0.5rem;
 
@@ -28,8 +33,8 @@ const GameLog = styled.h3`
 `;
 
 const SeasonAverage = styled(GameLog)`
-  color: ${props => (!props.average ? `red` : `gray`)};
-  border-bottom: ${props => (!props.average ? `0.2rem solid red` : "none")};
+  color: ${(props) => (!props.average ? `red` : `gray`)};
+  border-bottom: ${(props) => (!props.average ? `0.2rem solid red` : "none")};
 
   :hover {
     cursor: pointer;
@@ -62,21 +67,21 @@ function PlayerSearch() {
   const [isVisible, setIsVisible] = useState(false);
   const [noPlayerMessage, setNoPlayerMessage] = useState("");
 
-  const handlePlayerClick = value => {
+  const handlePlayerClick = (value) => {
     setPlayer([]);
     setPlayerBio([value]);
     fetch(
       `https://www.balldontlie.io/api/v1/season_averages?season=2019&player_ids[]=${value.id}`
     )
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setPlayerStats(data.data);
       });
     fetch(
       `https://www.balldontlie.io/api/v1/stats?seasons[]=2019&player_ids[]=${value.id}&per_page=100`
     )
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setPlayerGameLogs(data.data);
       });
   };
@@ -85,13 +90,13 @@ function PlayerSearch() {
     setIsClicked(true);
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     let validatedValue = event.target.value.replace(/[^A-z ]/gi, "");
     setInput(validatedValue);
     resetIsVisible();
   };
 
-  const handleSearch = event => {
+  const handleSearch = (event) => {
     event.preventDefault();
     resetNoPlayerMessage();
     setPlayer([]);
@@ -103,8 +108,8 @@ function PlayerSearch() {
       fetch(
         `https://www.balldontlie.io/api/v1/players?search=${input}&per_page=100`
       )
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           setLoading(true);
 
           const currentPage = data.meta.current_page;
@@ -119,10 +124,10 @@ function PlayerSearch() {
               `https://www.balldontlie.io/api/v1/players?search=${input}&per_page=100&page=` +
                 i
             )
-              .then(response => response.json())
-              .then(data => {
+              .then((response) => response.json())
+              .then((data) => {
                 slideUp();
-                setPlayer(player => player.concat(data.data));
+                setPlayer((player) => player.concat(data.data));
                 setLoading(false);
                 fadePlayers();
               });
@@ -146,15 +151,15 @@ function PlayerSearch() {
 
   const toggleSeasonAverage = () => {
     if (!isGameLog) {
-      setIsGameLog(prevState => !prevState);
-      setIsSeasonAverage(prevState => !prevState);
+      setIsGameLog((prevState) => !prevState);
+      setIsSeasonAverage((prevState) => !prevState);
     }
   };
 
   const toggleGameLog = () => {
     if (!isSeasonAverage) {
-      setIsGameLog(prevState => !prevState);
-      setIsSeasonAverage(prevState => !prevState);
+      setIsGameLog((prevState) => !prevState);
+      setIsSeasonAverage((prevState) => !prevState);
     }
   };
 
