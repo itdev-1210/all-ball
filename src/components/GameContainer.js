@@ -30,58 +30,51 @@ const Container = styled.div`
   }
 
   @media screen and (min-width: 100px) {
-    justify-content: ${props => (props.games.length > 3 ? `normal` : "center")};
+    justify-content: ${(props) => props.games.length <= 3 && "center"};
   }
 
-  @media screen and (min-width: 345px) {
-    justify-content: ${props =>
-      props.games.length <= 4 ? `normal` : "center"};
+  @media screen and (min-width: 336px) {
+    justify-content: ${(props) => props.games.length === 4 && `center`};
   }
 
-  @media screen and (min-width: 360px) {
-    justify-content: ${props => (props.games.length > 4 ? `normal` : "center")};
+  @media screen and (min-width: 435px) {
+    justify-content: ${(props) => props.games.length === 5 && `center`};
   }
 
-  @media screen and (min-width: 500px) {
-    justify-content: ${props => (props.games.length > 5 ? `normal` : "center")};
+  @media screen and (min-width: 510px) {
+    justify-content: ${(props) => props.games.length === 6 && `center`};
   }
 
-  @media screen and (min-width: 600px) {
-    justify-content: ${props => (props.games.length > 6 ? `normal` : "center")};
+  @media screen and (min-width: 650px) {
+    justify-content: ${(props) => props.games.length === 7 && `center`};
   }
 
-  @media screen and (min-width: 700px) {
-    justify-content: ${props =>
-      props.games.length >= 6 ? `normal` : "center"};
+  @media screen and (min-width: 730px) {
+    justify-content: ${(props) => props.games.length === 8 && `center`};
   }
 
-  @media screen and (min-width: 768px) {
-    justify-content: ${props => (props.games.length > 8 ? `normal` : "center")};
+  @media screen and (min-width: 820px) {
+    justify-content: ${(props) => props.games.length === 9 && `center`};
   }
 
-  @media screen and (min-width: 1000px) {
-    justify-content: ${props =>
-      props.games.length >= 12 ? `normal` : "center"};
+  @media screen and (min-width: 950px) {
+    justify-content: ${(props) => props.games.length === 10 && `center`};
   }
 
-  @media screen and (min-width: 1175px) {
-    justify-content: ${props =>
-      props.games.length > 12 ? `normal` : "center"};
+  @media screen and (min-width: 1024px) {
+    justify-content: ${(props) => props.games.length === 11 && `center`};
   }
 
-  @media screen and (min-width: 1220px) {
-    justify-content: ${props =>
-      props.games.length > 13 ? `normal` : "center"};
+  @media screen and (min-width: 1140px) {
+    justify-content: ${(props) => props.games.length === 12 && `center`};
   }
 
-  @media screen and (min-width: 1400px) {
-    justify-content: ${props =>
-      props.games.length >= 14 ? `normal` : "center"};
+  @media screen and (min-width: 1225px) {
+    justify-content: ${(props) => props.games.length === 13 && `center`};
   }
 
-  @media screen and (min-width: 1500px) {
-    justify-content: ${props =>
-      props.games.length > 14 ? `normal` : "center"};
+  @media screen and (min-width: 1320px) {
+    justify-content: ${(props) => props.games.length === 14 && `center`};
   }
 
   @media screen and (min-width: 2230px) {
@@ -133,8 +126,8 @@ function GameContainer(props) {
     fetch(
       `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}`
     )
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const totalPages = data.meta.total_pages;
         if (
           yearOfGame === "null" ||
@@ -151,13 +144,13 @@ function GameContainer(props) {
             fetch(
               `https://www.balldontlie.io/api/v1/games/?start_date=[]${yesterday}&end_date=[]${yesterday}&per_page=100`
             )
-              .then(response => response.json())
-              .then(data => {
+              .then((response) => response.json())
+              .then((data) => {
                 setGames(data.data);
                 setIsLoading(false);
                 setGameCardHeader("Game results from yesterday");
               })
-              .catch(error => {
+              .catch((error) => {
                 if (error) {
                   redirectError();
                 }
@@ -168,8 +161,8 @@ function GameContainer(props) {
           fetch(
             `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
           )
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
               setGames(data.data);
               setIsLoading(false);
               areGamesAvailable === "true" ||
@@ -179,14 +172,14 @@ function GameContainer(props) {
                   )
                 : setNoGameMessage("No games scheduled for this date");
             })
-            .catch(error => {
+            .catch((error) => {
               if (error) {
                 redirectError();
               }
             });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         if (error) {
           redirectError();
         }
@@ -253,16 +246,16 @@ function GameContainer(props) {
     setGameCardHeader(gameDayMessage);
   };
 
-  const handleGameClick = value => {
+  const handleGameClick = (value) => {
     props.history.push({
       pathname: `/games/${value.id}`,
       state: {
-        game: `${value.id}`
-      }
+        game: `${value.id}`,
+      },
     });
   };
 
-  const handleSearch = event => {
+  const handleSearch = (event) => {
     getDaysInMonth();
     setNoGameMessage("");
     getGameMessage();
@@ -288,15 +281,15 @@ function GameContainer(props) {
       fetch(
         `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100`
       )
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           const currentPage = data.meta.current_page;
           const totalPages = data.meta.total_pages;
           if (totalPages > 0) {
             for (let i = currentPage; i <= totalPages; i++) {
               fetch(
                 `https://www.balldontlie.io/api/v1/games/?start_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&end_date=[]${yearOfGame}-${monthOfGame}-${dayOfGame}&per_page=100&page=${i}`
-              ).then(response => response.json());
+              ).then((response) => response.json());
               setGames(data.data);
               setIsLoading(false);
               sessionStorage.setItem("areGamesAvailable", true);
@@ -307,7 +300,7 @@ function GameContainer(props) {
             setNoGameMessage("No games scheduled for this date");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error) {
             redirectError();
           }
@@ -317,19 +310,19 @@ function GameContainer(props) {
 
   const redirectError = () => {
     props.history.push({
-      pathname: "/error"
+      pathname: "/error",
     });
   };
 
-  const handleDayChange = event => {
+  const handleDayChange = (event) => {
     setDayOfGame(event.target.value);
   };
 
-  const handleMonthChange = event => {
+  const handleMonthChange = (event) => {
     setMonthOfGame(event.target.value);
   };
 
-  const handleYearChange = event => {
+  const handleYearChange = (event) => {
     setYearOfGame(event.target.value);
   };
 
