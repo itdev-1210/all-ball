@@ -38,6 +38,9 @@ const Input = styled.input`
   }
 
   @media (hover: none) {
+    -webkit-box-shadow: 0 8px 6px -8px black;
+    -moz-box-shadow: 0 8px 6px -8px black;
+    box-shadow: 10px 6px 8px -8px black;
     font-size: 16px;
     outline: none;
     transition: all 0.5s;
