@@ -10,18 +10,14 @@ const OuterContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-left: 11rem;
-  padding-right: 11rem;
+  margin: auto;
+  margin-bottom: 30px;
+  max-width: 1300px;
+  padding: 0rem 11rem;
 
   @media screen and (min-width: 600px) {
     flex-direction: row;
-    padding-left: 1.8rem;
-    padding-right: 1.8rem;
-  }
-
-  @media screen and (min-width: 1300px) {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding: 0rem 1.8rem;
   }
 `;
 
@@ -58,8 +54,8 @@ function TopPlayers(props) {
     fetch(
       `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100`
     )
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const currentPage = data.meta.current_page;
         const totalPages = data.meta.total_pages;
         if (
@@ -79,13 +75,13 @@ function TopPlayers(props) {
                 `https://www.balldontlie.io/api/v1/stats?dates[]=${yesterday}&per_page=100&page=` +
                   i
               )
-                .then(response => response.json())
-                .then(data => {
-                  setPlayers(players => players.concat(data.data));
+                .then((response) => response.json())
+                .then((data) => {
+                  setPlayers((players) => players.concat(data.data));
                   setIsLoading(false);
                   setPlayerHeader("Top players from yesterday");
                 })
-                .catch(error => {
+                .catch((error) => {
                   if (error) {
                     redirectError();
                   }
@@ -99,9 +95,9 @@ function TopPlayers(props) {
               `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
                 i
             )
-              .then(response => response.json())
-              .then(data => {
-                setPlayers(players => players.concat(data.data));
+              .then((response) => response.json())
+              .then((data) => {
+                setPlayers((players) => players.concat(data.data));
                 setIsLoading(false);
                 areStatsAvailable === "true" ||
                 sessionStorage.getItem("noDateExistsForPlayers") !== null
@@ -110,7 +106,7 @@ function TopPlayers(props) {
                       "No stats available for games that have not been played"
                     );
               })
-              .catch(error => {
+              .catch((error) => {
                 if (error) {
                   redirectError();
                 }
@@ -118,7 +114,7 @@ function TopPlayers(props) {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         if (error) {
           redirectError();
         }
@@ -157,19 +153,19 @@ function TopPlayers(props) {
     sessionStorage.setItem("statistic", statistic);
   }, [statistic]);
 
-  const handleDayChange = event => {
+  const handleDayChange = (event) => {
     setDay(event.target.value);
   };
 
-  const handleMonthChange = event => {
+  const handleMonthChange = (event) => {
     setMonth(event.target.value);
   };
 
-  const handleYearChange = event => {
+  const handleYearChange = (event) => {
     setYear(event.target.value);
   };
 
-  const handleStatisticChange = event => {
+  const handleStatisticChange = (event) => {
     setStatistic(event.target.value);
   };
 
@@ -198,7 +194,7 @@ function TopPlayers(props) {
     setPlayerHeader(topPlayerDateMessage);
   };
 
-  const handleSearch = event => {
+  const handleSearch = (event) => {
     getDaysInMonth();
     players.length = 0;
     setNoPlayerMessage("");
@@ -224,8 +220,8 @@ function TopPlayers(props) {
       fetch(
         `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100`
       )
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           const currentPage = data.meta.current_page;
           const totalPages = data.meta.total_pages;
           if (totalPages > 0) {
@@ -234,13 +230,13 @@ function TopPlayers(props) {
                 `https://www.balldontlie.io/api/v1/stats?dates[]=${year}-${month}-${day}&per_page=100&page=` +
                   i
               )
-                .then(response => response.json())
-                .then(data => {
-                  setPlayers(players => players.concat(data.data));
+                .then((response) => response.json())
+                .then((data) => {
+                  setPlayers((players) => players.concat(data.data));
                   setIsLoading(false);
                   sessionStorage.setItem("areStatsAvailable", true);
                 })
-                .catch(error => {
+                .catch((error) => {
                   if (error) {
                     redirectError();
                   }
@@ -254,7 +250,7 @@ function TopPlayers(props) {
             );
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error) {
             redirectError();
           }
@@ -264,7 +260,7 @@ function TopPlayers(props) {
 
   const redirectError = () => {
     props.history.push({
-      pathname: "/error"
+      pathname: "/error",
     });
   };
 
