@@ -14,6 +14,11 @@ import {
   LabelList
 } from "recharts";
 
+const Container = styled.div`
+margin: 0 auto;
+max-width: 1300px;
+`
+
 const TeamContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -171,7 +176,7 @@ function TeamGameChart(props) {
   ];
 
   return (
-    <div>
+    <Container>
       <TeamContainer>
         <AwayTeamContainer>
           <AwayTeamAbbreviation
@@ -222,7 +227,7 @@ function TeamGameChart(props) {
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>
-    </div>
+    </Container>
   );
 }
 
