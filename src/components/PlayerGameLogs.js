@@ -113,13 +113,13 @@ function PlayerGameLogs(props) {
                   <TableData>{stats.pts}</TableData>
                   <TableData>{stats.fga}</TableData>
                   <TableData>{stats.fgm}</TableData>
-                  <TableData>{stats.fg_pct}</TableData>
+                  <TableData>{stats.fg_pct}%</TableData>
                   <TableData>{stats.fg3a}</TableData>
                   <TableData>{stats.fg3m}</TableData>
-                  <TableData>{stats.fg3_pct}</TableData>
+                  <TableData>{stats.fg3_pct}%</TableData>
                   <TableData>{stats.fta}</TableData>
                   <TableData>{stats.ftm}</TableData>
-                  <TableData>{stats.ft_pct}</TableData>
+                  <TableData>{stats.ft_pct}%</TableData>
                   <TableData>{stats.reb}</TableData>
                   <TableData>{stats.oreb}</TableData>
                   <TableData>{stats.dreb}</TableData>

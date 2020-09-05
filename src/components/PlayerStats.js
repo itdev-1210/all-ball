@@ -89,13 +89,13 @@ function PlayerStats(props) {
                 <TableData>{seasonStats.pts}</TableData>
                 <TableData>{seasonStats.fga}</TableData>
                 <TableData>{seasonStats.fgm}</TableData>
-                <TableData>{seasonStats.fg_pct}</TableData>
+                <TableData>{seasonStats.fg_pct}%</TableData>
                 <TableData>{seasonStats.fg3a}</TableData>
                 <TableData>{seasonStats.fg3m}</TableData>
-                <TableData>{seasonStats.fg3_pct}</TableData>
+                <TableData>{seasonStats.fg3_pct}%</TableData>
                 <TableData>{seasonStats.fta}</TableData>
                 <TableData>{seasonStats.ftm}</TableData>
-                <TableData>{seasonStats.ft_pct}</TableData>
+                <TableData>{seasonStats.ft_pct}%</TableData>
                 <TableData>{seasonStats.reb}</TableData>
                 <TableData>{seasonStats.oreb}</TableData>
                 <TableData>{seasonStats.dreb}</TableData>
