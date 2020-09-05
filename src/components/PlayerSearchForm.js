@@ -12,7 +12,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  transform: ${props =>
+  transform: ${(props) =>
     props.isClicked ? "translateY(0rem)" : "translateY(12rem)"};
   transition: transform 0.5s;
   width: 75%;
@@ -22,7 +22,9 @@ const Input = styled.input`
   border: 0.1rem solid #333;
   border-radius: 2rem 0rem 0rem 2rem;
   border-right: none;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 8px 6px -8px black;
+  -moz-box-shadow: 0 8px 6px -8px black;
+  box-shadow: 10px 6px 8px -8px black;
   font-size: 1.7rem;
   padding: 1.5rem 0rem 1.5rem 1.5rem;
   width: 90%;
@@ -50,7 +52,9 @@ const SearchButton = styled.button`
   border: 0.1rem solid #333;
   border-left: none;
   border-radius: 0rem 2rem 2rem 0rem;
-  box-shadow: 7px -1px 15px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 8px 6px -8px black;
+  -moz-box-shadow: 0 8px 6px -8px black;
+  box-shadow: 0 8px 6px -8px black;
   color: #fffaf0;
   font-size: 1.7rem;
   padding-right: 1rem;
@@ -88,7 +92,11 @@ const SearchButton = styled.button`
     }
 
     @media screen and (min-width: 980px) {
-      margin-left: -11rem;
+      margin-left: -12rem;
+    }
+
+    @media screen and (min-width: 1220px) {
+      margin-left: -14rem;
     }
   }
 `;
@@ -99,7 +107,7 @@ const NoPlayerMessageContainer = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
   justify-content: center;
-  transform: ${props =>
+  transform: ${(props) =>
     props.isClicked ? "translateY(3rem)" : "translateY(15rem)"};
 `;
 
@@ -116,7 +124,7 @@ function PlayerSearchForm(props) {
     isClicked,
     handleChange,
     input,
-    noPlayerMessage
+    noPlayerMessage,
   } = props;
 
   return (
