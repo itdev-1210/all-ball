@@ -28,23 +28,6 @@ html {
   }
 }
 
-@media screen and (min-width: 1300px) {
-  html {
-    font-size: 9.5px;
-  }
-}
-
-@media screen and (min-width: 1600px) {
-  html {
-    font-size: 10px;
-  }
-}
-
-@media screen and (min-width: 1800px) {
-  html {
-    font-size: 10.5px;
-  }
-}
 
 body {
   background-color: #fffaf0;
