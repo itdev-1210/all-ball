@@ -88,9 +88,11 @@ const AwayTeamButton = styled.button`
   }
 `;
 
-const HomeTeamAbbreviation = styled.span``;
+const HomeTeamAbbreviation = styled.span`
+  font-size: 1.3rem;
+`;
 
-const AwayTeamAbbreviation = styled.span``;
+const AwayTeamAbbreviation = styled(HomeTeamAbbreviation)``;
 
 function TeamGameLog(props) {
   const [isHomeTeam, setIsHomeTeam] = useState(false);
