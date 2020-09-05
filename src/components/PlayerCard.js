@@ -9,6 +9,7 @@ const NameContainer = styled.div`
   display: flex;
   justify-content: center;
   letter-spacing: 0.06rem;
+  font-size: 1.2rem;
 
   @media screen and (min-width: 600px) and (max-width: 1000px) {
     flex-direction: column;
@@ -32,15 +33,10 @@ const LastName = styled.h2`
 
 const TopFiveContainer = styled.div`
   flex: 1;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   margin-top: 1rem;
   text-align: center;
-
-  @media screen and (min-width: 1500px) {
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
 `;
 
 const BackOfCardContainer = styled.div`
@@ -50,7 +46,7 @@ const BackOfCardContainer = styled.div`
 const FlipIcon = styled.img`
   bottom: 5px;
   display: block;
-  filter: ${props =>
+  filter: ${(props) =>
     props.teamAbbreviation !== "SAS" &&
     "invert(100%) sepia(0%) saturate(3167%) hue-rotate(130deg) brightness(95%) contrast(80%)"};
   height: 2rem;
@@ -65,6 +61,10 @@ const FlipIcon = styled.img`
 const PointAndAssistContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+
+  @media screen and (min-width: 600px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const ReboundAndStealContainer = styled(PointAndAssistContainer)``;
@@ -121,7 +121,7 @@ function PlayerCard(props) {
     oreb,
     dreb,
     pf,
-    turnover
+    turnover,
   } = props.playerData;
 
   return (
@@ -131,12 +131,13 @@ function PlayerCard(props) {
       teamAbbreviation={teamAbbreviation}
     >
       <Flippy flipOnHover={false} flipOnClick={true} flipDirection="horizontal">
-        <FrontSide className="frontAndBackCard"
+        <FrontSide
+          className="frontAndBackCard"
           style={{
             background: playerCardColor,
             borderRadius: "2rem",
             border: `solid 0.35rem ${playerCardSecondColor}`,
-            color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`
+            color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`,
           }}
         >
           <FlipIcon
@@ -159,13 +160,14 @@ function PlayerCard(props) {
             <h3>BLKS: {blk}</h3>
           </BlockContainer>
         </FrontSide>
-        <BackSide className="frontAndBackCard"
+        <BackSide
+          className="frontAndBackCard"
           style={{
             background: playerCardColor,
             borderRadius: "2rem",
             border: `solid 0.35rem ${playerCardSecondColor}`,
             color: `${teamAbbreviation === "SAS" ? "#222" : "#fefefe"}`,
-            fontSize: "1.1rem"
+            fontSize: "1.1rem",
           }}
         >
           <BackOfCardContainer>
