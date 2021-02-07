@@ -77,10 +77,10 @@ function GameInfoContainer(props) {
   const homeTeam = awayTeam.pop();
 
   const homeTeamRoster = selectedGame.filter(
-    x => x.team.abbreviation == homeTeam
+    x => x.team.abbreviation === homeTeam
   );
   const awayTeamRoster = selectedGame.filter(
-    x => x.team.abbreviation == awayTeam
+    x => x.team.abbreviation === awayTeam
   );
 
   const teamChart = (

@@ -214,6 +214,10 @@ function GameContainer(props) {
     sessionStorage.setItem("dayOfGame", dayOfGame);
   }, [dayOfGame]);
 
+  useEffect(() => {
+    sessionStorage.setItem("areGamesAvailable", areGamesAvailable);
+  }, [areGamesAvailable]);
+
   const getGameMessage = () => {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
@@ -236,9 +240,9 @@ function GameContainer(props) {
       gameDayMessage = "Game results from yesterday";
     } else if (selectedDate > today) {
       gameDayMessage = `Games scheduled on ${yearOfGame}-${monthOfGame}-${dayOfGame}`;
-    } else if (selectedDate == yesterday) {
+    } else if (selectedDate === yesterday) {
       gameDayMessage = `Game results from yesterday`;
-    } else if (selectedDate == today) {
+    } else if (selectedDate === today) {
       gameDayMessage = `Games scheduled for today`;
     } else if (selectedDate < today) {
       gameDayMessage = `Game results from ${yearOfGame}-${monthOfGame}-${dayOfGame}`;
@@ -292,11 +296,11 @@ function GameContainer(props) {
               ).then((response) => response.json());
               setGames(data.data);
               setIsLoading(false);
-              sessionStorage.setItem("areGamesAvailable", true);
+              setAreGamesAvailable(true);
             }
           } else {
             setIsLoading(false);
-            sessionStorage.setItem("areGamesAvailable", false);
+            setAreGamesAvailable(true);
             setNoGameMessage("No games scheduled for this date");
           }
         })

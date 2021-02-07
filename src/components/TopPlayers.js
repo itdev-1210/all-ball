@@ -153,6 +153,10 @@ function TopPlayers(props) {
     sessionStorage.setItem("statistic", statistic);
   }, [statistic]);
 
+  useEffect(() => {
+    sessionStorage.setItem("areStatsAvailable", areStatsAvailable);
+  }, [areStatsAvailable]);
+
   const handleDayChange = (event) => {
     setDay(event.target.value);
   };
@@ -234,7 +238,7 @@ function TopPlayers(props) {
                 .then((data) => {
                   setPlayers((players) => players.concat(data.data));
                   setIsLoading(false);
-                  sessionStorage.setItem("areStatsAvailable", true);
+                  setAreStatsAvailable(true);
                 })
                 .catch((error) => {
                   if (error) {
@@ -244,7 +248,7 @@ function TopPlayers(props) {
             }
           } else {
             setIsLoading(false);
-            sessionStorage.setItem("areStatsAvailable", false);
+            setAreStatsAvailable(true);
             setNoPlayerMessage(
               "No stats available for games that have not been played"
             );
